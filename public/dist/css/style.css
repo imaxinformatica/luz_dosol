@@ -1,0 +1,166 @@
+input, select, textarea, button,
+input:focus, select:focus, textarea:focus, button:focus {
+    outline: none;
+}
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    vertical-align: middle;
+}
+
+.content-header h1 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 40px;
+}
+
+button.btn-header {
+    border: 0;
+    background: #8BC34A;
+    padding: 10px 30px;
+    vertical-align: middle;
+    float: right;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+@media(max-width: 767px){
+    button.btn-header {
+        margin-top: 10px;
+    }
+}
+a.act-list {
+    text-decoration: none;
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+a.act-delete {
+    color: #d9534f;
+}
+
+a.act-edit {
+    color: #367fa9;
+}
+
+.box-auth {
+    background: #fff;
+    padding: 20px;
+    margin-top: 30%;
+    box-shadow: 0 0 50px #efefef;
+}
+
+.box-auth button {
+    width: 100%;   
+}
+
+.box-auth input {
+    width: 100%;
+    border: solid 1px #ccc;
+    padding: 12px;
+    outline: none;
+}
+
+.box-auth button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #CDDC39;
+    margin-top: 16px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: bold;
+    outline: none;
+}
+
+.box-login {
+    border: solid 1px #ccc;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+    padding: 60px 10px;
+    margin-top: 80px;
+    background: #fff;
+}
+
+.body-login {
+    background: #e6e6e6;
+}
+
+img.graduation-img {
+    width: 90px;
+    margin: 10px auto;
+    display: table;
+}
+
+.cycle-select {
+    float: right;
+    padding-top: 3px;
+}
+
+.cycle-select p {
+    float: left;
+    margin-bottom: 0;
+    margin-top: 6px;
+    text-transform: unset;
+}
+
+.time-cycle {
+    color: #fff;
+    text-transform: uppercase;
+    padding-top: 15px;
+    padding-right: 10px;
+}
+
+.cycle-select select {
+    float: left;
+    margin-left: 5px;
+    outline: none;
+    padding: 5px;
+    border-radius: 2px;
+}
+
+.product-box img {
+    width: 100%;
+}
+
+.product-body h3 {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.product-body h4 {
+    color: #f39c12;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+}
+
+button.add-cart {
+    float: left;
+    border: none;
+    background: #f39c12;
+    width: 80%;
+    padding: 8px 5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+button.more-info {
+    float: left;
+    border: none;
+    background: #ccc;
+    margin-right: 2%;
+    width: 18%;
+    padding: 8px 5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.product-footer {
+    padding: 8px;
+}
