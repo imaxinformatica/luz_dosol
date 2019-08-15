@@ -33,8 +33,13 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $request['password'] = bcrypt($request['password']);
-        User::create($request->all());
+        try {
+            $request['password'] = bcrypt($request['password']);
+            User::create($request->all());
+        } catch (\Exception $e) {
+            return redirect()->route('admin.user.index')
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+        }
         return redirect()->back()->with('success', 'Usuário adicionado.');
     }
 
@@ -45,7 +50,12 @@ class UserController extends Controller
 
     public function update(User $user, UserRequest $request)
     {
-        $user->update($request->except('_token', 'user_id'));
+        try{
+            $user->update($request->except('_token', 'user_id'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.user.index')
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+        }
         return redirect()->back()->with('success', 'Usuário editado.');
     }
 
@@ -55,5 +65,18 @@ class UserController extends Controller
         $user->save();
         return redirect()->back()->with('success', 'Status alterado.');
 
+    }
+
+    public function delete(User $user)
+    {
+        try{
+            $user->delete();
+        } catch (\Exception $e) {
+            return redirect()->route('admin.user.index')
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+        }
+        
+        return redirect()->back()
+        ->with('success', 'Usuário deletado com sucesso');
     }
 }

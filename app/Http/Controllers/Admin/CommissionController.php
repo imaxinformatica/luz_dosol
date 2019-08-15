@@ -20,8 +20,12 @@ class CommissionController extends Controller
     public function update(CommissionRequest $request, ServiceCommission $service)
     {
         $data = $service->validateDataService($request->except('_token'));
-
-        Commission::first()->update($data);
+        try {
+            Commission::first()->update($data);
+        } catch (\Exception $e) {
+            return redirect()->back()
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+        }
         return redirect()->back()
         ->with('success', 'Comissões Atualizadas');
     }

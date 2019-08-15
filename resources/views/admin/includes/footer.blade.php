@@ -63,26 +63,30 @@
   });
 
 //////////////////////////////////////////////////////////////////////////////////
+$('.simple-text-editor').wysihtml5({
+    toolbar: {
+      "font-styles": false, // Font styling, e.g. h1, h2, etc.
+      "emphasis": false, // Italics, bold, etc.
+      "lists": false, // (Un)ordered lists, e.g. Bullets, Numbers.
+      "html": false, // Button which allows you to edit the generated HTML.
+      "link": false, // Button to insert a link.
+      "image": false, // Button to insert an image.
+      "color": false, // Button to change color of font
+      "blockquote": false
+    }
+  });
 
-  // Identifica se algum caracter foi digitado e executa a função
-  $('#dataOrder input').keyup( function(){
-
-    var total    = 0;
-    var subtotal = realToFloat($('#dataOrder input[name="subtotal"]').val());
-    var freight    = realToFloat($('#dataOrder input[name="freight"]').val());
-    var discount = realToFloat($('#dataOrder input[name="discount"]').val());
-
-    total = subtotal + freight - discount;
-
-    // Fixa apenas duas casas decimais para o número
-    total = total.toFixed(2);
-
-    // Converte para o formato brasileiro
-    total = floatToReal(total);
-
-    // Passa o valor para o formulário
-    $('#dataOrder input[name="total"]').val(total);
-
+  $('.medium-text-editor').wysihtml5({
+    toolbar: {
+      "font-styles": false, // Font styling, e.g. h1, h2, etc.
+      "emphasis": true, // Italics, bold, etc.
+      "lists": true, // (Un)ordered lists, e.g. Bullets, Numbers.
+      "html": false, // Button which allows you to edit the generated HTML.
+      "link": true, // Button to insert a link.
+      "image": false, // Button to insert an image.
+      "color": true, // Button to change color of font
+      "blockquote": false
+    }
   });
 
 
@@ -111,96 +115,6 @@
     });
   });
 
-  $('.act-batch').on('click', function (e) {
-    e.preventDefault();
-    $('#productBatch form input[name="id_batch"]').val($(this).data('id'));
-    $('#productBatch').modal('show');
-  });
-
-  //Product order
-  $('#productOrder').submit(function (e) {
-    e.preventDefault();
-    var form = $(this);
-    var url  = $(this).attr('action');
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data:form.serialize(),
-      beforeSend: function(){
-      },
-      success:function(data){
-        var result = $.parseJSON(data);
-        console.log(result);
-        if (result != null) {
-          // console.log($('#productOrder input[name="order_id"]'));
-          $('#addOrderProduct form input[name="order_id"]').val($('#productOrder input[name="order_id"]').val());
-          $('#addOrderProduct form input[name="bar_code"]').val(result.bar_code);
-          $('#addOrderProduct form input[name="name"]').val(result.name);
-          $('#addOrderProduct form input[name="total"]').val(result.total);
-          $('#addOrderProduct form input[name="sale_price"]').val(result.sale_price);
-
-          $('#addOrderProduct').modal('show');
-        }else{
-          $('#dontExist').modal('show');
-        }
-      },
-      error: function(){
-        alert('erro');
-      }
-    });
-  });
-  //Batch Order
-  $('#batchOrder').submit(function (e) {
-    e.preventDefault();
-    var form = $(this);
-    var url  = $(this).attr('action');
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data:form.serialize(),
-      beforeSend: function(){
-      },
-      success:function(data){
-        var result = $.parseJSON(data);
-        console.log(result);
-        if (result != null) {
-          $('#addOrderBatch form input[name="order_id"]').val($('#productOrder input[name="order_id"]').val());
-          $('#addOrderBatch form input[name="batch_code"]').val(result.batch_code);
-          $('#addOrderBatch form input[name="name"]').val(result.name);
-          $('#addOrderBatch form input[name="sale_price"]').val(result.sale_price);
-
-          $('#addOrderBatch').modal('show');
-        }else{
-          $('#dontExist').modal('show');
-        }
-      },
-      error: function(){
-        alert('erro');
-      }
-    });
-  });
-
-  $('.act-stock').on('click', function (e) {
-    e.preventDefault();
-    $('#editStock form input[name="quantity"]').val($(this).data('quantity'));
-    $('#editStock form input[name="id"]').val($(this).data('id'));
-    $('#editStock form input[name="name"]').val($(this).data('name'));
-    $('#editStock form input[name="ncm"]').val($(this).data('ncm'));
-    $('#editStock form input[name="date_transaction"]').val($(this).data('date-transaction'));
-    $('#editStock form select[name="type"] option[value="'+$(this).data('type')+'"]').attr('selected', 'selected');
-
-    if($(this).data('due-date') != '' && $(this).data('due-date') != null){
-      $('#editStock form input[name="due_date"]').val($(this).data('due-date'));
-      $('#editStock form input[name="due_date"]').removeAttr('disabled');
-      $('#editStock form input[name="no_due"]').prop( "checked", false );
-    } else {
-      $('#editStock form input[name="due_date"]').val('');
-      $('#editStock form input[name="due_date"]').attr('disabled', '');
-      $('#editStock form input[name="no_due"]').prop( "checked", true );
-    }
-    $('#editStock').modal('show');
-  });
-
   $('.clear-filters').click( function(){
     $(':input','#filterForm')
     .not(':button, :submit, :reset, :hidden')
@@ -223,6 +137,7 @@
     $('.input-cep').inputmask({"mask": "99999-999", "placeholder":"_"});
 
     $('.input-cnpj').inputmask({"mask": "99.999.999/9999-99", "placeholder":"_"});
+    $('.input-cpf').inputmask({"mask": "999.999.999-99", "placeholder":"_"});
 
   });
 
@@ -245,27 +160,32 @@
       format: 'dd/mm/yyyy',
       autoclose: true
   });
+  $('.input-slug').keyup( function(){
+    var slug = slugify( $(this).val() );
+    $(this).val(slug);
+  });
+
+  function slugify(string) {
+    const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;'
+    const b = 'aaaaaaaaceeeeghiiiimnnnooooooprssstuuuuuwxyz------'
+    const p = new RegExp(a.split('').join('|'), 'g')
+    return string.toString().toLowerCase()
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+      .replace(/&/g, '-and-') // Replace & with ‘and’
+      .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+      .replace(/\-\-+/g, '-') // Replace multiple - with single -
+      /*
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, '') // Trim - from end of text
+      */
+  }
 
   $(".input-money").maskMoney({
       thousands:'.', 
       decimal:',', 
       allowZero: true,
       symbolStay: true
-  });
-  $('#no_due_batch').change(function(){
-    if ($(this).is(':checked')) {
-      $('input[name="due_date"]').attr('disabled', '');
-    }else{
-      $('input[name="due_date"]').removeAttr('disabled', '');
-    }
-  });
-
-  $('#no_due').change(function(){
-    if ($(this).is(':checked')) {
-      $('input[name="due_date"]').attr('disabled', '');
-    }else{
-      $('input[name="due_date"]').removeAttr('disabled', '');
-    }
   });
 </script>
 

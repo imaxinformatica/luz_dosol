@@ -33,6 +33,20 @@
         </div>
     </section>
     @endisset
+    @if(session()->has('error'))
+    <section class="content-header">
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-sm-12">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{session('error')}}
+                </div>
+            </section>
+        </div>
+    </section>
+    @endisset
 
     @if ($errors->any())
     <div class="content-header">
@@ -62,11 +76,11 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Nome</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" value="{{request('name')}}" name="name">
                                 </div>
                                 <div class="col-sm-6">
                                     <label>E-mail</label>
-                                    <input type="text" class="form-control" name="email">
+                                    <input type="text" class="form-control" value="{{request('email')}}" name="email">
                                 </div>
                             </div>
                         </div>

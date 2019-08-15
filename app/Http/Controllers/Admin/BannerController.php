@@ -28,7 +28,7 @@ class BannerController extends Controller
             Banner::create($data);
         } catch (\Exception $e) {
             return redirect()->route('admin.banner.index')
-            ->with('error','Tivemos um problema ao salvar seus dados, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
         }
 
         return redirect()->route('admin.banner.index')
@@ -60,7 +60,7 @@ class BannerController extends Controller
             Banner::find($request->banner_id)->update($data);
         } catch (\Exception $e) {
             return redirect()->route('admin.banner.index')
-            ->with('error','Tivemos um problema ao salvar seus dados, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
         }
 
         return redirect()->route('admin.banner.index')
@@ -73,7 +73,7 @@ class BannerController extends Controller
             $banner->delete();
         } catch (\Exception $e) {
             return redirect()->route('admin.banner.index')
-            ->with('error','Tivemos um problema ao salvar seus dados, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
         }
         
         return redirect()->back()
