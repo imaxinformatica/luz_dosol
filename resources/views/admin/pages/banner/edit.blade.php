@@ -51,52 +51,74 @@
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
-            <section class="col-lg-6">
+            <section class="col-lg-8">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Dados</h3>
                     </div>
-                    <form method="POST" action="{{route('admin.user.update', ['user' => $user])}}">
+                    <form id="dataOrder" method="POST" action="{{ route('admin.banner.update')}}"
+                        enctype="multipart/form-data">
                         {{csrf_field()}}
-                        <input type="hidden" name="user_id" value="">
+                        <input type="hidden" name="banner_id" value="{{$banner->id}}">
                         <div class="box-body">
                             <div class="form-group row">
                                 <div class="col-xs-12">
-                                    <label>Nome <small>*</small></label>
-                                    <input type="text" class="form-control" value="{{$user->name}}" name="name"
-                                        required>
+                                    <label for="status">Status <small>*</small> </label>
+                                    <select class="form-control" name="status" id="status" required>
+                                        <option value="" disabled hidden selected>Selecione..</option>
+                                        <option value="0" @if($banner->status == '0' ) selected @endif>Desativado
+                                        </option>
+                                        <option value="1" @if($banner->status == '1' ) selected @endif>Ativado</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-xs-12">
-                                    <label>E-mail <small>*</small></label>
-                                    <input type="email" class="form-control" value="{{$user->email}}" name="email"
-                                        required>
+                                    <label for="description">Descrição curta <small>*</small> </label>
+                                    <input type="text" name="description" class="form-control" id="description"
+                                        value="{{$banner->description }}" required>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-xs-6">
-                                    <label>CPF <small>*</small></label>
-                                    <input type="cpf" class="form-control input-cpf" value="{{$user->cpf}}" name="cpf"
-                                        required>
+                            <div class="form-group row link">
+                                <div class="col-xs-12">
+                                    <label for="link">Link</label>
+                                    <input type="text" name="link" class="form-control" id="link"
+                                        value="{{$banner->link }}">
                                 </div>
-                                <div class="col-xs-6">
-                                    <label>Status <small>*</small></label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option selected disabled hidden>Selecione..</option>
-                                        <option value="1" {{$user->status == '1' ? "selected" : ""}}>Ativado</option>
-                                        <option value="0" {{$user->status == '0' ? "selected" : ""}}>Desativado</option>
+                            </div>
+                            <div class="form-group row target">
+                                <div class="col-xs-12">
+                                    <label for="target">Abertura</label>
+                                    <select class="form-control" name="target" id="target">
+                                        <option value="" disabled hidden selected>Selecione..</option>
+                                        <option value="0" @if($banner->target =='0' ) selected @endif>Mesma aba</option>
+                                        <option value="1" @if($banner->target =='1' ) selected @endif>Nova aba</option>
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <div class="col-xs-12">
+                                    <label for="file">Imagem <small>*</small></label>
+                                    <p><small>São aceitos os formatos JPEG, JPG, PNG, BMP</small></p>
+                                    <input type="file" name="file" id="file">
+                                </div>
+                            </div>
                         </div>
                         <div class="box-footer">
-                            <button type="button" class="btn btn-primary">Editar</button>
-                            <button type="button" class="btn btn-secondary"
-                                onclick="window.location.href='{{route('admin.user.index')}}'">Voltar</button>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
                         </div>
                     </form>
+                </div>
+            </section>
+            <section class="col-lg-4">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Imagem Atual</h3>
+                    </div>
+                    <div class="box-body">
+                        <img src="{{ asset('uploads/banner/thumbnail')}}/{{$banner->file}}" class="banner-image">
+
+                    </div>
                 </div>
             </section>
         </div>

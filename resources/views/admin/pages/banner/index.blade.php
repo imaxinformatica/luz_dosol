@@ -33,6 +33,20 @@
         </div>
     </section>
     @endisset
+    @if(session()->has('error'))
+    <section class="content-header">
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-sm-12">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{session('error')}}
+                </div>
+            </section>
+        </div>
+    </section>
+    @endisset
 
     @if ($errors->any())
     <div class="content-header">
@@ -66,7 +80,6 @@
                             <thead>
                                 <tr>
                                     <th>Arquivo</th>
-                                    <th>Local</th>
                                     <th>Descrição</th>
                                     <th>Ações</th>
                                 </tr>
@@ -75,58 +88,27 @@
                                 @forelse($banners as $banner)
                                 <tr>
                                     <td>
-                                        @if($banner->type == '1')
-                                        <img src="{{ asset('uploads/banners/thumbnail')}}/{{$banner->file}}"
+                                        <img src="{{ asset('uploads/banner/thumbnail')}}/{{$banner->file}}"
                                             class="banner-image">
-                                        @else
-                                        <video controls src="{{ asset('uploads/banners/original')}}/{{$banner->file}}"
-                                            class="banner-image"></video>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @switch($banner->location)
-                                        @case(0)
-                                        Banner principal
-                                        @break
-
-                                        @case(1)
-                                        Banner 1
-                                        @break
-
-                                        @case(2)
-                                        Banner 2
-                                        @break
-
-                                        @case(3)
-                                        Banner 3
-                                        @break
-
-                                        @case(4)
-                                        Banner 4
-                                        @break
-
-                                        @default
-                                        Não definido
-                                        @endswitch
                                     </td>
                                     <td>{{$banner->description}}</td>
                                     <td>
                                         @if($banner->status == 0)
-                                        <a href="{{ route('admin.banner.change.status', ['id' => $banner->id])}}"
-                                            title="Ativar" class="btn-act-list btn-banner-inactive">
-                                            Ativar
+                                        <a href="{{ route('admin.banner.status', ['banner' => $banner->id])}}"
+                                            title="Ativar" class="act-list act-edit">
+                                            <i class="fa fa-toggle-off" aria-hidden="true"></i>
                                         </a>
                                         @else
-                                        <a href="{{ route('admin.banner.change.status', ['id' => $banner->id])}}"
-                                            title="Desativar" class="btn-act-list btn-banner-active">
-                                            Desativar
+                                        <a href="{{ route('admin.banner.status', ['banner' => $banner->id])}}"
+                                            title="Desativar" class="act-list act-edit">
+                                            <i class="fa fa-toggle-on" aria-hidden="true"></i>
                                         </a>
                                         @endif
-                                        <a href="{{ route('admin.banner.edit', ['id' => $banner->id])}}" title="Editar"
+                                        <a href="{{ route('admin.banner.edit', ['banner' => $banner->id])}}" title="Editar"
                                             class="act-list act-edit">
                                             <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                         </a>
-                                        <a href="{{ route('admin.banner.delete', ['id' => $banner->id])}}"
+                                        <a href="{{ route('admin.banner.delete', ['banner' => $banner->id])}}"
                                             title="Excluir" class="act-list act-delete">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>

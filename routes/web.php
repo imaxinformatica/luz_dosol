@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-  Route::get('/dashboard', function () {
-    return view('admin.pages.dashboard.index');
-  })->name('dashboard');
+  Route::get('/dashboard','Admin\DashboardController@index')->name('dashboard');
 // Cadastro de usuários
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
   Route::get('/', 'Admin\UserController@index')->name('index');
@@ -44,7 +42,7 @@ Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
 Route::group(['prefix' => 'commission', 'as' => 'commission.'], function () {
   Route::get('/', 'Admin\CommissionController@index')->name('index');
   Route::get('/edit', 'Admin\CommissionController@edit')->name('edit');
-  Route::post('/update/{transaction}', 'Admin\CommissionController@update')->name('update');
+  Route::post('/update', 'Admin\CommissionController@update')->name('update');
 });
 Route::group(['prefix' => 'export', 'as' => 'export.'], function () {
   Route::get('/', 'Admin\ExportController@index')->name('index');
@@ -54,7 +52,10 @@ Route::group(['prefix' => 'banner', 'as' => 'banner.'], function () {
   Route::get('/', 'Admin\BannerController@index')->name('index');
   Route::get('/create', 'Admin\BannerController@create')->name('create');
   Route::post('/store', 'Admin\BannerController@store')->name('store');
-  Route::get('/edit', 'Admin\BannerController@edit')->name('edit');
+  Route::get('/status/{banner}', 'Admin\BannerController@status')->name('status');
+  Route::get('/edit/{banner}', 'Admin\BannerController@edit')->name('edit');
+  Route::post('/update', 'Admin\BannerController@update')->name('update');
+  Route::get('/delete/{banner}', 'Admin\BannerController@delete')->name('delete');
 });
 
   Route::get('/products', function () {
