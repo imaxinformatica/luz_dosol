@@ -1,4 +1,4 @@
-@extends('admin.templates.default')
+@extends('user.templates.default')
 
 @section('title', 'Meus pedidos')
 

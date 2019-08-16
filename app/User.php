@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Notifications\UserResetPassword;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -43,6 +43,11 @@ class User extends Authenticatable
         $this->notify(new UserResetPassword($token));
     }
 
+    public function cart()
+    {
+        return $this->belongsToMany('App\Product', 'carts', 'user_id', 'product_id')
+        ->withPivot('product_id', 'user_id', 'price', 'qty', 'id');
+    }
     public function status()
     {
         $status = $this->status == 0 ? 'Desativado' : 'Ativado';

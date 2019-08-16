@@ -14,7 +14,7 @@ class ServiceProduct
         $image = Image::make($originalImage);
         $image->save($originalPath.$fileName);
         
-        $image->resize(150, null, function ($constraint) { $constraint->aspectRatio(); });
+        $image->resize(100, null, function ($constraint) { $constraint->aspectRatio(); });
         $image->save($thumbnailPath.$fileName);
 
         return $fileName;

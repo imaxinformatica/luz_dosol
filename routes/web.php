@@ -77,9 +77,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], function () {
     Route::get('/dashboard', 'User\DashboardController@index')->name('dashboard');
 
-    Route::get('/products', function () {
-        return view('user.pages.products');
+    Route::get('/produtos', 'User\ProductController@index')->name('product');
+
+    Route::group(['prefix' => 'carrinho', 'as' => 'cart.'], function(){
+        Route::post('/incluir', 'User\CartController@include')->name('include');
+        Route::get('/remover/{cart}', 'User\CartController@delete')->name('delete');
     });
+
+    Route::get('/checkout', 'User\CartController@checkout')->name('checkout');
 
     Route::get('/orders', function () {
         return view('user.pages.orders');

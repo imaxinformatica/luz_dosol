@@ -104,6 +104,7 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>Imagem</th>
                                     <th>Referênca</th>
                                     <th>Nome</th>
                                     <th>Preço</th>
@@ -114,6 +115,10 @@
                             <tbody>
                                 @forelse($products as $product)
                                 <tr>
+                                    <td>
+                                        <img src="{{ asset('uploads/products/thumbnail')}}/{{$product->file}}"
+                                            class="product-image">
+                                    </td>
                                     <td>{{$product->reference}}</td>
                                     <td>{{$product->name}}</td>
                                     <td>R$ {{convertMoneyUSAtoBrazil($product->price)}}</td>
