@@ -269,3 +269,4 @@
   });
 </script>
 
+@yield('scripts')

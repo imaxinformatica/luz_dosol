@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Versão</b> 1.0.0
+        <b>Versão</b> 1.0.0
     </div>
     <strong>Copyright &copy; 2019 <b>Luz do Sol</b>.</strong> Todos os direitos reservados.
 </footer>
@@ -13,7 +13,7 @@
 <script src="{{ asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button);
+$.widget.bridge('uibutton', $.ui.button);
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
@@ -32,7 +32,9 @@
 <script src="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <!-- datepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js">
+</script>
 
 
 <!-- Bootstrap WYSIHTML5 -->
@@ -53,139 +55,168 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
 
 <script type="text/javascript">
-  $('#type-transaction').on('change', function(){
+$('#type-transaction').on('change', function() {
     var type = $(this).val();
     if (type != 1) {
-      $('#due_date').hide();
-    }else{
-      $('#due_date').show();
+        $('#due_date').hide();
+    } else {
+        $('#due_date').show();
     }
-  });
+});
 
 //////////////////////////////////////////////////////////////////////////////////
 $('.simple-text-editor').wysihtml5({
     toolbar: {
-      "font-styles": false, // Font styling, e.g. h1, h2, etc.
-      "emphasis": false, // Italics, bold, etc.
-      "lists": false, // (Un)ordered lists, e.g. Bullets, Numbers.
-      "html": false, // Button which allows you to edit the generated HTML.
-      "link": false, // Button to insert a link.
-      "image": false, // Button to insert an image.
-      "color": false, // Button to change color of font
-      "blockquote": false
+        "font-styles": false, // Font styling, e.g. h1, h2, etc.
+        "emphasis": false, // Italics, bold, etc.
+        "lists": false, // (Un)ordered lists, e.g. Bullets, Numbers.
+        "html": false, // Button which allows you to edit the generated HTML.
+        "link": false, // Button to insert a link.
+        "image": false, // Button to insert an image.
+        "color": false, // Button to change color of font
+        "blockquote": false
     }
-  });
+});
 
-  $('.medium-text-editor').wysihtml5({
+$('.medium-text-editor').wysihtml5({
     toolbar: {
-      "font-styles": false, // Font styling, e.g. h1, h2, etc.
-      "emphasis": true, // Italics, bold, etc.
-      "lists": true, // (Un)ordered lists, e.g. Bullets, Numbers.
-      "html": false, // Button which allows you to edit the generated HTML.
-      "link": true, // Button to insert a link.
-      "image": false, // Button to insert an image.
-      "color": true, // Button to change color of font
-      "blockquote": false
+        "font-styles": false, // Font styling, e.g. h1, h2, etc.
+        "emphasis": true, // Italics, bold, etc.
+        "lists": true, // (Un)ordered lists, e.g. Bullets, Numbers.
+        "html": false, // Button which allows you to edit the generated HTML.
+        "link": true, // Button to insert a link.
+        "image": false, // Button to insert an image.
+        "color": true, // Button to change color of font
+        "blockquote": false
     }
-  });
+});
 
 
-  
 
-  // Converte número do formato brasileiro para tipo float
-  function realToFloat(amount){
+
+// Converte número do formato brasileiro para tipo float
+function realToFloat(amount) {
     amount = amount.replace(/\./g, "");
     amount = amount.replace(",", ".");
     amount = parseFloat(amount);
     return amount;
-  }
-  // Converte número do formato float para o formato brasileiro
-  function floatToReal(n, c, d, t){
-    c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
-    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-  }
+}
+// Converte número do formato float para o formato brasileiro
+function floatToReal(n, c, d, t) {
+    c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" :
+        "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n -
+        i).toFixed(c).slice(2) : "");
+}
 //////////////////////////////////////////////////////////////////////////////////
-  $('.act-delete').on('click', function (e) {
+$('.act-delete').on('click', function(e) {
     e.preventDefault();
     $('#confirmationModal .modal-title').html('Confirmação');
     $('#confirmationModal .modal-body p').html('Tem certeza que deseja realizar esta exclusão?');
     var href = $(this).attr('href');
     $('#confirmationModal').modal('show').on('click', '#confirm', function() {
-      window.location.href=href;
+        window.location.href = href;
     });
-  });
+});
 
-  $('.clear-filters').click( function(){
-    $(':input','#filterForm')
-    .not(':button, :submit, :reset, :hidden')
-    .val('')
-    .prop('checked', false)
-    .prop('selected', false);
-  });
+$('.clear-filters').click(function() {
+    $(':input', '#filterForm')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .prop('checked', false)
+        .prop('selected', false);
+});
 
-  // Mask
-  $( document ).ready(function() {
-    $('.input-telefone').each( function(){
-      var phone = $(this).val().replace(/\D/g, '');
-      if(phone.length > 10){
-        $(this).inputmask({"mask": "(99) 99999-9999", "placeholder":" "});
-      } else {
-        $(this).inputmask({"mask": "(99) 9999-99999", "placeholder":" "});
-      }
+// Mask
+$(document).ready(function() {
+    $('.input-telefone').each(function() {
+        var phone = $(this).val().replace(/\D/g, '');
+        if (phone.length > 10) {
+            $(this).inputmask({
+                "mask": "(99) 99999-9999",
+                "placeholder": " "
+            });
+        } else {
+            $(this).inputmask({
+                "mask": "(99) 9999-99999",
+                "placeholder": " "
+            });
+        }
     });
 
-    $('.input-cep').inputmask({"mask": "99999-999", "placeholder":"_"});
+    $('.input-cep').inputmask({
+        "mask": "99999-999",
+        "placeholder": "_"
+    });
 
-    $('.input-cnpj').inputmask({"mask": "99.999.999/9999-99", "placeholder":"_"});
-    $('.input-cpf').inputmask({"mask": "999.999.999-99", "placeholder":"_"});
+    $('.input-cnpj').inputmask({
+        "mask": "99.999.999/9999-99",
+        "placeholder": "_"
+    });
+    $('.input-cpf').inputmask({
+        "mask": "999.999.999-99",
+        "placeholder": "_"
+    });
 
-  });
+});
 
-  $('.input-phone').focusout( function(){
+$('.input-phone').focusout(function() {
     var phone = $(this).val().replace(/\D/g, '');
-    if(phone.length > 10){
-      $(this).inputmask({"mask": "(99) 99999-9999", "placeholder":" "});
+    if (phone.length > 10) {
+        $(this).inputmask({
+            "mask": "(99) 99999-9999",
+            "placeholder": " "
+        });
     } else {
-      $(this).inputmask({"mask": "(99) 9999-99999", "placeholder":" "});
+        $(this).inputmask({
+            "mask": "(99) 9999-99999",
+            "placeholder": " "
+        });
     }
-  });
-    
+});
 
-	$('.alert .close').click( function(){
+
+$('.alert .close').click(function() {
     $(this).parent().hide();
-  });
+});
 
-	$('.input-date').datepicker({
-      language: 'pt-BR',
-      format: 'dd/mm/yyyy',
-      autoclose: true
-  });
-  $('.input-slug').keyup( function(){
-    var slug = slugify( $(this).val() );
+$('.input-date').datepicker({
+    language: 'pt-BR',
+    format: 'dd/mm/yyyy',
+    autoclose: true
+});
+$('.input-slug').keyup(function() {
+    var slug = slugify($(this).val());
     $(this).val(slug);
-  });
+});
 
-  function slugify(string) {
+function upperCase(letter) {
+    upper = letter.value.toUpperCase();
+    letter.value = upper;
+}
+
+
+function slugify(string) {
     const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;'
     const b = 'aaaaaaaaceeeeghiiiimnnnooooooprssstuuuuuwxyz------'
     const p = new RegExp(a.split('').join('|'), 'g')
     return string.toString().toLowerCase()
-      .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-      .replace(/&/g, '-and-') // Replace & with ‘and’
-      .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-      .replace(/\-\-+/g, '-') // Replace multiple - with single -
-      /*
-      .replace(/^-+/, '') // Trim - from start of text
-      .replace(/-+$/, '') // Trim - from end of text
-      */
-  }
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+        .replace(/&/g, '-and-') // Replace & with ‘and’
+        .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    /*
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, '') // Trim - from end of text
+    */
+}
 
-  $(".input-money").maskMoney({
-      thousands:'.', 
-      decimal:',', 
-      allowZero: true,
-      symbolStay: true
-  });
+$(".input-money").maskMoney({
+    thousands: '.',
+    decimal: ',',
+    allowZero: true,
+    symbolStay: true
+});
 </script>
-
+@yield('scripts')

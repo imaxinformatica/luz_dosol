@@ -1,4 +1,4 @@
-@extends('admin.templates.default')
+@extends('user.templates.default')
 
 @section('title', 'Início')
 
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        @if(count($banners))
+
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
@@ -141,7 +141,7 @@
             </section>
         </div>
         <!-- /.row (main row) -->
-        @endif
+
     </section>
     <!-- /.content -->
 </div>

@@ -15,8 +15,8 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU PRINCIPAL</li>
-        <li {{ (Request::is('admin') ? 'class=active' : '') }} {{ (Request::is('admin/') ? 'class=active' : '') }}>
-          <a href="{{ url('admin')}}">
+        <li {{ (Request::is('user/dashboard') ? 'class=active' : '') }} {{ (Request::is('user/dashboard/*') ? 'class=active' : '') }}>
+          <a href="{{ route('user.dashboard')}}">
             <i class="fa fa-home"></i> <span>INÍCIO</span>
           </a>
         </li>
@@ -51,7 +51,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="{{url('user/logout')}}">
             <i class="fa fa-sign-out"></i> <span>LOGOUT</span>
           </a>
         </li>

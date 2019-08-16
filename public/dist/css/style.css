@@ -126,6 +126,9 @@ img.graduation-img {
 .product-box img {
     width: 100%;
 }
+.product-box {
+    position: relative;
+}
 
 .product-body h3 {
     font-size: 14px;
@@ -172,4 +175,18 @@ button.more-info {
 }
 .cursor {
     cursor: pointer;
+}
+
+.box-description {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    padding: 20px;
+}
+.display-none {
+    display: none;
 }

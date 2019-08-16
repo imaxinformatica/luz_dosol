@@ -77,7 +77,7 @@
                             <div class="form-group row">
                                 <div class="col-xs-6">
                                     <label>CPF <small>*</small></label>
-                                    <input type="cpf" class="form-control input-cpf" value="{{$user->cpf}}" name="cpf"
+                                    <input type="text" class="form-control input-cpf" value="{{$user->cpf}}" name="cpf"
                                         required>
                                 </div>
                                 <div class="col-xs-6">

@@ -1,6 +1,6 @@
 @extends('admin.templates.default')
 
-@section('title', 'Novo Usuário')
+@section('title', 'Novo Banner')
 
 @section('description', 'Descrição')
 
@@ -11,7 +11,7 @@
     <section class="content-header">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Novo Usuário</h1>
+                <h1>Novo Banner</h1>
             </div>
         </div>
     </section>

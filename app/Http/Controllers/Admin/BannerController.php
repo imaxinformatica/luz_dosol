@@ -50,7 +50,7 @@ class BannerController extends Controller
         ->with('banner', $banner);
     }
 
-    public function update(BannerRequest $request)
+    public function update(BannerRequest $request, ServiceBanner $service)
     {
         $data = $request->except('_token', 'banner_id');
         try {

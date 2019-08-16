@@ -34,6 +34,12 @@
                     <i class="fa fa-picture-o" aria-hidden="true"></i> <span>BANNERS</span>
                 </a>
             </li>
+            <li {{ (Request::is('admin/produtos') ? 'class=active' : '') }}
+                {{ (Request::is('admin/produtos/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.product.index')}}">
+                    <i class="fa fa-cubes"></i> <span>PRODUTOS</span>
+                </a>
+            </li>
             <li {{ (Request::is('admin/user') ? 'class=active' : '') }}
                 {{ (Request::is('admin/user/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.user.index')}}">

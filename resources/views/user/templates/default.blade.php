@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        @include('admin.includes.head')
+        @include('user.includes.head')
     </head>
 
     <body class="hold-transition skin-yellow sidebar-mini">
         
-        @include('admin.includes.header')
+        @include('user.includes.header')
 
-        @include('admin.includes.sidebar')
+        @include('user.includes.sidebar')
 
         @yield('content')
 
-        @include('admin.includes.modals')
+        @include('user.includes.modals')
         
-        @include('admin.includes.footer')
+        @include('user.includes.footer')
         
     </body>
 
