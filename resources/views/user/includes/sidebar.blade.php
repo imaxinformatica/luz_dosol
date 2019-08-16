@@ -7,7 +7,7 @@
                   <img src="{{ asset('dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
               </div>
               <div class="pull-left info">
-                  @php($auth = auth()->guard('admin')->user())
+                  @php($auth = auth()->guard('user')->user())
                   <p>{{$auth->name}}</p>
                   <span><small>ID: {{str_pad($auth->id, 5, 0, STR_PAD_LEFT )}}</small></span>
 

@@ -93,7 +93,7 @@
                 </div>
               </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Atualizar</button>
+                <button type="button" class="btn btn-primary">Atualizar</button>
               </div>
             </form>
           </div>
