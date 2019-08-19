@@ -8,7 +8,8 @@
             </div>
             <div class="pull-left info">
                 @php($auth = auth()->guard('admin')->user())
-                <p>{{$auth->name}}</p>
+                <p>{{$auth->name}} <span class="configuration" onclick="window.location.href='{{route('admin.configuration.index')}}'"> <i class="fa fa-pencil"
+                            aria-hidden="true"></i> </span> </p>
                 <span><small>ID: {{str_pad($auth->id, 5, 0, STR_PAD_LEFT )}}</small></span>
 
             </div>
@@ -62,6 +63,12 @@
                 {{ (Request::is('admin/export/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.export.index')}}">
                     <i class="fa fa-download"></i> <span>EXPORTAÇÃO</span>
+                </a>
+            </li>
+            <li {{ (Request::is('admin/configuracao') ? 'class=active' : '') }}
+                {{ (Request::is('admin/configuracao/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.configuration.index')}}">
+                    <i class="fa fa-cog"></i> <span>CONFIGURAÇÃO</span>
                 </a>
             </li>
             <li>

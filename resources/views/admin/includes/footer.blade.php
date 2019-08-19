@@ -127,6 +127,22 @@ $('.clear-filters').click(function() {
         .prop('selected', false);
 });
 
+var lastday = function(y,m){
+return  new Date(y, m +1, 0).getDate();
+}
+
+$(document).ready(function(){
+    let d = new Date();
+    let dateActual = d.getDate();
+    let monthActual = d.getMonth();
+    let yearActual = d.getFullYear();
+
+    let lastDay = lastday(yearActual, monthActual);
+
+    let timeFinish = lastDay - dateActual;
+    $('.timeOut').html(timeFinish + " dia(s)");
+});
+
 // Mask
 $(document).ready(function() {
     $('.input-telefone').each(function() {

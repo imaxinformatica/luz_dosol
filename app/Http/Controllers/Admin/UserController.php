@@ -67,6 +67,40 @@ class UserController extends Controller
 
     }
 
+    public function password(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        $user = User::find($request->user_id);
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return redirect()->back()->with('success', 'Senha alterada com sucesso.');
+
+    }
+
+    public function attach(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $user = User::where('email', $request->email)->where('user_id', null)->first();
+        $principalUser = User::find($request->user_id);
+        
+        if($user && $user->id != $request->user_id){
+            
+            $user->user_id = $request->user_id;
+            $user->save();
+        }else{
+            return redirect()->back()->with('warning', 'Usuário já vinculado ou inexistente, impossível vincular a este usuário');
+        }
+        return redirect()->back()->with('success', 'Usuário adicionado a rede com sucesso.');
+    }
+
     public function delete(User $user)
     {
         try{

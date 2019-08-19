@@ -24,6 +24,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::get('/create', 'Admin\UserController@create')->name('create');
         Route::post('/store', 'Admin\UserController@store')->name('store');
         Route::get('/edit/{user}', 'Admin\UserController@edit')->name('edit');
+        Route::post('/senha', 'Admin\UserController@password')->name('password');
+        Route::post('/attach', 'Admin\UserController@attach')->name('attach');
         Route::post('/update/{user}', 'Admin\UserController@update')->name('update');
         Route::get('/status/{user}', 'Admin\UserController@status')->name('status');
         Route::get('/delete/{user}', 'Admin\UserController@delete')->name('delete');
@@ -61,6 +63,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 
     Route::group(['prefix' => 'export', 'as' => 'export.'], function () {
         Route::get('/', 'Admin\ExportController@index')->name('index');
+    });
+    Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
+        Route::get('/', 'Admin\ConfigurationController@index')->name('index');
+        Route::post('/update', 'Admin\ConfigurationController@update')->name('update');
+        Route::post('/cycle', 'Admin\ConfigurationController@cycle')->name('cycle');
     });
 
     Route::group(['prefix' => 'banner', 'as' => 'banner.'], function () {

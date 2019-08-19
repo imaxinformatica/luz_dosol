@@ -21,3 +21,5 @@
   <!-- /.modal-dialog -->
 </div>
 <!--/.Exclusão-->
+
+@yield('modals')

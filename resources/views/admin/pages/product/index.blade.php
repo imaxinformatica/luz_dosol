@@ -75,12 +75,12 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label>Nome</label>
-                                    <input type="text" class="form-control" value="{{request('name')}}" name="name">
+                                    <label>Referência</label>
+                                    <input type="text" class="form-control" value="{{request('reference')}}" name="reference">
                                 </div>
                                 <div class="col-sm-6">
-                                    <label>E-mail</label>
-                                    <input type="text" class="form-control" value="{{request('email')}}" name="email">
+                                    <label>Nome</label>
+                                    <input type="text" class="form-control" value="{{request('name')}}" name="name">
                                 </div>
                             </div>
                         </div>

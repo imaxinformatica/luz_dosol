@@ -33,6 +33,20 @@
         </div>
     </section>
     @endisset
+    @if(session()->has('warning'))
+    <section class="content-header">
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-sm-12">
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{session('warning')}}
+                </div>
+            </section>
+        </div>
+    </section>
+    @endisset
     @if(session()->has('error'))
     <section class="content-header">
         <!-- Main row -->
@@ -119,7 +133,7 @@
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                     <td>
-                                    
+
                                         <a href="{{ route('admin.user.status', ['user' => $user])}}" title="Editar"
                                             class="act-list">
                                             @if($user->status == 0)
@@ -128,10 +142,17 @@
                                             <i class="fa fa-toggle-on" aria-hidden="true"></i>
                                             @endif
                                         </a>
+                                        <a href="#" data-user_id="{{$user->id}}" title="Alterar Senha" class="act-list change-password">
+                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="#" data-user_id="{{$user->id}}" title="Vincular Usuário a Rede" class="act-list attach-user">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                        </a>
                                         <a href="{{ route('admin.user.edit', ['user' => $user])}}" title="Editar"
                                             class="act-list">
                                             <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                         </a>
+                                        
                                         <a href="{{ route('admin.user.delete', ['user' => $user])}}" title="Excluir"
                                             class="act-list act-delete">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -157,3 +178,103 @@
 </div>
 
 @stop
+
+@section('scripts')
+<script type="text/javascript">
+$('.change-password').on('click', function() {
+    let user_id = $(this).data('user_id');
+    $('#changePassword form input[name="user_id"]').val(user_id);
+    $('#changePassword').modal('show');
+});
+
+$('.attach-user').on('click', function(){
+    let user_id = $(this).data('user_id');
+    $('#attachUser form input[name="user_id"]').val(user_id);
+    $('#attachUser').modal('show');
+});
+</script>
+@endsection
+
+@section('modals')
+
+<!--Alterar Senha-->
+<div class="modal fade" id="changePassword">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Alterar Senha</h4>
+            </div>
+            <form action="{{ route('admin.user.password')}}" method="post">
+            {{csrf_field()}}
+                <input type="hidden" name="user_id" value="">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="password">Senha</label>
+                                <input type="password" name="password" class="form-control" id="password">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="password_confirmation">Confirmação de Senha</label>
+                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="confirm">Confirmar</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--/.Alterar Senha-->
+
+<!--Vincular Usuário a rede-->
+<div class="modal fade" id="attachUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Alterar Senha</h4>
+            </div>
+            <form action="{{ route('admin.user.attach')}}" method="post">
+            {{csrf_field()}}
+                <input type="hidden" name="user_id" value="">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" name="email" class="form-control" id="email">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="confirm">Confirmar</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--/.Vincular Usuário a rede-->
+
+@endsection

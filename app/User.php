@@ -19,6 +19,7 @@ class User extends Authenticatable
         'name',
         'email',
         'cpf',
+        'user_id',
         'status',
         'password',
     ];
@@ -52,5 +53,15 @@ class User extends Authenticatable
     {
         $status = $this->status == 0 ? 'Desativado' : 'Ativado';
         return $status;
+    }
+
+    public function users()
+    {
+        return $this->hasMany('App\User', 'user_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
     }
 }
