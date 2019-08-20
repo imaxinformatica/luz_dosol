@@ -91,8 +91,11 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="price">Preço <small>*</small></label>
-                                        <input type="text" class="form-control input-money" value="{{old('price')}}"
-                                            name="price" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">R$</span>
+                                            <input type="text" name="price" value=""
+                                                class="form-control input-money" required>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">

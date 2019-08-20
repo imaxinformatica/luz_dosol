@@ -75,9 +75,10 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showRegistrationForm()
+    public function showRegistrationForm($user)
     {
-        return view('user.auth.register');
+        $user = User::find($user);
+        return view('user.auth.register')->with('user', $user);
     }
 
     /**

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
-use App\User;
+use App\Services\ServiceUser;
+use App\{User, State, Address, Databank};
+
 class UserController extends Controller
 {
     public function index(Request $request)
@@ -28,16 +30,20 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.pages.user.create');
+        $states = State::all();
+        return view('admin.pages.user.create')
+        ->with('states', $states);
     }
 
-    public function store(UserRequest $request)
+    public function store(UserRequest $request, ServiceUser $service)
     {
+        $dataUser = $service->generateDatauser($request->all());
+        $dataAdress = $service->generateDataAddress($request->all());
         try {
-            $request['password'] = bcrypt($request['password']);
-            User::create($request->all());
+            $user = User::create($dataUser);
+            $user->address()->create($dataAdress);
         } catch (\Exception $e) {
-            return redirect()->route('admin.user.index')
+            return redirect()->back()
             ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
         }
         return redirect()->back()->with('success', 'Usuário adicionado.');

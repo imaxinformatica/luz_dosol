@@ -19,6 +19,9 @@ class User extends Authenticatable
         'name',
         'email',
         'cpf',
+        'rg',
+        'cellphone',
+        'phone',
         'user_id',
         'status',
         'password',
@@ -49,19 +52,30 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Product', 'carts', 'user_id', 'product_id')
         ->withPivot('product_id', 'user_id', 'price', 'qty', 'id');
     }
-    public function status()
-    {
-        $status = $this->status == 0 ? 'Desativado' : 'Ativado';
-        return $status;
-    }
-
+    
     public function users()
     {
         return $this->hasMany('App\User', 'user_id');
     }
-
+    
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function address()
+    {
+        return $this->hasOne('App\Address', 'user_id');
+    }
+
+    public function databank()
+    {
+        return $this->hasOne('App\Databank', 'user_id');
+    }
+
+    public function status()
+    {
+        $status = $this->status == 0 ? 'Desativado' : 'Ativado';
+        return $status;
     }
 }

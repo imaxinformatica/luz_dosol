@@ -27,6 +27,14 @@ class UserRequest extends FormRequest
         $rules = [
             'name' => 'required',
             'cpf' => 'required',
+            'rg' => 'required',
+            'cellphone' => 'required',
+            'zip_code' => 'required',
+            'street' => 'required',
+            'number' => 'required',
+            'neighborhood' => 'required',
+            'city' => 'required',
+            'state' => 'required',
         ];
         if ($this->request->has('user_id')) {
             $rules['password'] = ['required|min:6'];

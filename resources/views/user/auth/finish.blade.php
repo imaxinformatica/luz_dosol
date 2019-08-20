@@ -64,19 +64,17 @@
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <h3>Cadastro</h3>
-                                    <p>Antes de continuar com seu cadastro, por favor, confirme os dados do seu
-                                        patrocinador</p>
+                                    <h3>Finalize seu Cadastro</h3>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <label for="id">ID do patrocinador</label>
-                                    <input type="text" name="id" id="id" value="{{$user->id}}" readonly>
+                                    <input type="text" name="id" id="id" value="">
                                 </div>
                                 <div class="col-sm-8">
                                     <label for="namepat">Nome do patrocinador</label>
-                                    <input type="text" name="namepat" id="namepat" value="{{$user->name}}" readonly>
+                                    <input type="text" name="namepat" id="namepat" value="">
                                 </div>
                             </div>
                             <div class="row">
@@ -109,4 +107,4 @@
 
 </body>
 
-</html>
+</html>b

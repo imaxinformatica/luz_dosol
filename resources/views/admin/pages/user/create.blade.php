@@ -31,6 +31,21 @@
     </section>
     @endisset
 
+    @if(session()->has('error'))
+    <section class="content-header">
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-sm-12">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{session('error')}}
+                </div>
+            </section>
+        </div>
+    </section>
+    @endisset
+
     @if ($errors->any())
     <div class="content-header">
         @foreach ($errors->all() as $error)
@@ -51,7 +66,7 @@
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
-            <section class="col-lg-6">
+            <section class="col-lg-10">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Dados</h3>
@@ -59,39 +74,130 @@
                     <form method="POST" action="{{route('admin.user.store')}}">
                         {{csrf_field()}}
                         <div class="box-body">
-                            <div class="form-group row">
-                                <div class="col-xs-12">
-                                    <label>Nome <small>*</small></label>
-                                    <input type="text" class="form-control" value="{{old('name')}}" name="name"
-                                        required>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nome <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('name')}}" name="name"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>E-mail <small>*</small></label>
+                                        <input type="email" class="form-control" value="{{old('email')}}" name="email"
+                                            required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-xs-12">
-                                    <label>E-mail <small>*</small></label>
-                                    <input type="email" class="form-control" value="{{old('email')}}" name="email"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
+                            <div class="row">
                                 <div class="col-xs-6">
-                                    <label>CPF <small>*</small></label>
-                                    <input type="text" class="form-control input-cpf" value="{{old('cpf')}}" name="cpf"
-                                        required>
+                                    <div class="form-group">
+                                        <label>Status <small>*</small></label>
+                                        <select name="status" id="status" class="form-control">
+                                            <option selected disabled hidden>Selecione..</option>
+                                            <option value="1" {{old('status') == '1' ? "selected" : ""}}>Ativado
+                                            </option>
+                                            <option value="0" {{old('status') == '0' ? "selected" : ""}}>Desativado
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-xs-6">
-                                    <label>Status <small>*</small></label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option selected disabled hidden>Selecione..</option>
-                                        <option value="1" {{old('status') == '1' ? "selected" : ""}}>Ativado</option>
-                                        <option value="0" {{old('status') == '0' ? "selected" : ""}}>Desativado</option>
-                                    </select>
+                                    <div class="form-group">
+                                        <label>Senha <small>*</small></label>
+                                        <input type="password" class="form-control" name="password" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-xs-12">
-                                    <label>Senha <small>*</small></label>
-                                    <input type="password" class="form-control" name="password" required>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="cpf">CPF <small>*</small></label>
+                                        <input type="text" class="form-control input-cpf" value="{{old('cpf')}}" name="cpf"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="rg">RG <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('rg')}}" name="rg"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="cellphone">Telefone Celular <small>*</small></label>
+                                        <input type="text" class="form-control input-phone" value="{{old('cellphone')}}"
+                                            name="cellphone" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="phone">Telefone</label>
+                                        <input type="text" class="form-control input-phone" value="{{old('phone')}}" name="phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="zip_code">CEP <small>*</small></label>
+                                        <input type="text" class="form-control input-cep" value="{{old('zip_code')}}"
+                                            name="zip_code" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <label for="street">Logradouro <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('street')}}" name="street"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="number">Número <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('number')}}" name="number"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <label for="complement">Complemento</label>
+                                        <input type="text" class="form-control" value="{{old('complement')}}" name="complement">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="neighborhood">Bairro<small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('neighborhood')}}"
+                                            name="neighborhood" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-xs-6">
+                                    <div class="form-group">
+                                        <label for="city">Cidade<small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('city')}}" name="city" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-xs-6">
+                                    <div class="form-group">
+                                        <label for="state">Estado<small>*</small></label>
+                                        <select name="state" id="state" class="form-control" required>
+                                            <option selected disabled hidden>Selecione..</option>
+                                            @foreach($states as $state)
+                                                <option value="{{$state->initials}}">{{$state->initials}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

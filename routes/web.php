@@ -91,14 +91,22 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
         Route::get('/remover/{cart}', 'User\CartController@delete')->name('delete');
     });
 
+    // Cadastro de usuários
+    Route::group(['prefix' => 'usuario', 'as' => 'user.'], function () {
+        Route::get('/rede', 'User\UserController@index')->name('index');
+        Route::get('/create', 'User\UserController@create')->name('create');
+        Route::post('/store', 'User\UserController@store')->name('store');
+    });
+
+    Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
+        Route::get('/', 'User\ConfigurationController@index')->name('index');
+        Route::post('/update', 'User\ConfigurationController@update')->name('update');
+    });
+
     Route::get('/checkout', 'User\CartController@checkout')->name('checkout');
 
     Route::get('/orders', function () {
         return view('user.pages.orders');
-    });
-
-    Route::get('/register', function () {
-        return view('user.pages.register');
     });
 
     Route::get('/financial', function () {
@@ -119,7 +127,10 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/login', 'UserAuth\LoginController@login');
     Route::get('/logout', 'UserAuth\LoginController@logout')->name('logout');
 
-    Route::get('/register', 'UserAuth\RegisterController@showRegistrationForm')->name('register');
+    // Route::get('/register', 'UserAuth\RegisterController@showRegistrationForm')->name('register');
+    Route::get('/cadastro/{user}', 'UserAuth\RegisterController@showRegistrationForm')->name('register');
+    Route::post('/session/cadastro', 'User\RegisterController@sessionRegister')->name('register.session');
+    Route::get('/finalizar/cadastro', 'User\RegisterController@register')->name('register.finish');
     Route::post('/register', 'UserAuth\RegisterController@register');
 
     Route::post('/password/email', 'UserAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');

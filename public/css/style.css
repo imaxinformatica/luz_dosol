@@ -1,0 +1,206 @@
+html{
+    min-height: 100%;
+}
+
+body {
+	width: 100%;
+    color: #000;
+}
+
+* {
+	font-family: 'Roboto', sans-serif;
+}
+
+#sidebar{
+	width: 25%;
+	float: left;
+}
+
+#content{
+	width: 75%;
+	float: left;
+}
+
+#content img{
+    max-height: 702px;
+    width: 100%;
+}
+
+.box-logo {
+    height: 100%;
+    padding: 0 20px;
+}
+
+.box-logo img{
+    width: 205px;
+    margin: 55px auto;
+    display: table;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    border: 2px solid #c2c2c2;
+    padding: 10px;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+button.btn-form {
+    background: #cdca01;
+    border: none;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    font-weight: bold;
+    outline: none;
+    margin-top: 10px;
+}
+
+a#register {
+    display: table;
+    color: #000;
+    margin-top: 21px;
+}
+
+a#reset-pas {
+    font-weight: 100;
+    display: table;
+    margin: 45px auto 0;
+    color: #000;
+}
+
+.box-logo a:hover, .box-logo a:focus{
+    color: #000;
+    text-decoration: none;
+}
+
+a.logo img{
+    width: 155px;
+    margin: 10px 0;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #000;
+    font-size: 15px;
+}
+
+ul.nav.navbar-nav.navbar-right {
+    margin: 19px 0 10px;
+}
+
+li.office {
+    background: #cdca01;
+    height: 40px;
+    margin-top: 4px;
+}
+
+li.office a {
+    color: #fff !important;
+    margin-top: -4px;
+    font-weight: bold;
+}
+
+section.banner-example {
+    padding-top: 75px;
+    background: #cdca01;
+}
+
+.box-banner-example {
+    text-align: center;
+    margin: 160px 0;
+}
+
+.box-banner-example h1 {
+    color: #fff;
+    font-weight: bold;
+    margin: 0;
+}
+
+section.about {
+    padding-top: 60px;
+}
+
+.box-about {
+    margin-bottom: 45px;
+}
+
+.box-about span {
+    font-weight: bold;
+    font-size: 15px;
+    color: #000;
+}
+
+.box-about p{
+    margin-top: 15px;
+}
+
+section.register {
+    background: url(../images/bg-login.jpg)center center;
+    background-size: cover;
+    padding-top: 75px;
+}
+
+.box-register {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 35px;
+    margin: 60px 0;
+}
+
+.box-register h3 {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.box-register p{
+    margin-bottom: 25px;
+}
+
+.box-register .btn-form{
+    font-weight: 400;
+}
+
+footer {
+    background: #272727;
+    padding: 15px 0;
+}
+
+footer p {
+    color: #fff;
+    margin: 10px 0;
+}
+
+button.btn-footer {
+    background: #cdca01;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 9px 19px;
+    outline: none;
+    float: right;
+    margin-top: 2px;
+}
+
+@media(max-width: 768px){
+	#sidebar, #content{
+		width: 100%;
+	}
+
+    .box-logo {
+        max-width: 345px;
+        margin: 0 auto 80px;
+    }
+
+    .box-logo img {
+        margin: 30px auto;
+        width: 130px;
+    }
+
+    a#register{
+        margin: 21px auto 0;
+    }
+
+}

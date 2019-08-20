@@ -234,6 +234,17 @@
       $(this).inputmask({"mask": "(99) 9999-99999", "placeholder":" "});
     }
   });
+  function copyClipboard()
+  {
+    $('input').select();
+    var copiar = document.execCommand('copy');
+    if(copiar){
+      $('#copyClipboard').popover();
+    }else{
+      alert('Erro ao copiar, seu navegador pode não ter suporte a essa função.');
+      
+    }
+  }
     
 
 	$('.alert .close').click( function(){

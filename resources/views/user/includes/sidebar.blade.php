@@ -40,21 +40,14 @@
                       <i class="fa fa-list"></i> <span>MEUS PEDIDOS</span>
                   </a>
               </li>
-              <li {{ (Request::is('user/register') ? 'class=active' : '') }}
-                  {{ (Request::is('user/register/*') ? 'class=active' : '') }}>
-                  <a href="{{ url('user/register')}}">
-                      <i class="fa fa-user"></i> <span>CADASTRAR</span>
-                  </a>
-              </li>
               <li {{ (Request::is('user/financial') ? 'class=active' : '') }}
                   {{ (Request::is('user/financial/*') ? 'class=active' : '') }}>
                   <a href="{{ url('user/financial')}}">
                       <i class="fa fa-credit-card-alt"></i> <span>DADOS FINANCEIROS</span>
                   </a>
               </li>
-              <li {{ (Request::is('user/network') ? 'class=active' : '') }}
-                  {{ (Request::is('user/network/*') ? 'class=active' : '') }}>
-                  <a href="{{ url('user/network')}}">
+              <li {{ (Request::is('user/usuario/rede') ? 'class=active' : '') }}>
+                  <a href="{{ route('user.user.index')}}">
                       <i class="fa fa-users"></i> <span>REDE</span>
                   </a>
               </li>
@@ -62,6 +55,12 @@
                   {{ (Request::is('user/documents/*') ? 'class=active' : '') }}>
                   <a href="{{ url('user/documents')}}">
                       <i class="fa fa-download"></i> <span>DOCUMENTOS</span>
+                  </a>
+              </li>
+              <li {{ (Request::is('user/congiguracao') ? 'class=active' : '') }}
+                  {{ (Request::is('user/congiguracao/*') ? 'class=active' : '') }}>
+                  <a href="{{ route('user.configuration.index')}}">
+                      <i class="fa fa-cog"></i> <span>CONFIGURAÇÃO</span>
                   </a>
               </li>
               <li>

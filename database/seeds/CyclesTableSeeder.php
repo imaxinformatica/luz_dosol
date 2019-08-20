@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CyclesTableRequest extends Seeder
+class CyclesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
