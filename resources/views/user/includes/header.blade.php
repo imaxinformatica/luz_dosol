@@ -16,7 +16,7 @@
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
           <li class="time-cycle">
-            <b>O clico finaliza em:</b> 00:01:34:52
+          <b>O clico finaliza em:</b><span class="timeOut"></span>
           </li>
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

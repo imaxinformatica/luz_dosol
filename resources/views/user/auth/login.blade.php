@@ -1,68 +1,103 @@
-@extends('admin.layout.auth')
+<!DOCTYPE HTML>
+<html lang="pt-BR">
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/user/login') }}">
-                        {{ csrf_field() }}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Luz do Sol</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Última versão CSS compilada e minificada -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+    <!-- Tema opcional -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" autofocus>
+    <!-- Última versão JavaScript compilada e minificada -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css?ver=1.5')}}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700,800,900" rel="stylesheet">
+</head>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
+<body>
+    <header>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="logo" href="{{url('/')}}"><img src="{{asset('images/logo.png')}}"></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{url('/')}}">SOBRE A EMPRESA</a></li>
+                        <li><a href="#">NOSSO CATÁLOGO</a></li>
+                        <li class="office"><a href="{{url('user/login')}}">ESCRITÓRIO VIRTUAL</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </header>
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
+    <section class="register">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="box-register">
+                        <form method="post" action="{{url('user/login')}}">
+                            {{csrf_field()}}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3>Login</h3>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/admin/password/reset') }}">
-                                    Forgot Your Password?
-                                </a>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <label for="email">E-mail</label>
+                                    <input type="text" name="email" id="email" value="{{old('email')}}" >
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="password">Senha</label>
+                                    <input type="password" name="password" id="password">
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <button class="btn-form" type="submit">LOGIN</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="text-center">&copy; 2019 Luz do Sol. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

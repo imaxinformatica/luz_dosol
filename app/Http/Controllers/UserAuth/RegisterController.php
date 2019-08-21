@@ -5,6 +5,7 @@ namespace App\Http\Controllers\UserAuth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use App\Services\ServiceUser;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,6 +53,15 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'cpf' => 'required',
+            'rg' => 'required',
+            'cellphone' => 'required',
+            'zip_code' => 'required',
+            'street' => 'required',
+            'number' => 'required',
+            'neighborhood' => 'required',
+            'city' => 'required',
+            'state' => 'required',
         ]);
     }
 
@@ -63,11 +73,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $service = new ServiceUser;
+        $data['status'] = 0;
+        $dataUser = $service->generateDatauser($data);
+        $dataUser['user_id'] = session('user_id');
+        $dataAdress = $service->generateDataAddress($data);
+
+        $user = User::create($dataUser);
+        $user->address()->create($dataAdress);
+        return $user;
     }
 
     /**

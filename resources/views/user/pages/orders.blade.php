@@ -14,7 +14,7 @@
           <h1>Meus pedidos</h1>
         </div>
         <div class="col-sm-6">
-          <button class="btn-header">Novo</button>
+          <button class="btn-header" onclick="window.location.href='{{url('user/produtos')}}'">Novo</button>
         </div>
       </div>
     </section>

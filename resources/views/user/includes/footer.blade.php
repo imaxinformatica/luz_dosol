@@ -245,6 +245,54 @@
       
     }
   }
+  
+  var lastday = function(y,m){
+    return  new Date(y, m +1, 0).getDate();
+  }
+  $(document).ready(function(){
+    timeOut()
+  });
+  function timeOut(){
+    let d = new Date();
+    let yearActual = d.getFullYear();
+    let monthActual = d.getMonth();
+    let hours = d.getHours();
+    let lastDay = lastday(yearActual, monthActual);
+    // Set the date we're counting down to
+    if(monthActual == 12){
+        monthActual = 1;
+        yearActual = yearActual+1;
+    }else{
+        monthActual = monthActual+1;
+    }
+    let countDownDate = new Date(yearActual, monthActual, 1, 0, 0, 0, 0).getTime();
+
+    // Update the count down every 1 second
+    let x = setInterval(function() {
+
+    // Get today's date and time
+    let now = new Date().getTime();
+        
+    // Find the distance between now and the count down date
+    let distance = countDownDate - now;
+        
+    // Time calculations for days, hours, minutes and seconds
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+    // Output the result in an element with id="timeOut"
+    $('.timeOut').html(days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ");
+        
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        $('.timeOut').html('Ciclo Finalizado');
+    }
+    }, 1000);
+}
     
 
 	$('.alert .close').click( function(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\State;
 
 class RegisterController extends Controller
 {
@@ -16,6 +17,7 @@ class RegisterController extends Controller
 
     public function register()
     {
-        return view('user.auth.finish');
+        $states = State::all();
+        return view('user.auth.finish')->with('states', $states);
     }
 }

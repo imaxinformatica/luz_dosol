@@ -81,7 +81,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <button class="btn-form" type="submir">CONTINUAR</button>
+                                    <button class="btn-form" type="submit">CONTINUAR</button>
                                 </div>
                             </div>
                         </form>

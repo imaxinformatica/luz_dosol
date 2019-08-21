@@ -53,14 +53,26 @@
             </div>
         </nav>
     </header>
-
+    @if ($errors->any())
+    <div class="content-header">
+        @foreach ($errors->all() as $error)
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ $error }}
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endif
     <section class="register">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="box-register">
-                        @if($user)
-                        <form method="post" action="{{route('register.session')}}">
+                        <form method="post" action="{{url('user/register')}}">
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-sm-12">
@@ -68,13 +80,125 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <label for="id">ID do patrocinador</label>
-                                    <input type="text" name="id" id="id" value="">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nome <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('name')}}" name="name"
+                                            required>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <label for="namepat">Nome do patrocinador</label>
-                                    <input type="text" name="namepat" id="namepat" value="">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>E-mail <small>*</small></label>
+                                        <input type="email" class="btn-form" value="{{old('email')}}" name="email"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label>Senha <small>*</small></label>
+                                        <input type="password" class="btn-form" name="password" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label>Confirmação de Senha <small>*</small></label>
+                                        <input type="password" class="btn-form" name="password_confirmation" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="cpf">CPF <small>*</small></label>
+                                        <input type="text" class="btn-form input-cpf" value="{{old('cpf')}}" name="cpf"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="rg">RG <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('rg')}}" name="rg" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="cellphone">Telefone Celular <small>*</small></label>
+                                        <input type="text" class="btn-form input-phone" value="{{old('cellphone')}}"
+                                            name="cellphone" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="phone">Telefone</label>
+                                        <input type="text" class="btn-form input-phone" value="{{old('phone')}}"
+                                            name="phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <label for="zip_code">CEP <small>*</small></label>
+                                        <input type="text" class="btn-form input-cep" value="{{old('zip_code')}}"
+                                            name="zip_code" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="street">Logradouro <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('street')}}" name="street"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <label for="number">Número <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('number')}}" name="number"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="complement">Complemento</label>
+                                        <input type="text" class="btn-form" value="{{old('complement')}}"
+                                            name="complement">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="neighborhood">Bairro<small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('neighborhood')}}"
+                                            name="neighborhood" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="city">Cidade<small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('city')}}" name="city"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="state">Estado<small>*</small></label>
+                                        <select name="state" id="state" class="btn-form" required>
+                                            <option selected disabled hidden>Selecione..</option>
+                                            @foreach($states as $state)
+                                            <option value="{{$state->initials}}">{{$state->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -83,12 +207,7 @@
                                 </div>
                             </div>
                         </form>
-                        @else
-                        <div class="row">
-                            <h3>Convite Inválido</h3>
-                            <p>O convite apresentado é inválido, apresente um convite de um patrocinador válido.</p>
-                        </div>
-                        @endif
+
                     </div>
                 </div>
             </div>
