@@ -20,7 +20,8 @@ class CreateDatabanksTable extends Migration
             $table->integer('agency');
             $table->integer('account');
             $table->integer('account_type');
-            $table->string('cpf');
+            $table->string('cpf_holder');
+            $table->string('name_holder');
             $table->timestamps();
         });
     }

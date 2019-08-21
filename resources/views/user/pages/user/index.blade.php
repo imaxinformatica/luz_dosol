@@ -79,32 +79,6 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="row">
-            <section class="col-lg-12">
-                <div class="box">
-                    <form id="filterForm" method="GET" autocomplete="off">
-                        <div class="box-header">
-                            <h3 class="box-title">Filtrar resultados</h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Nome</label>
-                                    <input type="text" class="form-control" value="{{request('name')}}" name="name">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>E-mail</label>
-                                    <input type="text" class="form-control" value="{{request('email')}}" name="email">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-primary">Filtrar</button>
-                            <button type="button" class="btn btn-default clear-filters">Limpar</button>
-                        </div>
-                    </form>
-            </section>
-        </div>
 
         <!-- Main row -->
         <div class="row">
@@ -112,31 +86,482 @@
             <section class="col-lg-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Lista de usuários</h3>
+                        <h3 class="box-title">Rede Nível 1</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="1" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="box-body table-responsive">
+                    <div class="box-body table-responsive display-none " id="boxId-1">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Código</th>
                                     <th>Nome</th>
                                     <th>E-mail</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($users as $user)
+                            
+                                    @foreach($users as $user)
                                 <tr>
-                                    <td>{{str_pad($user->id, 5, 0, STR_PAD_LEFT )}}</td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                @empty
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 2</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="2" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-2">
+                        <table class="table table-bordered table-striped">
+                            <thead>
                                 <tr>
-                                    <td colspan="6">Ainda nenhum pedido foi realizado</td>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
                                 </tr>
-                                @endforelse
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 3</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="3" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-3">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 4</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="4" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-4">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 5</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="5" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-5">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 6</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="6" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-6">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 7</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="7" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-7">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 8</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="8" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-8">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 9</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="9" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-9">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <!-- /.row (main row) -->
+
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rede Nível 10</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" data-box="10" class="btn btn-box-tool btn-add-widget btn-open-box">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive display-none " id="boxId-10">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach($users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                    @foreach($user->users as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->status()}}</td>
+                                </tr>
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
                             </tbody>
 
                         </table>
@@ -155,6 +580,11 @@
 <script type="text/javascript">
 $('.newInvitation').on('click', function() {
     $('#newInvitation').modal('show');
+});
+
+$('.btn-open-box').on('click', function(){
+    box = $(this).data('box');
+    $('#boxId-'+box).slideToggle('slow');
 });
 </script>
 @endsection
@@ -177,9 +607,10 @@ $('.newInvitation').on('click', function() {
                     </div>
                     <div class="col-xs-8">
                         <div class="input-group">
-                            <input type="text" value="{{url('user/cadastro')}}/{{auth()->guard('user')->user()->id}}" class="form-control" readonly>
-                            <span class="input-group-addon generate-invitation" onclick="copyClipboard();" id="copyClipboard"
-                                data-container="body" data-toggle="popover" data-placement="top"
+                            <input type="text" value="{{url('user/cadastro')}}/{{auth()->guard('user')->user()->id}}"
+                                class="form-control" readonly>
+                            <span class="input-group-addon generate-invitation" onclick="copyClipboard();"
+                                id="copyClipboard" data-container="body" data-toggle="popover" data-placement="top"
                                 data-content="Link Copiado.">
                                 <i class="fa fa-files-o" aria-hidden=""></i>
                             </span>
@@ -191,8 +622,7 @@ $('.newInvitation').on('click', function() {
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>

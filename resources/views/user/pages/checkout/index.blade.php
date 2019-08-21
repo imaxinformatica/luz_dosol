@@ -13,6 +13,9 @@
             <div class="col-sm-6">
                 <h1>Finalizar pedido</h1>
             </div>
+            <div class="col-sm-6">
+                <button class="btn-header" onclick="window.location.href='{{url('user/produtos')}}'">FINALIZAR PEDIDO</button>
+            </div>
         </div>
     </section>
 
@@ -89,7 +92,8 @@
                                 @forelse($itemsCart as $item)
                                 <tr>
                                     <td>
-                                        <img class="image-product-checkout" src="{{asset('uploads/products/thumbnail/'. $item->file)}}"
+                                        <img class="image-product-checkout"
+                                            src="{{asset('uploads/products/thumbnail/'. $item->file)}}"
                                             alt="Imagem do produto">
                                     </td>
                                     <td>{{$item->reference}}</td>

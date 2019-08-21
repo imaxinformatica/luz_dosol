@@ -39,9 +39,11 @@ class UserController extends Controller
     {
         $dataUser = $service->generateDatauser($request->all());
         $dataAdress = $service->generateDataAddress($request->all());
+        $dataBank = $service->generateDataBank($request->all());
         try {
             $user = User::create($dataUser);
             $user->address()->create($dataAdress);
+            $user->databank()->create($dataBank);
         } catch (\Exception $e) {
             return redirect()->back()
             ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
@@ -51,15 +53,24 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.pages.user.edit')->with('user', $user);
+        $states = State::all();
+
+        return view('admin.pages.user.edit')
+        ->with('states', $states)
+        ->with('user', $user);
     }
 
-    public function update(User $user, UserRequest $request)
+    public function update(User $user, UserRequest $request, ServiceUser $service)
     {
-        try{
-            $user->update($request->except('_token', 'user_id'));
+        $dataUser = $service->generateDatauser($request->all());
+        $dataAdress = $service->generateDataAddress($request->all());
+        $dataBank = $service->generateDataBank($request->all());
+        try {
+            $user->update($dataUser);
+            $user->address()->update($dataAdress);
+            $user->databank()->update($dataBank);
         } catch (\Exception $e) {
-            return redirect()->route('admin.user.index')
+            return redirect()->back()
             ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
         }
         return redirect()->back()->with('success', 'Usuário editado.');
@@ -110,6 +121,8 @@ class UserController extends Controller
     public function delete(User $user)
     {
         try{
+            $user->databank()->delete();
+            $user->address()->delete();
             $user->delete();
         } catch (\Exception $e) {
             return redirect()->route('admin.user.index')

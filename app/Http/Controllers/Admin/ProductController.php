@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = new Product;
-        $products = $products->orderBy('name', 'asc')->paginate(20);
+        $products = $products->orderBy('reference', 'asc')->paginate(20);
         
         return view('admin.pages.product.index')
         ->with('products', $products); 

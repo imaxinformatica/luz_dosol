@@ -114,8 +114,8 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="cpf">CPF <small>*</small></label>
-                                        <input type="text" class="form-control input-cpf" value="{{old('cpf')}}" name="cpf"
-                                            required>
+                                        <input type="text" class="form-control input-cpf" value="{{old('cpf')}}"
+                                            name="cpf" required>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
@@ -137,7 +137,8 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="phone">Telefone</label>
-                                        <input type="text" class="form-control input-phone" value="{{old('phone')}}" name="phone">
+                                        <input type="text" class="form-control input-phone" value="{{old('phone')}}"
+                                            name="phone">
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +170,8 @@
                                 <div class="col-xs-8">
                                     <div class="form-group">
                                         <label for="complement">Complemento</label>
-                                        <input type="text" class="form-control" value="{{old('complement')}}" name="complement">
+                                        <input type="text" class="form-control" value="{{old('complement')}}"
+                                            name="complement">
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +187,8 @@
                                 <div class="col-sm-4 col-xs-6">
                                     <div class="form-group">
                                         <label for="city">Cidade<small>*</small></label>
-                                        <input type="text" class="form-control" value="{{old('city')}}" name="city" required>
+                                        <input type="text" class="form-control" value="{{old('city')}}" name="city"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-sm-2 col-xs-6">
@@ -194,9 +197,57 @@
                                         <select name="state" id="state" class="form-control" required>
                                             <option selected disabled hidden>Selecione..</option>
                                             @foreach($states as $state)
-                                                <option value="{{$state->initials}}">{{$state->initials}}</option>
+                                            <option value="{{$state->initials}}">{{$state->initials}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="bank_code">Código Banco <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('bank_code')}}"
+                                            name="bank_code" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="agency">Agência <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('agency')}}" name="agency" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="account">Conta (s/ dígito) <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('account')}}"
+                                            name="account" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <div class="form-group">
+                                        <label for="account_type">Dígito conta <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('account_type')}}"
+                                            name="account_type" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label for="name_holder">Nome Titular <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('name_holder')}}"
+                                            name="name_holder" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label for="cpf_holder">CPF Titular <small>*</small></label>
+                                        <input type="text" class="form-control input-cpf" value="{{old('cpf_holder')}}"
+                                            name="cpf_holder" required>
                                     </div>
                                 </div>
                             </div>

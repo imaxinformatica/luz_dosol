@@ -40,9 +40,9 @@
                       <i class="fa fa-list"></i> <span>MEUS PEDIDOS</span>
                   </a>
               </li>
-              <li {{ (Request::is('user/financial') ? 'class=active' : '') }}
-                  {{ (Request::is('user/financial/*') ? 'class=active' : '') }}>
-                  <a href="{{ url('user/financial')}}">
+              <li {{ (Request::is('user/dados-bancarios') ? 'class=active' : '') }}
+                  {{ (Request::is('user/dados-bancarios/*') ? 'class=active' : '') }}>
+                  <a href="{{ route('user.financial.edit')}}">
                       <i class="fa fa-credit-card-alt"></i> <span>DADOS FINANCEIROS</span>
                   </a>
               </li>

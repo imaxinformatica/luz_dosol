@@ -51,7 +51,7 @@
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
-            <section class="col-lg-6">
+            <section class="col-lg-10">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Dados</h3>
@@ -59,18 +59,116 @@
                     <form method="POST" action="{{route('user.configuration.update')}}">
                         {{csrf_field()}}
                         <div class="box-body">
-                            <div class="form-group row">
-                                <div class="col-xs-12">
-                                    <label>Nome <small>*</small></label>
-                                    <input type="text" class="form-control" value="{{$user->name}}" name="name"
-                                        required>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nome <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{$user->name}}" name="name"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>E-mail <small>*</small></label>
+                                        <input type="email" class="form-control" value="{{$user->email}}" name="email"
+                                            required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-xs-12">
-                                    <label>E-mail <small>*</small></label>
-                                    <input type="email" class="form-control" value="{{$user->email}}" name="email"
-                                        required>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="cpf">CPF <small>*</small></label>
+                                        <input type="text" class="form-control input-cpf" value="{{$user->cpf}}"
+                                            name="cpf" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="rg">RG <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{$user->rg}}" name="rg"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="cellphone">Telefone Celular <small>*</small></label>
+                                        <input type="text" class="form-control input-phone" value="{{$user->cellphone}}"
+                                            name="cellphone" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="phone">Telefone</label>
+                                        <input type="text" class="form-control input-phone" value="{{$user->phone}}"
+                                            name="phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="zip_code">CEP <small>*</small></label>
+                                        <input type="text" class="form-control input-cep"
+                                            value="{{$user->address->zip_code}}" name="zip_code" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <label for="street">Logradouro <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{$user->address->street}}"
+                                            name="street" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="number">Número <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{$user->address->number}}"
+                                            name="number" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <label for="complement">Complemento</label>
+                                        <input type="text" class="form-control" value="{{$user->address->complement}}"
+                                            name="complement">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="neighborhood">Bairro<small>*</small></label>
+                                        <input type="text" class="form-control" value="{{$user->address->neighborhood}}"
+                                            name="neighborhood" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-xs-6">
+                                    <div class="form-group">
+                                        <label for="city">Cidade<small>*</small></label>
+                                        <input type="text" class="form-control" value="{{$user->address->city}}"
+                                            name="city" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-xs-6">
+                                    <div class="form-group">
+                                        <label for="state">Estado<small>*</small></label>
+                                        <select name="state" id="state" class="form-control" required>
+                                            <option selected disabled hidden>Selecione..</option>
+                                            @foreach($states as $state)
+                                            <option value="{{$state->initials}}"
+                                                {{$user->address->state == $state->initials ? "selected" : ""}}>
+                                                {{$state->initials}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

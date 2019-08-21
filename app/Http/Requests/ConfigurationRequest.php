@@ -26,6 +26,15 @@ class ConfigurationRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'cpf' => 'required',
+            'rg' => 'required',
+            'cellphone' => 'required',
+            'zip_code' => 'required',
+            'street' => 'required',
+            'number' => 'required',
+            'neighborhood' => 'required',
+            'city' => 'required',
+            'state' => 'required',
             'email' => [
                 'required',
                 Rule::unique('admins')->ignore($this->request->get('email'), 'email'),

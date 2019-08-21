@@ -288,3 +288,11 @@ button.more-info {
 .generate-invitation:hover {
     cursor: pointer;
 }
+.btn-add-widget, .btn-add-widget:focus, .btn-add-widget:hover {
+    border: 1px solid transparent;
+    outline: none;
+    box-shadow: none;
+    background: #8BC34A;
+    color: #fff;
+    width: 30px;
+}

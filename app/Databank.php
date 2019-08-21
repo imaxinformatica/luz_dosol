@@ -12,7 +12,8 @@ class Databank extends Model
         'agency',
         'account',
         'account_type',
-        'cpf'
+        'cpf_holder',
+        'name_holder'
     ];
 
     public function user()

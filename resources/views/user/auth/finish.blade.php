@@ -201,6 +201,55 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="bank_code">Código Banco <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('bank_code')}}"
+                                            name="bank_code" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="agency">Agência <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('agency')}}"
+                                            name="agency" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label for="account">Conta (s/ dígito) <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('account')}}"
+                                            name="account" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <div class="form-group">
+                                        <label for="account_type">Dig. conta<small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('account_type')}}"
+                                            name="account_type" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label for="name_holder">Nome Titular <small>*</small></label>
+                                        <input type="text" class="btn-form" value="{{old('name_holder')}}"
+                                            name="name_holder" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label for="cpf_holder">CPF Titular <small>*</small></label>
+                                        <input type="text" class="btn-form input-cpf"
+                                            value="{{old('cpf_holder')}}" name="cpf_holder" required>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <button class="btn-form" type="submir">CONTINUAR</button>

@@ -62,6 +62,12 @@ class RegisterController extends Controller
             'neighborhood' => 'required',
             'city' => 'required',
             'state' => 'required',
+            'bank_code' => 'required',
+            'agency' => 'required',
+            'account' => 'required',
+            'account_type' => 'required',
+            'cpf_holder' => 'required',
+            'name_holder' => 'required'
         ]);
     }
 
@@ -78,9 +84,11 @@ class RegisterController extends Controller
         $dataUser = $service->generateDatauser($data);
         $dataUser['user_id'] = session('user_id');
         $dataAdress = $service->generateDataAddress($data);
+        $dataBank = $service->generateDataBank($data);
 
         $user = User::create($dataUser);
         $user->address()->create($dataAdress);
+        $user->databank()->create($dataBank);
         return $user;
     }
 

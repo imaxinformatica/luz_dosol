@@ -102,6 +102,10 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
         Route::get('/', 'User\ConfigurationController@index')->name('index');
         Route::post('/update', 'User\ConfigurationController@update')->name('update');
     });
+    Route::group(['prefix' => 'dados-bancarios', 'as' => 'financial.'], function () {
+        Route::get('/', 'User\FinancialController@edit')->name('edit');
+        Route::post('/update', 'User\FinancialController@update')->name('update');
+    });
 
     Route::get('/checkout', 'User\CartController@checkout')->name('checkout');
 
@@ -109,9 +113,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
         return view('user.pages.orders');
     });
 
-    Route::get('/financial', function () {
-        return view('user.pages.financial');
-    });
+    
 
     Route::get('/network', function () {
         return view('user.pages.network');
