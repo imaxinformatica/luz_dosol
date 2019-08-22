@@ -1,6 +1,6 @@
-@extends('user.templates.default')
+@extends('admin.templates.default')
 
-@section('title', 'Finalizar pedido')
+@section('title', 'Meu Pedido')
 
 @section('description', 'Descrição')
 
@@ -11,10 +11,7 @@
     <section class="content-header">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Finalizar pedido</h1>
-            </div>
-            <div class="col-sm-6">
-                <button class="btn-header finishOrder">FINALIZAR PEDIDO</button>
+                <h1>Meu Pedido</h1>
             </div>
         </div>
     </section>
@@ -89,7 +86,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Lista de itens</h3>
-                        <h3 class="box-title pull-right">Total:R$ {{convertMoneyUSAtoBrazil($total)}}</h3>
+                        <h3 class="box-title pull-right">Total:R$ {{convertMoneyUSAtoBrazil($order->total)}}</h3>
                     </div>
                     <div class="box-body table-responsive">
                         <table class="table table-bordered table-striped">
@@ -101,28 +98,21 @@
                                     <th scope="col">Quantidade</th>
                                     <th scope="col">Preço</th>
                                     <th scope="col">Subtotal</th>
-                                    <th scope="col">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($itemsCart as $item)
+                                @forelse($order->orderitems as $item)
                                 <tr>
                                     <td>
                                         <img class="image-product-checkout"
-                                            src="{{asset('uploads/products/thumbnail/'. $item->file)}}"
+                                            src="{{asset('uploads/products/thumbnail/'. $item->product->file)}}"
                                             alt="Imagem do produto">
                                     </td>
-                                    <td>{{$item->reference}}</td>
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->pivot->qty}}</td>
+                                    <td>{{$item->product->reference}}</td>
+                                    <td>{{$item->product->name}}</td>
+                                    <td>{{$item->qty}}</td>
                                     <td>R${{convertMoneyUSAtoBrazil($item->price)}}</td>
-                                    <td>R${{convertMoneyUSAtoBrazil($item->price * $item->pivot->qty)}}</td>
-                                    <td>
-                                        <a href="{{route('user.cart.delete', ['cart' => $item->pivot->id])}}"
-                                            title="Excluir" class="act-list act-delete">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
+                                    <td>R${{convertMoneyUSAtoBrazil($item->subtotal)}}</td>
                                 </tr>
                                 @empty
                                 <tr>
@@ -142,53 +132,3 @@
 </div>
 
 @stop
-@section('scripts')
-<script type="text/javascript">
-$('.finishOrder').on('click', function() {
-    $('#finishOrder').modal('show');
-});
-</script>
-@endsection
-
-@section('modals')
-<div class="modal fade" tabindex="-1" role="dialog" id="finishOrder">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Finalizar Pedido</h4>
-            </div>
-            <form method="post" action="{{route('user.order.checkout')}}">
-            {{csrf_field()}}
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xs-8" style="padding-top:5px;">
-                            <p>Tem certeza que deseja finalizar pedido?</p>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon">R$</span>
-                                    <input type="text" name="price" value="{{convertMoneyUSAtoBrazil($total)}}"
-                                        class="form-control input-money" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-primary">Confirmar</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endsection

@@ -21,4 +21,9 @@ class Product extends Model
         return $status;
     }
 
+    public function orderitems()
+    {
+        return $this->hasMany('App\Orderitem', 'product_id');
+    }
+
 }

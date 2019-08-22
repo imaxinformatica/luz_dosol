@@ -61,17 +61,18 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <img class="graduation-img" src="{{ asset('dist/img/ouro.png')}}">
+                                <img class="graduation-img" src="{{ asset('images/'.$user->getGraduation())}}">
                                 <p class="text-center">Graduação<br>máxima alcançada</p>
                             </div>
                             <div class="col-md-6">
-                                <img class="graduation-img" src="{{ asset('dist/img/bronze.png')}}">
+                                <img class="graduation-img" src="{{ asset('images/'.$user->getGraduation())}}">
                                 <p class="text-center">Graduação<br>do mês atual</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @if($user->status == 1)
             <div class="col-lg-7">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
@@ -79,7 +80,7 @@
                         <div class="small-box bg-green">
                             <div class="inner">
                                 <p>Bônus de consumo</p>
-                                <h3>R$2.300,00</h3>
+                                <h3>R$0,00</h3>
                             </div>
                         </div>
                     </div>
@@ -88,7 +89,7 @@
                         <div class="small-box bg-yellow">
                             <div class="inner">
                                 <p>Comissões da rede</p>
-                                <h3>R$8.321,00</h3>
+                                <h3>R${{convertMoneyUSAtoBrazil($user->getCommission())}}</h3>
                             </div>
                         </div>
                     </div>
@@ -99,13 +100,14 @@
                         <div class="small-box bg-aqua">
                             <div class="inner">
                                 <p>Bônus total</p>
-                                <h3>R$10.621,00</h3>
+                                <h3>R${{convertMoneyUSAtoBrazil($user->getCommission())}}</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @endif
         @if(count($banners))
         <!-- Main row -->
         <div class="row">

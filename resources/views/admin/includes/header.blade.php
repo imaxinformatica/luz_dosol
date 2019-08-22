@@ -19,10 +19,10 @@
                         <b>O clico finaliza em:</b><span class="timeOut"></span>
                     </li>
                     <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
                             <span class="label label-success">4</span>
-                        </a>
+                        </a> -->
                         <!--
             <ul class="dropdown-menu">
               <li class="header">You have 4 messages</li>
@@ -94,13 +94,13 @@
               <li class="footer"><a href="#">See All Messages</a></li>
             </ul>
             -->
-                    </li>
+                    <!-- </li> -->
                     <!-- Notifications: style can be found in dropdown.less -->
-                    <li class="dropdown notifications-menu">
+                    <!-- <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
                             <span class="label label-warning">10</span>
-                        </a>
+                        </a> -->
                         <!--
             <ul class="dropdown-menu">
               <li class="header">You have 10 notifications</li>
@@ -137,13 +137,13 @@
               <li class="footer"><a href="#">View all</a></li>
             </ul>
             -->
-                    </li>
+                    <!-- </li>
                     <li>
                         <a href="#">
                             <i class="fa fa-shopping-cart"></i>
                             <span class="label label-danger">9</span>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </nav>

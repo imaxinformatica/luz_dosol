@@ -28,15 +28,15 @@
                       <i class="fa fa-shopping-cart"></i> <span>REALIZAR PEDIDO</span>
                   </a>
               </li>
-              <li {{ (Request::is('user/checkout') ? 'class=active' : '') }}
+              <!-- <li {{ (Request::is('user/checkout') ? 'class=active' : '') }}
                   {{ (Request::is('user/checkout/*') ? 'class=active' : '') }}>
                   <a href="{{ route('user.checkout')}}">
                       <i class="fa fa-credit-card"></i> <span>FINALIZAR PEDIDO</span>
                   </a>
-              </li>
-              <li {{ (Request::is('user/orders') ? 'class=active' : '') }}
-                  {{ (Request::is('user/orders/*') ? 'class=active' : '') }}>
-                  <a href="{{ url('user/orders')}}">
+              </li> -->
+              <li {{ (Request::is('user/pedido') ? 'class=active' : '') }}
+                  {{ (Request::is('user/pedido/*') ? 'class=active' : '') }}>
+                  <a href="{{ route('user.order.index')}}">
                       <i class="fa fa-list"></i> <span>MEUS PEDIDOS</span>
                   </a>
               </li>

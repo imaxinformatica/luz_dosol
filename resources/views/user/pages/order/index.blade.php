@@ -1,4 +1,4 @@
-@extends('admin.templates.default')
+@extends('user.templates.default')
 
 @section('title', 'Meus pedido')
 
@@ -93,18 +93,16 @@
                                 <tr>
                                     <th scope="col">Pedido</th>
                                     <th scope="col">Total</th>
-                                    <th scope="col">Usuário</th>
                                     <th scope="col">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($transactions as $transaction)
+                                @forelse($orders as $order)
                                 <tr>
-                                    <td>#{{str_pad($transaction->id, 5, 0, STR_PAD_LEFT )}}</td>
-                                    <td>R${{convertMoneyUSAtoBrazil($transaction->total)}}</td>
-                                    <td>{{$transaction->user->name}}</td>
+                                    <td>#{{str_pad($order->id, 5, 0, STR_PAD_LEFT )}}</td>
+                                    <td>R${{convertMoneyUSAtoBrazil($order->total)}}</td>
                                     <td>
-                                        <a href="{{ route('admin.transaction.show', ['transaction' => $transaction])}}"
+                                        <a href="{{ route('user.order.show', ['order' => $order])}}"
                                             title="Editar" class="act-list">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>

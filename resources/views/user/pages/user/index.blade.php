@@ -103,17 +103,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
+                                @php($total1 = 0)
+                                @php($active1 = 0)
+                                @php($desactive1 = 0)
+
+                                @foreach($users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
+                                @php($total1++ )
+                                @php($active1 += $user->status == 1 ? 1 : 0)
+                                @php($desactive1 += $user->status == 0 ? 1 : 0)
+                                @endforeach
                             </tbody>
 
                         </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total1}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active1}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive1}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -143,21 +169,49 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
+
+                                @php($total2 = 0)
+                                @php($active2 = 0)
+                                @php($desactive2 = 0)
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
 
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total2++ )
+                                @php($active2 += $user->status == 1 ? 1 : 0)
+                                @php($desactive2 += $user->status == 0 ? 1 : 0)
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
                     </div>
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive2}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
                     <!-- /.box-body -->
                 </div>
             </section>
@@ -186,21 +240,49 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+
+                                @php($total3 = 0)
+                                @php($active3 = 0)
+                                @php($desactive3 = 0)    
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
+
+                                    @php($total3++ )
+                                    @php($active3 += $user->status == 1 ? 1 : 0)
+                                    @php($desactive3 += $user->status == 0 ? 1 : 0)
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total3}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active3}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive3}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -230,23 +312,50 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+                                @php($total4 = 0)
+                                @php($active4 = 0)
+                                @php($desactive4 = 0)    
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total4++ )
+                                @php($active4 += $user->status == 1 ? 1 : 0)
+                                @php($desactive4 += $user->status == 0 ? 1 : 0)
+
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total4}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active4}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive4}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -276,25 +385,52 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+                                @php($total5 = 0)
+                                @php($active5 = 0)
+                                @php($desactive5 = 0)    
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total5++ )
+                                @php($active5 += $user->status == 1 ? 1 : 0)
+                                @php($desactive5 += $user->status == 0 ? 1 : 0)
+
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total5}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active5}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive5}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -324,29 +460,56 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+                                @php($total6 = 0)
+                                @php($active6 = 0)
+                                @php($desactive6 = 0)
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total6++ )
+                                @php($active6 += $user->status == 1 ? 1 : 0)
+                                @php($desactive6 += $user->status == 0 ? 1 : 0)
+
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
                     </div>
                     <!-- /.box-body -->
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total6}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active6}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive6}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
@@ -364,6 +527,7 @@
                             </button>
                         </div>
                     </div>
+
                     <div class="box-body table-responsive display-none " id="boxId-7">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -374,29 +538,55 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+                                @php($total7 = 0)
+                                @php($active7 = 0)
+                                @php($desactive7 = 0)
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total7++ )
+                                @php($active7 += $user->status == 1 ? 1 : 0)
+                                @php($desactive7 += $user->status == 0 ? 1 : 0)
+
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total7}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active7}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive7}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -426,31 +616,58 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+                                @php($total8 = 0)
+                                @php($active8 = 0)
+                                @php($desactive8 = 0)
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total8++ )
+                                @php($active8 += $user->status == 1 ? 1 : 0)
+                                @php($desactive8 += $user->status == 0 ? 1 : 0)
+
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total8}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active8}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive8}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -470,6 +687,7 @@
                             </button>
                         </div>
                     </div>
+
                     <div class="box-body table-responsive display-none " id="boxId-9">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -480,33 +698,61 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+                                @php($total9 = 0)
+                                @php($active9 = 0)
+                                @php($desactive9 = 0)
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total9++ )
+                                @php($active9 += $user->status == 1 ? 1 : 0)
+                                @php($desactive9 += $user->status == 0 ? 1 : 0)
+
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+
                             </tbody>
 
                         </table>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total9}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active9}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive9}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -536,35 +782,61 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                    @foreach($users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
-                                    @foreach($user->users as $user)
+                                @php($total10 = 0)
+                                @php($active10 = 0)
+                                @php($desactive10 = 0)
+
+                                @foreach($users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
+                                @foreach($user->users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status()}}</td>
                                 </tr>
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
-                                    @endforeach
+
+                                @php($total10++ )
+                                @php($active10 += $user->status == 1 ? 1 : 0)
+                                @php($desactive10 += $user->status == 0 ? 1 : 0)
+
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
+                                @endforeach
                             </tbody>
 
                         </table>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-xs-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Total: {{$total10}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ativados: {{$active10}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desativados: {{$desactive10}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -582,15 +854,15 @@ $('.newInvitation').on('click', function() {
     $('#newInvitation').modal('show');
 });
 
-$('.btn-open-box').on('click', function(){
+$('.btn-open-box').on('click', function() {
     box = $(this).data('box');
-    $('#boxId-'+box).slideToggle('slow');
+    $('#boxId-' + box).slideToggle('slow');
 });
 </script>
 @endsection
 
 @section('modals')
-<!--Inclur idioma-->
+<!--Gerar Convite-->
 <div class="modal fade" tabindex="-1" role="dialog" id="newInvitation">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -622,13 +894,13 @@ $('.btn-open-box').on('click', function(){
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- /.Incluir Idioma -->
+<!-- /.Gerar Convite -->
 
 @endsection

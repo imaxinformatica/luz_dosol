@@ -78,4 +78,66 @@ class User extends Authenticatable
         $status = $this->status == 0 ? 'Desativado' : 'Ativado';
         return $status;
     }
+
+    public function commission()
+    {
+        return $this->hasMany('App\OrderCommission', 'user_id');
+    }
+
+    public function graduation()
+    {
+        return $this->hasOne('App\Graduation', 'user_id');
+    }
+
+    public function total()
+    {
+        $total = 0;
+        foreach ($this->cart as $item) {
+            $subtotal = $item->price * $item->pivot->qty;
+            $total += $subtotal;
+        }
+        return $total;
+    }
+
+    public function getCommission()
+    {
+        $totalCommission = 0;
+        foreach ($this->commission as $commission) {
+            $orderTotal = ($commission->commission_percentage/100) * $commission->order->total;
+            $totalCommission += $orderTotal;
+        }
+        return $totalCommission;
+    }
+
+    public function getGraduation()
+    {
+        $activeUsers = $this->users()->where('status', 1)->count();
+        $commission = $this->getCommission();
+        $graduation = 'no-graduated.png';
+        if($commission >= 27 && $activeUsers >= 3){
+            $graduation = 'bronze.png';
+        }
+        if($commission >= 141 && $activeUsers >= 3){
+            $graduation = 'prata.png';
+        }
+        if($commission >= 1250 && $activeUsers >= 3){
+            $graduation = 'ouro.png';
+        }
+        
+        return $graduation;
+    }
+
+    public function typeOfGraduation($graduation)
+    {
+        $typeGraduation = 0;
+        if($graduation == 'bronze.png'){
+            $typeGraduation = 1;
+        }elseif($graduation == 'prata.png'){
+            $typeGraduation = 2;
+        }elseif($graduation == 'ouro.png'){
+            $typeGraduation = 3;
+        }
+
+        return $typeGraduation;
+    }
 }

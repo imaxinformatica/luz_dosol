@@ -55,10 +55,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::post('/update', 'Admin\CommissionController@update')->name('update');
     });
 
+    Route::group(['prefix' => 'documento', 'as' => 'document.'], function () {
+        Route::get('/', 'Admin\DocumentController@index')->name('index');
+        Route::get('/create', 'Admin\DocumentController@create')->name('create');
+        Route::post('/store', 'Admin\DocumentController@store')->name('store');
+        Route::get('/edit/{document}', 'Admin\DocumentController@edit')->name('edit');
+        Route::post('/update/{document}', 'Admin\DocumentController@update')->name('update');
+        Route::get('/delete/{document}', 'Admin\DocumentController@delete')->name('delete');
+
+    });
+
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
         Route::get('/', 'Admin\TransactionController@index')->name('index');
-        Route::get('/edit/{transaction}', 'Admin\TransactionController@edit')->name('edit');
-        Route::post('/update/{transaction}', 'Admin\TransactionController@update')->name('update');
+        Route::get('/show/{transaction}', 'Admin\TransactionController@show')->name('show');
     });
 
     Route::group(['prefix' => 'export', 'as' => 'export.'], function () {
@@ -107,11 +116,14 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
         Route::post('/update', 'User\FinancialController@update')->name('update');
     });
 
+    Route::group(['prefix' => 'pedido', 'as' => 'order.'], function () {
+        Route::get('/', 'User\OrderController@index')->name('index');
+        Route::get('/visualizar/{order}', 'User\OrderController@show')->name('show');
+        Route::post('/checkout', 'User\OrderController@checkout')->name('checkout');
+    });
+
     Route::get('/checkout', 'User\CartController@checkout')->name('checkout');
 
-    Route::get('/orders', function () {
-        return view('user.pages.orders');
-    });
 
     
 

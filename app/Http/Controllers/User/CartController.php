@@ -48,7 +48,13 @@ class CartController extends Controller
         $user = Auth::guard('user')->user();
 
         $itemsCart = $user->cart;
+        $total = 0;
+        foreach ($itemsCart as $item) {
+            $item->subtotal = $item->price * $item->pivot->qty;
+            $total += $item->subtotal;
+        }
         return view('user.pages.checkout.index')
+        ->with('total', $total)
         ->with('itemsCart', $itemsCart);
     }
 }

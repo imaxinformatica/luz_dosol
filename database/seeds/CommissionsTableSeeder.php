@@ -13,16 +13,16 @@ class CommissionsTableSeeder extends Seeder
     {
         DB::table("commissions")->insert([
             [
-                'commission_1' => 0.00,
-                'commission_2' => 0.00,
-                'commission_3' => 0.00,
-                'commission_4' => 0.00,
-                'commission_5' => 0.00,
-                'commission_6' => 0.00,
-                'commission_7' => 0.00,
-                'commission_8' => 0.00,
-                'commission_9' => 0.00,
-                'commission_10' => 0.00,        
+                'commission_1' => 2.50,
+                'commission_2' => 5.00,
+                'commission_3' => 6.00,
+                'commission_4' => 5.00,
+                'commission_5' => 2.50,
+                'commission_6' => 1.50,
+                'commission_7' => 1.00,
+                'commission_8' => 0.50,
+                'commission_9' => 0.50,
+                'commission_10' => 0.50,        
             ], 
         ]);
     }

@@ -141,7 +141,7 @@
           <li>
             <a href="#">
               <i class="fa fa-shopping-cart"></i>
-              <span class="label label-danger">9</span>
+              <span class="label label-danger">{{auth()->guard('user')->user()->cart->count()}}</span>
             </a>
           </li>
         </ul>

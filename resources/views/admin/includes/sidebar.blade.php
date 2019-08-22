@@ -65,6 +65,12 @@
                     <i class="fa fa-download"></i> <span>EXPORTAÇÃO</span>
                 </a>
             </li>
+            <li {{ (Request::is('admin/documento') ? 'class=active' : '') }}
+                {{ (Request::is('admin/documento/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.document.index')}}">
+                    <i class="fa fa-archive"></i> <span>DOCUMENTOS</span>
+                </a>
+            </li>
             <li {{ (Request::is('admin/configuracao') ? 'class=active' : '') }}
                 {{ (Request::is('admin/configuracao/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.configuration.index')}}">
