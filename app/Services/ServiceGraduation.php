@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use User;
+use App\User;
 
 class ServiceGraduation
 {

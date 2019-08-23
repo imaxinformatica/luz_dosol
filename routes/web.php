@@ -65,9 +65,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 
     });
 
-    Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
-        Route::get('/', 'Admin\TransactionController@index')->name('index');
-        Route::get('/show/{transaction}', 'Admin\TransactionController@show')->name('show');
+    Route::group(['prefix' => 'pedido', 'as' => 'order.'], function () {
+        Route::get('/', 'Admin\OrderController@index')->name('index');
+        Route::get('/show/{order}', 'Admin\OrderController@show')->name('show');
     });
 
     Route::group(['prefix' => 'export', 'as' => 'export.'], function () {
@@ -109,11 +109,16 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
 
     Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
         Route::get('/', 'User\ConfigurationController@index')->name('index');
+        Route::post('avatar', 'User\ConfigurationController@changeAvatar')->name('avatar');
         Route::post('/update', 'User\ConfigurationController@update')->name('update');
     });
     Route::group(['prefix' => 'dados-bancarios', 'as' => 'financial.'], function () {
         Route::get('/', 'User\FinancialController@edit')->name('edit');
         Route::post('/update', 'User\FinancialController@update')->name('update');
+    });
+
+    Route::group(['prefix' => 'documento', 'as' => 'document.'], function () {
+        Route::get('/', 'User\DocumentController@index')->name('index');
     });
 
     Route::group(['prefix' => 'pedido', 'as' => 'order.'], function () {
@@ -123,13 +128,6 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
     });
 
     Route::get('/checkout', 'User\CartController@checkout')->name('checkout');
-
-
-    
-
-    Route::get('/network', function () {
-        return view('user.pages.network');
-    });
 
     Route::get('/documents', function () {
         return view('user.pages.documents');
@@ -165,4 +163,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('password.email');
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
+});
+
+
+Route::get('/verificar-graduacao', function(){
+    $sv = new App\Services\ServiceGraduation;
+    $sv->getMaxGraduation();
 });

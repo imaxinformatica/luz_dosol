@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone', 191)->nullable();
             $table->string('email', 191)->unique();
             $table->string('password');
+            $table->string('avatar')->default('default.png');
             $table->string('user_id')->nullable();
             $table->integer('status')->default(0);
             $table->rememberToken();

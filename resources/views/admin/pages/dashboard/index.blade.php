@@ -77,7 +77,7 @@
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="{{route('admin.transaction.index')}}" class="small-box-footer">Mais informações <i
+                    <a href="{{route('admin.order.index')}}" class="small-box-footer">Mais informações <i
                             class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -103,13 +103,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($orders as $transaction)
+                                @forelse($recentOrders as $order)
                                 <tr>
-                                    <td>#{{str_pad($transaction->id, 5, 0, STR_PAD_LEFT )}}</td>
-                                    <td>R${{convertMoneyUSAtoBrazil($transaction->total)}}</td>
-                                    <td>{{$transaction->user->name}}</td>
+                                    <td>#{{str_pad($order->id, 5, 0, STR_PAD_LEFT )}}</td>
+                                    <td>R${{convertMoneyUSAtoBrazil($order->total)}}</td>
+                                    <td>{{$order->user->name}}</td>
                                     <td>
-                                        <a href="{{ route('admin.transaction.show', ['transaction' => $transaction])}}"
+                                        <a href="{{ route('admin.order.show', ['order' => $order])}}"
                                             title="Editar" class="act-list">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>

@@ -86,6 +86,9 @@
   });
 
 
+$('.change-avatar').on('click', function(){
+  $('#changeAvatar').modal('show');
+});
   
 
   // Converte número do formato brasileiro para tipo float
@@ -311,21 +314,7 @@
       allowZero: true,
       symbolStay: true
   });
-  $('#no_due_batch').change(function(){
-    if ($(this).is(':checked')) {
-      $('input[name="due_date"]').attr('disabled', '');
-    }else{
-      $('input[name="due_date"]').removeAttr('disabled', '');
-    }
-  });
-
-  $('#no_due').change(function(){
-    if ($(this).is(':checked')) {
-      $('input[name="due_date"]').attr('disabled', '');
-    }else{
-      $('input[name="due_date"]').removeAttr('disabled', '');
-    }
-  });
+ 
 </script>
 
 @yield('scripts')

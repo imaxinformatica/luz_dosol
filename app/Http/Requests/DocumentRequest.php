@@ -27,7 +27,7 @@ class DocumentRequest extends FormRequest
             'name' => 'required',
         ];
         if(!request()->has('document_id')){
-            $rules['file'] = 'required';
+            $rules['file'] = 'required|mimes:rar,pdf,xlsx,xls,ppt,pptx,doc,docx,otp,odp,ods,odt,pps,psd,jpeg,jpg,png';
         }
         return $rules;
     }

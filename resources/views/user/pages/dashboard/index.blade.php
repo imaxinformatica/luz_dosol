@@ -106,8 +106,8 @@
                     </div>
                 </div>
             </div>
-        </div>
         @endif
+        </div>
         @if(count($banners))
         <!-- Main row -->
         <div class="row">

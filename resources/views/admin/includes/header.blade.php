@@ -1,7 +1,7 @@
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{route('admin.dashboard')}}" class="logo">
             <span class="logo-lg"><b>LUZ DO SOL</b></span>
             <span class="logo-mini"><b>LDS</b></span>
         </a>
@@ -94,9 +94,9 @@
               <li class="footer"><a href="#">See All Messages</a></li>
             </ul>
             -->
-                    <!-- </li> -->
-                    <!-- Notifications: style can be found in dropdown.less -->
-                    <!-- <li class="dropdown notifications-menu">
+                        <!-- </li> -->
+                        <!-- Notifications: style can be found in dropdown.less -->
+                        <!-- <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
                             <span class="label label-warning">10</span>
@@ -136,14 +136,13 @@
               </li>
               <li class="footer"><a href="#">View all</a></li>
             </ul>
+                    </li>
             -->
-                    <!-- </li>
                     <li>
-                        <a href="#">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span class="label label-danger">9</span>
+                        <a href="{{route('admin.logout')}}">
+                            <i class="fa fa-sign-out"></i>
                         </a>
-                    </li> -->
+                    </li>
                 </ul>
             </div>
         </nav>

@@ -1,5 +1,6 @@
 <?php
 namespace App\Services;
+use Image;
 
 class ServiceUser
 {
@@ -45,6 +46,19 @@ class ServiceUser
         $dataBank['name_holder'] = $data['name_holder'];
         
         return $dataBank;
+    }
+
+    public function saveAvatar($file, $name)
+    {
+        $originalPath = public_path().'/uploads/profile/';
+        $originalImage = $file;
+        $fileName = getNameFile($file, $name);
+
+        $image = Image::make($originalImage);
+        $image->resize(200, null, function ($constraint) { $constraint->aspectRatio(); });
+        $image->save($originalPath.$fileName);
+        
+        return $fileName;
     }
 
 }

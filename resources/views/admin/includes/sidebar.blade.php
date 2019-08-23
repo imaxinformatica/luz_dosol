@@ -8,10 +8,12 @@
             </div>
             <div class="pull-left info">
                 @php($auth = auth()->guard('admin')->user())
-                <p>{{$auth->name}} <span class="configuration" onclick="window.location.href='{{route('admin.configuration.index')}}'"> <i class="fa fa-pencil"
-                            aria-hidden="true"></i> </span> </p>
+                <p>{{$auth->name}}
+                    <span class="configuration" onclick="window.location.href='{{route('admin.configuration.index')}}'">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+                </p>
                 <span><small>ID: {{str_pad($auth->id, 5, 0, STR_PAD_LEFT )}}</small></span>
-
             </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -53,10 +55,10 @@
                     </i><i class="fa fa-file" aria-hidden="true"></i> <span>PÁGINAS</span>
                 </a>
             </li>
-            <li {{ (Request::is('admin/transaction') ? 'class=active' : '') }}
-                {{ (Request::is('admin/transaction/*') ? 'class=active' : '') }}>
-                <a href="{{ route('admin.transaction.index')}}">
-                    <i class="fa fa-usd" aria-hidden="true"></i> <span>TRANSAÇÕES</span>
+            <li {{ (Request::is('admin/pedido') ? 'class=active' : '') }}
+                {{ (Request::is('admin/pedido/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.order.index')}}">
+                    <i class="fa fa-usd" aria-hidden="true"></i> <span>PEDIDOS</span>
                 </a>
             </li>
             <li {{ (Request::is('admin/export') ? 'class=active' : '') }}
@@ -77,11 +79,7 @@
                     <i class="fa fa-cog"></i> <span>CONFIGURAÇÃO</span>
                 </a>
             </li>
-            <li>
-                <a href="{{route('admin.logout')}}">
-                    <i class="fa fa-sign-out"></i> <span>LOGOUT</span>
-                </a>
-            </li>
+          
         </ul>
     </section>
     <!-- /.sidebar -->

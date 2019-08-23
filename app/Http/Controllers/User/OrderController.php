@@ -20,7 +20,7 @@ class OrderController extends Controller
         }
         $i = 1;
 
-        if($user->total() > 200 && $user->status == 0){
+        if($user->total() >= 200 && $user->status == 0){
             $user->status = 1;
             $user->save();
         }

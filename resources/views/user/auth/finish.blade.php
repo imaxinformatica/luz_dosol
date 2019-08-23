@@ -40,14 +40,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="logo" href="index"><img src="{{asset('images/logo.png')}}"></a>
+                    <a class="logo" href="{{url('/')}}"><img src="{{asset('images/logo.png')}}"></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index">SOBRE A EMPRESA</a></li>
+                        <li><a href="{{url('/')}}">SOBRE A EMPRESA</a></li>
                         <li><a href="#">NOSSO CATÁLOGO</a></li>
-                        <li class="office"><a href="login">ESCRITÓRIO VIRTUAL</a></li>
+                        <li class="office"><a href="{{url('user/login')}}">ESCRITÓRIO VIRTUAL</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
@@ -202,59 +202,59 @@
                                 </div>
                             </div>
                             <div class="box-body">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <div class="form-group">
-                                        <label for="bank_code">Código Banco <small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('bank_code')}}"
-                                            name="bank_code" required>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label for="bank_code">Código Banco <small>*</small></label>
+                                            <input type="text" class="btn-form" value="{{old('bank_code')}}"
+                                                name="bank_code" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-xs-4">
-                                    <div class="form-group">
-                                        <label for="agency">Agência <small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('agency')}}"
-                                            name="agency" required>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label for="agency">Agência <small>*</small></label>
+                                            <input type="text" class="btn-form" value="{{old('agency')}}" name="agency"
+                                                required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label for="account">Conta (s/ dígito) <small>*</small></label>
+                                            <input type="text" class="btn-form" value="{{old('account')}}"
+                                                name="account" required>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-xs-4">
-                                    <div class="form-group">
-                                        <label for="account">Conta (s/ dígito) <small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('account')}}"
-                                            name="account" required>
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <div class="form-group">
+                                            <label for="account_type">Dig. conta<small>*</small></label>
+                                            <input type="text" class="btn-form" value="{{old('account_type')}}"
+                                                name="account_type" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <div class="form-group">
+                                            <label for="name_holder">Nome Titular <small>*</small></label>
+                                            <input type="text" class="btn-form" value="{{old('name_holder')}}"
+                                                name="name_holder" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <div class="form-group">
+                                            <label for="cpf_holder">CPF Titular <small>*</small></label>
+                                            <input type="text" class="btn-form input-cpf" value="{{old('cpf_holder')}}"
+                                                name="cpf_holder" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <div class="form-group">
-                                        <label for="account_type">Dig. conta<small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('account_type')}}"
-                                            name="account_type" required>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <button class="btn-form" type="submir">CONTINUAR</button>
                                     </div>
                                 </div>
-                                <div class="col-xs-5">
-                                    <div class="form-group">
-                                        <label for="name_holder">Nome Titular <small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('name_holder')}}"
-                                            name="name_holder" required>
-                                    </div>
-                                </div>
-                                <div class="col-xs-5">
-                                    <div class="form-group">
-                                        <label for="cpf_holder">CPF Titular <small>*</small></label>
-                                        <input type="text" class="btn-form input-cpf"
-                                            value="{{old('cpf_holder')}}" name="cpf_holder" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <button class="btn-form" type="submir">CONTINUAR</button>
-                                </div>
-                            </div>
                         </form>
 
                     </div>
@@ -272,7 +272,35 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+    <script type="text/javascript">
+    $('.input-cep').inputmask({
+        "mask": "99999-999",
+        "placeholder": "_"
+    });
+
+    $('.input-cpf').inputmask({
+        "mask": "999.999.999-99",
+        "placeholder": "_"
+    });
+
+
+    $('.input-phone').focusout(function() {
+        var phone = $(this).val().replace(/\D/g, '');
+        if (phone.length > 10) {
+            $(this).inputmask({
+                "mask": "(99) 99999-9999",
+                "placeholder": " "
+            });
+        } else {
+            $(this).inputmask({
+                "mask": "(99) 9999-99999",
+                "placeholder": " "
+            });
+        }
+    });
+    </script>
 
 </body>
 
-</html>b
+</html>

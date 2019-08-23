@@ -36,4 +36,22 @@ class ConfigurationController extends Controller
         }
         return redirect()->back()->with('success', 'Dados Atualizados com sucesso');
     }
+
+    public function changeAvatar(Request $request, ServiceUser $sv)
+    {
+        $request->validate([
+            'avatar' => 'required'
+        ]);
+
+        $user = Auth::guard('user')->user();
+        try {
+            $data['avatar'] =$sv->saveAvatar($request->file('avatar'), $user->id);
+            $user->update($data);
+        } catch (\Exception $e) {
+            return redirect()->back()
+            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+        }
+        return redirect()->back()->with('success', 'Foto de perfil Atualizada');
+
+    }
 }

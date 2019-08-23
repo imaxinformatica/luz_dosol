@@ -40,14 +40,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="logo" href="index"><img src="{{asset('images/logo.png')}}"></a>
+                    <a class="logo" href="{{url('/')}}"><img src="{{asset('images/logo.png')}}"></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index">SOBRE A EMPRESA</a></li>
+                        <li><a href="{{url('/')}}">SOBRE A EMPRESA</a></li>
                         <li><a href="#">NOSSO CATÁLOGO</a></li>
-                        <li class="office"><a href="login">ESCRITÓRIO VIRTUAL</a></li>
+                        <li class="office"><a href="{{url('user/login')}}">ESCRITÓRIO VIRTUAL</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
