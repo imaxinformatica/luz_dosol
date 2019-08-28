@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\ServiceUser;
-use App\{User, State, Address, Databank};
+use App\{User, State, Bank};
 
 class UserController extends Controller
 {
@@ -31,7 +31,9 @@ class UserController extends Controller
     public function create()
     {
         $states = State::all();
+        $banks = Bank::get();
         return view('admin.pages.user.create')
+        ->with('banks', $banks)
         ->with('states', $states);
     }
 
@@ -54,9 +56,10 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $states = State::all();
-
+        $banks = Bank::get();
         return view('admin.pages.user.edit')
         ->with('states', $states)
+        ->with('banks', $banks)
         ->with('user', $user);
     }
 

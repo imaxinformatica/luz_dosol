@@ -10,4 +10,6 @@ class Bank extends Model
         'bank_code',
         'bank_name',
     ];
+
+    protected $primaryKey = 'bank_code';
 }

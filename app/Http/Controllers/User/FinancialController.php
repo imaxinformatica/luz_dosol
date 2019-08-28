@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FinancialRequest;
 use App\Databank;
+use App\Bank;
 use Auth;
 
 class FinancialController extends Controller
@@ -15,7 +16,9 @@ class FinancialController extends Controller
         $user = Auth::guard('user')->user();
 
         $dataBank = $user->databank;
+        $banks = Bank::get();
         return view('user.pages.financial.edit')
+        ->with('banks', $banks)
         ->with('dataBank', $dataBank);
     }
 

@@ -35,21 +35,6 @@
         </div>
     </section>
 
-    @isset($_GET['alert'])
-    <section class="content-header">
-        <!-- Main row -->
-        <div class="row">
-            <!-- Left col -->
-            <section class="col-sm-12">
-                <div class="alert alert-{{$_GET['type-alert']}} alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{$_GET['alert']}}
-                </div>
-            </section>
-        </div>
-    </section>
-    @endisset
-
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -106,7 +91,26 @@
                     </div>
                 </div>
             </div>
-        @endif
+            @else
+            <div class="col-lg-4">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Ativação pendente</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="inner">
+                                    <p>Ative-se agora mesmo, realize a sua primeira compra deste ciclo, para poder
+                                        verificar seu saldo.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
         @if(count($banners))
         <!-- Main row -->
@@ -122,7 +126,7 @@
                             <img src="{{ asset('uploads/banner/original/'.$banner->file)}}"
                                 alt="{{$banner->description}}" class="banner-dashboard cursor" @if($banner->target == 0)
                             onclick="window.location.href='{{$banner->link}}'" @else
-                            onclick="window.open('{{$banner->link}}', '_blank');"  @endif>
+                            onclick="window.open('{{$banner->link}}', '_blank');" @endif>
                             @else
                             <img src="{{ asset('uploads/banner/original/'.$banner->file)}}"
                                 alt="{{$banner->description}}" class="banner-dashboard">

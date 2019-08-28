@@ -42,6 +42,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
       Route::get('/delete/{product}', 'Admin\ProductController@delete')->name('delete');
     });
 
+    // Bancos
+    Route::group(['prefix' => 'banco', 'as' => 'bank.'], function () {
+        Route::get('/', 'Admin\BankController@index')->name('index');
+        Route::post('/store', 'Admin\BankController@store')->name('store');
+        Route::post('/update/', 'Admin\BankController@update')->name('update');
+        Route::get('/delete/{bank}', 'Admin\BankController@delete')->name('delete');
+      });
+
     // Páginas
     Route::group(['prefix' => 'pages', 'as' => 'pages.'], function () {
         Route::get('/', 'Admin\PageController@index')->name('index');

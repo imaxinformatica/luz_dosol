@@ -208,14 +208,21 @@
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="bank_code">Código Banco <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{old('bank_code')}}"
-                                            name="bank_code" required>
+                                        <select name="bank_code" id="bank_code" class="form-control select2" required>
+                                            <option disabled hidden selected>Selecione...</option>
+                                            @foreach($banks as $bank)
+                                            <option value="{{$bank->bank_code}}"
+                                                {{$bank->bank_code == old('bank_code') ? "selected" : ""}}>
+                                                {{$bank->bank_code." - ". $bank->bank_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="agency">Agência <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{old('agency')}}" name="agency" required>
+                                        <input type="text" class="form-control" value="{{old('agency')}}" name="agency"
+                                            required>
                                     </div>
                                 </div>
 

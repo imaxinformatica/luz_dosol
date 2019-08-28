@@ -33,8 +33,9 @@
 <!-- datepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-
-
+<!-- Select2 -->
+<script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{ asset('bower_components/select2/dist/js/i18n/pt-BR.js')}}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <!-- Slimscroll -->
@@ -59,6 +60,13 @@
       $('#due_date').hide();
     }else{
       $('#due_date').show();
+    }
+  });
+  $('.select2').select2({
+    allowClear: true,
+    placeholder: {
+      id: "",
+      placeholder: "Escolha..."
     }
   });
 

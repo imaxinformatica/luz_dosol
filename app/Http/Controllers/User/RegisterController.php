@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\State;
+use App\{State, Bank};
 
 class RegisterController extends Controller
 {
@@ -18,6 +18,9 @@ class RegisterController extends Controller
     public function register()
     {
         $states = State::all();
-        return view('user.auth.finish')->with('states', $states);
+        $banks = Bank::orderBy('bank_code', 'asc')->get();
+        return view('user.auth.finish')
+        ->with('banks', $banks)
+        ->with('states', $states);
     }
 }

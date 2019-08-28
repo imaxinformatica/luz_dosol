@@ -43,6 +43,12 @@
                     <i class="fa fa-cubes"></i> <span>PRODUTOS</span>
                 </a>
             </li>
+            <li {{ (Request::is('admin/banco') ? 'class=active' : '') }}
+                {{ (Request::is('admin/banco/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.bank.index')}}">
+                    <i class="fa fa-university"></i> <span>BANCOS</span>
+                </a>
+            </li>
             <li {{ (Request::is('admin/user') ? 'class=active' : '') }}
                 {{ (Request::is('admin/user/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.user.index')}}">
