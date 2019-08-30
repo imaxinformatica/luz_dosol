@@ -11,8 +11,8 @@ class DocumentController extends Controller
     public function index()
     {
         $documents = Document::all();
-        
+
         return view('user.pages.document.index')
-        ->with('documents', $documents);
+            ->with('documents', $documents);
     }
 }

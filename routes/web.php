@@ -80,6 +80,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 
     Route::group(['prefix' => 'export', 'as' => 'export.'], function () {
         Route::get('/', 'Admin\ExportController@index')->name('index');
+        Route::post('/gerar', 'Admin\ExportController@generate')->name('generate');
     });
     Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
         Route::get('/', 'Admin\ConfigurationController@index')->name('index');
@@ -178,3 +179,5 @@ Route::get('/verificar-graduacao', function(){
     $sv = new App\Services\ServiceGraduation;
     $sv->getMaxGraduation();
 });
+
+Route::get('get-bonus', 'User\DashboardController@getBonus')->name('get-bonus');

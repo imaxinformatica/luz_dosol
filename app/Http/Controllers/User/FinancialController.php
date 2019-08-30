@@ -18,8 +18,8 @@ class FinancialController extends Controller
         $dataBank = $user->databank;
         $banks = Bank::get();
         return view('user.pages.financial.edit')
-        ->with('banks', $banks)
-        ->with('dataBank', $dataBank);
+            ->with('banks', $banks)
+            ->with('dataBank', $dataBank);
     }
 
     public function update(FinancialRequest $request)
@@ -30,7 +30,7 @@ class FinancialController extends Controller
             $databank->update($data);
         } catch (\Exception $e) {
             return redirect()->back()
-            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Dados Bancários atualizados');
     }

@@ -15,9 +15,7 @@ class ProductController extends Controller
         $products = Product::where('status', 1)->get();
         $itemscart = $user->cart;
         return view('user.pages.product.index')
-        ->with('itemscart', $itemscart)
-        ->with('products', $products);
+            ->with('itemscart', $itemscart)
+            ->with('products', $products);
     }
-
-    
 }

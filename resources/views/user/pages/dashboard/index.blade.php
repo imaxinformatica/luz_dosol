@@ -16,19 +16,10 @@
             <div class="col-sm-6">
                 <div class="cycle-select">
                     <p>Ciclo do painel:</p>
-                    <select>
-                        <option>Maio de 2019</option>
-                        <option>Abril de 2019</option>
-                        <option>Março de 2019</option>
-                        <option>Fevereiro de 2019</option>
-                        <option>Janeiro de 2019</option>
-                        <option>Dezembro de 2018</option>
-                        <option>Novembro de 2018</option>
-                        <option>Outubro de 2018</option>
-                        <option>Setembro de 2018</option>
-                        <option>Agosto de 2018</option>
-                        <option>Julho de 2018</option>
-                        <option>Junho de 2018</option>
+                    <select name="cycle" id="cycle" required>
+                        @foreach($dates as $date)
+                        <option value="{{$date}}" {{end($dates) ? 'selected' : ""}} >{{$date}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -65,7 +56,7 @@
                         <div class="small-box bg-green">
                             <div class="inner">
                                 <p>Bônus de consumo</p>
-                                <h3>R$0,00</h3>
+                                <h3 class="bonus"></h3>
                             </div>
                         </div>
                     </div>
@@ -74,7 +65,7 @@
                         <div class="small-box bg-yellow">
                             <div class="inner">
                                 <p>Comissões da rede</p>
-                                <h3>R${{convertMoneyUSAtoBrazil($user->getCommission())}}</h3>
+                                <h3 class="commission"></h3>
                             </div>
                         </div>
                     </div>
@@ -85,7 +76,7 @@
                         <div class="small-box bg-aqua">
                             <div class="inner">
                                 <p>Bônus total</p>
-                                <h3>R${{convertMoneyUSAtoBrazil($user->getCommission())}}</h3>
+                                <h3 class="total"></h3>
                             </div>
                         </div>
                     </div>
@@ -153,3 +144,40 @@
 </div>
 
 @stop
+
+@section('scripts')
+<script type="text/javascript">
+$('document').ready(function(){
+    getCycle();
+});
+$('#cycle').on('change', function(){
+    getCycle();
+});
+
+function getCycle(){
+    let cycle = $('#cycle').val();
+    let array_cycle = cycle.split("/");
+    $.ajax({
+        type: 'GET',
+        url: "{{route('get-bonus')}}",
+        data: {
+            month: array_cycle[0],
+            year: array_cycle[1]
+        },
+        beforeSend: function() {
+            $('.bonus').html('Buscando...');
+            $('.commission').html('Buscando...');
+            $('.total').html('Buscando...');
+        },
+        success: function(data) {
+            $('.bonus').html('R$ ');
+            $('.bonus').append(data['bonus']);
+            $('.commission').html('R$ ');
+            $('.commission').append(data['commission']);
+            $('.total').html('R$ ');
+            $('.total').append(data['total']);
+        }
+    });
+}
+</script>
+@endsection

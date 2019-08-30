@@ -20,7 +20,7 @@ class RegisterController extends Controller
         $states = State::all();
         $banks = Bank::orderBy('bank_code', 'asc')->get();
         return view('user.auth.finish')
-        ->with('banks', $banks)
-        ->with('states', $states);
+            ->with('banks', $banks)
+            ->with('states', $states);
     }
 }

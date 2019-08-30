@@ -56,25 +56,25 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Exportar Pagamentos a serem realizados</h3>
                     </div>
-                    <form method="POST" action="#" autocomplete="off">
+                    <form method="POST" action="{{route('admin.export.generate')}}" autocomplete="off">
                         {{csrf_field()}}
                         <div class="box-body">
-                            
                             <div class="form-group row">
 
                                 <div class="col-xs-6">
-                                    <label>Data Inicial <small>*</small></label>
-                                        <input type="text" name="commission" class="form-control input-date" required>
+                                    <label for="cycle">Selecione o ciclo <small>*</small></label>
+                                    <select name="cycle" id="cycle" class="form-control" required>
+                                        @foreach($dates as $date)
+                                        <option value="{{$date}}" {{end($dates) ? 'selected' : ""}}>{{$date}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-xs-6">
-                                    <label>Data Final <small>*</small></label>
-                                        <input type="text" name="commission" class="form-control input-date" required>
-                                </div>
+
                             </div>
 
                         </div>
                         <div class="box-footer">
-                            <button type="button" class="btn btn-primary">Exportar</button>
+                            <button type="submit" class="btn btn-primary">Exportar</button>
                         </div>
                     </form>
                 </div>

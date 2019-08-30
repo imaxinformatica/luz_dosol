@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Databank', 'user_id');
     }
 
+    public function bonus()
+    {
+        return $this->hasMany('App\Bonus', 'user_id');
+    }
+
     public function status()
     {
         $status = $this->status == 0 ? 'Desativado' : 'Ativado';
@@ -100,20 +105,28 @@ class User extends Authenticatable
         return $total;
     }
 
-    public function getCommission()
+    public function getCommission($month, $year)
     {
         $totalCommission = 0;
-        foreach ($this->commission as $commission) {
+        foreach ($this->commission()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->get() as $commission) {
             $orderTotal = ($commission->commission_percentage/100) * $commission->order->total;
             $totalCommission += $orderTotal;
         }
         return $totalCommission;
     }
 
+    public function getBonus($month, $year)
+    {
+        $bonus = $this->bonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
+        return $bonus;
+    }
+
     public function getGraduation()
     {
         $activeUsers = $this->users()->where('status', 1)->count();
-        $commission = $this->getCommission();
+        $month = date('m');
+        $year = date('Y');
+        $commission = $this->getCommission($month, $year);
         $graduation = 'no-graduated.png';
         if($commission >= 27 && $activeUsers >= 3){
             $graduation = 'bronze.png';

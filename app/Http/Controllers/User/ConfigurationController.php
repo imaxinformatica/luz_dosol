@@ -16,8 +16,8 @@ class ConfigurationController extends Controller
         $user = Auth::guard('user')->user();
         $states = State::all();
         return view('user.pages.configuration.index')
-        ->with('states', $states)
-        ->with('user', $user);
+            ->with('states', $states)
+            ->with('user', $user);
     }
 
     public function update(ConfigurationRequest $request, ServiceUser $service)
@@ -32,7 +32,7 @@ class ConfigurationController extends Controller
             $user->address()->update($dataAddress);
         } catch (\Exception $e) {
             return redirect()->back()
-            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Dados Atualizados com sucesso');
     }
@@ -45,13 +45,12 @@ class ConfigurationController extends Controller
 
         $user = Auth::guard('user')->user();
         try {
-            $data['avatar'] =$sv->saveAvatar($request->file('avatar'), $user->id);
+            $data['avatar'] = $sv->saveAvatar($request->file('avatar'), $user->id);
             $user->update($data);
         } catch (\Exception $e) {
             return redirect()->back()
-            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Foto de perfil Atualizada');
-
     }
 }

@@ -16,7 +16,7 @@ class CartController extends Controller
         $data = $request->except('_token');
 
         $data['user_id'] = $user->id;
-        
+
         try {
             $product = Product::find($request->product_id);
             $data['price'] = $product->price;
@@ -27,7 +27,7 @@ class CartController extends Controller
             );
         } catch (\Exception $e) {
             return redirect()->back()
-            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Item adicionado ao carrinho.');
     }
@@ -38,7 +38,7 @@ class CartController extends Controller
             $cart->delete();
         } catch (\Exception $e) {
             return redirect()->back()
-            ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
+                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Item removido do carrinho.');
     }
@@ -54,7 +54,7 @@ class CartController extends Controller
             $total += $item->subtotal;
         }
         return view('user.pages.checkout.index')
-        ->with('total', $total)
-        ->with('itemsCart', $itemsCart);
+            ->with('total', $total)
+            ->with('itemsCart', $itemsCart);
     }
 }

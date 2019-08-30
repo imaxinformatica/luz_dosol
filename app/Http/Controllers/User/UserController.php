@@ -15,8 +15,7 @@ class UserController extends Controller
         $user = Auth::guard('user')->user();
 
         $users = User::where('user_id', $user->id)->orderBy('name', 'asc')->get();
- 
+
         return view('user.pages.user.index')->with('users', $users);
     }
-
 }

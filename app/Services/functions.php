@@ -38,3 +38,21 @@ function getNameFile($originalImage, $name_image)
 
     return $fileName;
 }
+
+function datasArray($data_inicio, $data_fim = null): array
+{
+	$data_fim = !$data_fim ? date('d-m-Y') : $data_fim;
+
+    list($dia, $mes, $ano) = explode( "-",$data_inicio);
+
+	$dataInicial = getdate(strtotime($data_inicio));
+	$dataFinal = getdate(strtotime($data_fim));
+	$dif = ( ($dataFinal[0] - $dataInicial[0]) / 86400 );
+	$meses = round($dif/30)+1;  // +1 serve para adiconar a data fim no array
+ 
+	for($x = 0; $x < $meses; $x++){
+		$datas[] =  date("m/Y",strtotime("+".$x." month",mktime(0, 0, 0,$mes,$dia,$ano)));
+	}
+
+  	return $datas;
+}
