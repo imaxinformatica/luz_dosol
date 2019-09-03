@@ -181,3 +181,10 @@ Route::get('/verificar-graduacao', function(){
 });
 
 Route::get('get-bonus', 'User\DashboardController@getBonus')->name('get-bonus');
+
+Route::get('teste', function(){
+    $sv = new \App\Services\ServiceGraduation;
+    $user = \App\User::find(2);
+    $teste = $sv->getGoldGraduation($user,3, 2000);
+    return dd($teste);
+});

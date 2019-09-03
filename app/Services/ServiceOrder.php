@@ -125,9 +125,10 @@ class ServiceOrder
         }
     }
 
-    public function generateReport($date): array
+    public function generateReport($date)
     {
         $users = User::get();
+        $array = [];
         foreach ($users as $key => $user) {
             $data['código'] = $user->id;
             $data['nome'] = $user->name;

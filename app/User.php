@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Notifications\UserResetPassword;
+use App\Services\ServiceGraduation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -51,14 +52,14 @@ class User extends Authenticatable
     public function cart()
     {
         return $this->belongsToMany('App\Product', 'carts', 'user_id', 'product_id')
-        ->withPivot('product_id', 'user_id', 'price', 'qty', 'id');
+            ->withPivot('product_id', 'user_id', 'price', 'qty', 'id');
     }
-    
+
     public function users()
     {
         return $this->hasMany('App\User', 'user_id');
     }
-    
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
@@ -109,7 +110,7 @@ class User extends Authenticatable
     {
         $totalCommission = 0;
         foreach ($this->commission()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->get() as $commission) {
-            $orderTotal = ($commission->commission_percentage/100) * $commission->order->total;
+            $orderTotal = ($commission->commission_percentage / 100) * $commission->order->total;
             $totalCommission += $orderTotal;
         }
         return $totalCommission;
@@ -121,34 +122,33 @@ class User extends Authenticatable
         return $bonus;
     }
 
-    public function getGraduation()
+    public function getGraduation() : bool
     {
+        $sv = new ServiceGraduation;
         $activeUsers = $this->users()->where('status', 1)->count();
-        $month = date('m');
-        $year = date('Y');
-        $commission = $this->getCommission($month, $year);
-        $graduation = 'no-graduated.png';
-        if($commission >= 27 && $activeUsers >= 3){
-            $graduation = 'bronze.png';
+        $date = date('m-Y', strtotime('-1 day'));
+        list($month, $year) = explode('-', $date);
+        $bonusTotal = ($this->getCommission($month, $year) + $this->getBonus($month, $year));
+
+        $graduation = false;
+        $graduation = $sv->getBronzeGraduation($activeUsers, $bonusTotal);
+        if ($graduation) {
+            $graduation = $sv->getSilverGraduation($activeUsers, $bonusTotal);
+            if ($graduation) {
+                $sv->getGoldGraduation($this, $activeUsers, $bonusTotal);
+            }
         }
-        if($commission >= 141 && $activeUsers >= 3){
-            $graduation = 'prata.png';
-        }
-        if($commission >= 1250 && $activeUsers >= 3){
-            $graduation = 'ouro.png';
-        }
-        
         return $graduation;
     }
 
     public function typeOfGraduation($graduation)
     {
         $typeGraduation = 0;
-        if($graduation == 'bronze.png'){
+        if ($graduation == 'bronze.png') {
             $typeGraduation = 1;
-        }elseif($graduation == 'prata.png'){
+        } elseif ($graduation == 'prata.png') {
             $typeGraduation = 2;
-        }elseif($graduation == 'ouro.png'){
+        } elseif ($graduation == 'ouro.png') {
             $typeGraduation = 3;
         }
 

@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Services;
+
 use Image;
+use App\User;
 
 class ServiceUser
 {
@@ -13,15 +16,24 @@ class ServiceUser
         $dataUser['rg'] = $data['rg'];
         $dataUser['cellphone'] = $data['cellphone'];
         $dataUser['phone'] = $data['phone'];
-        if(isset($data['password'])){
+        if (isset($data['password'])) {
 
             $dataUser['password'] = bcrypt($data['password']);
         }
-        if(isset($data['status'])){
+        if (isset($data['status'])) {
 
             $dataUser['status'] = $data['status'];
         }
         return $dataUser;
+    }
+
+    public function createUser($dataUser, $dataAdress, $dataBank): User
+    {
+        $user = User::create($dataUser, $dataAdress, $dataBank);
+        $user->address()->create($dataAdress);
+        $user->databank()->create($dataBank);
+
+        return $user;
     }
 
     public function generateDataAddress(array $data): array
@@ -44,21 +56,22 @@ class ServiceUser
         $dataBank['account_type'] = $data['account_type'];
         $dataBank['cpf_holder'] = $data['cpf_holder'];
         $dataBank['name_holder'] = $data['name_holder'];
-        
+
         return $dataBank;
     }
 
     public function saveAvatar($file, $name)
     {
-        $originalPath = public_path().'/uploads/profile/';
+        $originalPath = public_path() . '/uploads/profile/';
         $originalImage = $file;
         $fileName = getNameFile($file, $name);
 
         $image = Image::make($originalImage);
-        $image->resize(200, null, function ($constraint) { $constraint->aspectRatio(); });
-        $image->save($originalPath.$fileName);
-        
+        $image->resize(200, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $image->save($originalPath . $fileName);
+
         return $fileName;
     }
-
 }

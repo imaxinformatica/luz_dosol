@@ -43,9 +43,7 @@ class UserController extends Controller
         $dataAdress = $service->generateDataAddress($request->all());
         $dataBank = $service->generateDataBank($request->all());
         try {
-            $user = User::create($dataUser);
-            $user->address()->create($dataAdress);
-            $user->databank()->create($dataBank);
+            $service->createUser($dataUser, $dataAdress, $dataBank);
         } catch (\Exception $e) {
             return redirect()->back()
             ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
