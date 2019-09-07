@@ -11,11 +11,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
@@ -29,21 +24,11 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new UserResetPassword($token));
@@ -80,12 +65,6 @@ class User extends Authenticatable
         return $this->hasMany('App\Bonus', 'user_id');
     }
 
-    public function status()
-    {
-        $status = $this->status == 0 ? 'Desativado' : 'Ativado';
-        return $status;
-    }
-
     public function commission()
     {
         return $this->hasMany('App\OrderCommission', 'user_id');
@@ -94,6 +73,23 @@ class User extends Authenticatable
     public function graduation()
     {
         return $this->hasOne('App\Graduation', 'user_id');
+    }
+
+    public function active()
+    {
+        return $this->hasMany('App\ActiveUser', 'user_id');
+    }
+
+    public function status()
+    {
+        $status = $this->status == 0 ? 'Desativado' : 'Ativado';
+        return $status;
+    }
+
+    public function getActive($month, $year)
+    {
+        $active = $this->active()->whereMonth('date_active', $month)->whereYear('date_active', $year)->first();
+        return $active;
     }
 
     public function total()
@@ -122,36 +118,78 @@ class User extends Authenticatable
         return $bonus;
     }
 
-    public function getGraduation() : bool
+    public function getTotalBonus($month, $year)
+    {
+        $totalBonus = $this->getCommission($month, $year) + $this->getBonus($month, $year);
+        return $totalBonus;
+    }
+
+    public function getGraduation(): int
     {
         $sv = new ServiceGraduation;
+
         $activeUsers = $this->users()->where('status', 1)->count();
+
         $date = date('m-Y', strtotime('-1 day'));
         list($month, $year) = explode('-', $date);
-        $bonusTotal = ($this->getCommission($month, $year) + $this->getBonus($month, $year));
 
-        $graduation = false;
-        $graduation = $sv->getBronzeGraduation($activeUsers, $bonusTotal);
-        if ($graduation) {
-            $graduation = $sv->getSilverGraduation($activeUsers, $bonusTotal);
-            if ($graduation) {
-                $sv->getGoldGraduation($this, $activeUsers, $bonusTotal);
+        $bonusTotal = $this->getTotalBonus($month, $year);
+
+        $graduation = 0;
+
+        $isGraduated = $sv->getBronzeGraduation($activeUsers, $bonusTotal);
+        if ($isGraduated) {
+            $isGraduated = false;
+            $graduation++;
+            $isGraduated = $sv->getSilverGraduation($activeUsers, $bonusTotal);
+
+            if ($isGraduated) {
+                $isGraduated = false;
+                $graduation++;
+                $isGraduated = $sv->getGoldGraduation($this, $activeUsers, $bonusTotal);
+
+                if ($isGraduated) {
+                    $isGraduated = false;
+                    $graduation++;
+                    $isGraduated = $sv->getPlatinumGraduation($this, $activeUsers, $bonusTotal);
+
+                    if ($isGraduated) {
+                        $isGraduated = false;
+                        $graduation++;
+                        $isGraduated = $sv->getDiamondGraduation($this, $activeUsers, $bonusTotal);
+
+                        if ($isGraduated) {
+                            $isGraduated = false;
+                            $graduation++;
+                            $isGraduated = $sv->getMasterGraduation($this, $activeUsers, $bonusTotal);
+
+                            if ($isGraduated) {
+                                $isGraduated = false;
+                                $graduation++;
+                                $isGraduated = $sv->getEmperorGraduation($this, $activeUsers, $bonusTotal);
+                                
+                                if ($isGraduated) {
+                                    $isGraduated = false;
+                                    $graduation++;
+                                    $isGraduated = $sv->getPrinceGraduation($this, $activeUsers, $bonusTotal);
+
+                                    if ($isGraduated) {
+                                        $isGraduated = false;
+                                        $graduation++;
+                                        $isGraduated = $sv->getKingGraduation($this, $activeUsers, $bonusTotal);
+
+                                        if ($isGraduated) {
+                                            $isGraduated = false;
+                                            $graduation++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         return $graduation;
-    }
-
-    public function typeOfGraduation($graduation)
-    {
-        $typeGraduation = 0;
-        if ($graduation == 'bronze.png') {
-            $typeGraduation = 1;
-        } elseif ($graduation == 'prata.png') {
-            $typeGraduation = 2;
-        } elseif ($graduation == 'ouro.png') {
-            $typeGraduation = 3;
-        }
-
-        return $typeGraduation;
     }
 }

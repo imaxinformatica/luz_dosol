@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
 
         $user =  Auth::guard('user')->user();
-        
+
         $userDate = date("d-m-Y", strtotime($user->created_at));
 
         $dates = datasArray($userDate);
@@ -27,10 +27,15 @@ class DashboardController extends Controller
     public function getBonus(Request $request)
     {
         $user =  Auth::guard('user')->user();
-    
+
+        $isActive = $user->getActive($request->month, $request->year);
+        if (!$isActive) {
+            return view('user.parts.active');
+        }
+
         $data['bonus'] = convertMoneyUSAtoBrazil($user->getBonus($request->month, $request->year));
         $data['commission'] = convertMoneyUSAtoBrazil($user->getCommission($request->month, $request->year));
-        $data['total'] = convertMoneyUSAtoBrazil($user->getBonus($request->month, $request->year) + $user->getCommission($request->month, $request->year));
-        return $data;
+        $data['total'] = convertMoneyUSAtoBrazil($user->getTotalBonus($request->month, $request->year));
+        return view('user.parts.bonus')->with('data', $data);
     }
 }

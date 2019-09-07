@@ -48,60 +48,10 @@
                     </div>
                 </div>
             </div>
-            @if($user->status == 1)
-            <div class="col-lg-7">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <!-- small box -->
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <p>Bônus de consumo</p>
-                                <h3 class="bonus"></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <!-- small box -->
-                        <div class="small-box bg-yellow">
-                            <div class="inner">
-                                <p>Comissões da rede</p>
-                                <h3 class="commission"></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <!-- small box -->
-                        <div class="small-box bg-aqua">
-                            <div class="inner">
-                                <p>Bônus total</p>
-                                <h3 class="total"></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="bonus">
+                <!-- Conteudo carregado via ajax -->
             </div>
-            @else
-            <div class="col-lg-4">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Ativação pendente</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="inner">
-                                    <p>Ative-se agora mesmo, realize a sua primeira compra deste ciclo, para poder
-                                        verificar seu saldo.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
+            
         </div>
         @if(count($banners))
         <!-- Main row -->
@@ -165,17 +115,9 @@ function getCycle(){
             year: array_cycle[1]
         },
         beforeSend: function() {
-            $('.bonus').html('Buscando...');
-            $('.commission').html('Buscando...');
-            $('.total').html('Buscando...');
         },
         success: function(data) {
-            $('.bonus').html('R$ ');
-            $('.bonus').append(data['bonus']);
-            $('.commission').html('R$ ');
-            $('.commission').append(data['commission']);
-            $('.total').html('R$ ');
-            $('.total').append(data['total']);
+            $('.bonus').html(data);
         }
     });
 }

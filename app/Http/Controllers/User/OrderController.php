@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ServiceOrder;
-use App\{Order};
+use App\{ActiveUser, Order};
 use Auth;
 
 class OrderController extends Controller
@@ -18,9 +18,12 @@ class OrderController extends Controller
         if (count($user->cart) == 0) {
             return redirect()->back()->with('warning', 'O pedido precisa ter ao mínimo um item no carrinho');
         }
-        $i = 1;
-
         if ($user->total() >= 200 && $user->status == 0) {
+            $date = date('Y-m-d');
+            ActiveUser::create([
+                'user_id' => $user->id,
+                'date_active' => $date
+                ]);
             $user->status = 1;
             $user->save();
         }

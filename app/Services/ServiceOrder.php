@@ -132,7 +132,7 @@ class ServiceOrder
         foreach ($users as $key => $user) {
             $data['código'] = $user->id;
             $data['nome'] = $user->name;
-            $data['valor'] = ($user->getBonus($date[0], $date[1]) + $user->getCommission($date[0], $date[1]));
+            $data['valor'] = (getTotalBonus($date[0], $date[1]));
             if ($data['valor'] == 0) {
                 continue;
             }

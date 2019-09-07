@@ -1,5 +1,5 @@
 s\Unit\Graduation
- [x] Verifica se o usuario eh gold
+ [x] Verifica se o usuario eh graduado
 
 s\Unit\User
  [x] Verifica usuario esta criado
