@@ -10,4 +10,9 @@ class ActiveUser extends Model
         'user_id', 
         'date_active'
     ];
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'user_id');
+    }
 }

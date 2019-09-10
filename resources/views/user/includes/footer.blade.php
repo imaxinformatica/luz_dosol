@@ -52,33 +52,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+<!-- Pagseguro Sandbox -->
+<script type="text/javascript" src=
+"https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
 
 <script type="text/javascript">
-  $('#type-transaction').on('change', function(){
-    var type = $(this).val();
-    if (type != 1) {
-      $('#due_date').hide();
-    }else{
-      $('#due_date').show();
-    }
-  });
-  $('.select2').select2({
-    allowClear: true,
-    placeholder: {
-      id: "",
-      placeholder: "Escolha..."
-    }
-  });
-
-//////////////////////////////////////////////////////////////////////////////////
-
-
-
 $('.change-avatar').on('click', function(){
   $('#changeAvatar').modal('show');
 });
   
-
   // Converte número do formato brasileiro para tipo float
   function realToFloat(amount){
     amount = amount.replace(/\./g, "");

@@ -43,7 +43,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Item removido do carrinho.');
     }
 
-    public function checkout()
+    public function cart()
     {
         $user = Auth::guard('user')->user();
 

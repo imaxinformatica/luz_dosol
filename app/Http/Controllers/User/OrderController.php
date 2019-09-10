@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ServiceOrder;
 use App\{ActiveUser, Order};
+use App\Services\ServiceCheckout;
 use Auth;
 
 class OrderController extends Controller
 {
-    public function checkout(Request $request)
+    public function checkout(Request $request, ServiceCheckout $sv)
     {
         $sv = new ServiceOrder;
 
@@ -19,14 +20,9 @@ class OrderController extends Controller
             return redirect()->back()->with('warning', 'O pedido precisa ter ao mínimo um item no carrinho');
         }
         if ($user->total() >= 200 && $user->status == 0) {
-            $date = date('Y-m-d');
-            ActiveUser::create([
-                'user_id' => $user->id,
-                'date_active' => $date
-                ]);
-            $user->status = 1;
-            $user->save();
+            $sv->activeUser($user);
         }
+
 
         $order = new Order;
         $order->user_id = $user->id;
@@ -42,6 +38,27 @@ class OrderController extends Controller
             $items->pivot->delete();
         }
         return redirect()->route('user.order.index')->with('success', 'Pedido finalizado');
+    }
+
+    public function getSession()
+    {
+        $data['email'] = config('services.pagseguro.pagseguro_email');
+        $data['token'] = config('services.pagseguro.pagseguro_token');
+
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1'));
+        curl_setopt($curl, CURLOPT_URL, "https://ws.sandbox.pagseguro.uol.com.br/v2/sessions");
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+        $resp = simplexml_load_string($resp);
+        return $resp->id;
     }
 
     public function index()

@@ -145,8 +145,41 @@
 @section('scripts')
 <script type="text/javascript">
 $('.finishOrder').on('click', function() {
-    $('#finishOrder').modal('show');
+    getSessionScript();
 });
+
+function getSessionScript() {
+    $.ajax({
+        type: 'POST',
+        url: "{{route('session.pagseguro')}}",
+        data: {
+            _token: "{{ csrf_token() }}",
+        },
+        beforeSend: function() {},
+        success: function(data) {
+            // $("#finishOrder form input[name='session_id']").val(data);
+            PagSeguroDirectPayment.setSessionId(data);
+            console.log(data);
+            getPaymentMethodScript();
+            $('#finishOrder').modal('show');
+        }
+    });
+}
+
+function getPaymentMethodScript() {
+    PagSeguroDirectPayment.getPaymentMethods({
+        success: function(data) {
+            var response = $.parseJSON(data);
+            console.log(response);
+        },
+        error: function(data) {
+	    // Callback para chamadas que falharam.
+	},
+	complete: function(data) {
+	    // Callback para todas chamadas.
+	}
+    });
+}
 </script>
 @endsection
 
@@ -161,7 +194,8 @@ $('.finishOrder').on('click', function() {
                 <h4 class="modal-title">Finalizar Pedido</h4>
             </div>
             <form method="post" action="{{route('user.order.checkout')}}">
-            {{csrf_field()}}
+                {{csrf_field()}}
+                <input type="hidden" name="session_id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-8" style="padding-top:5px;">

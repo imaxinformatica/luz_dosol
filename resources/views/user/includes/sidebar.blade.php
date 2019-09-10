@@ -30,7 +30,7 @@
             </li>
             <!-- <li {{ (Request::is('user/checkout') ? 'class=active' : '') }}
                 {{ (Request::is('user/checkout/*') ? 'class=active' : '') }}>
-                <a href="{{ route('user.checkout')}}">
+                <a href="#">
                     <i class="fa fa-credit-card"></i> <span>FINALIZAR PEDIDO</span>
                 </a>
             </li> -->

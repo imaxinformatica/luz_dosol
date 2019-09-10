@@ -6,6 +6,14 @@ use App\User;
 
 class ServiceGraduation
 {
+    protected $month;
+    protected $year;
+    function __construct() {
+        $date = date('m-Y', strtotime('-1 day'));
+        list($month, $year) = explode('-', $date);
+        $this->month = $month;
+        $this->year = $year;
+    }
     public function getMaxGraduation()
     {
         $users = User::where('status', 1)->get();

@@ -33,13 +33,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 
     // Cadastro de usuários
     Route::group(['prefix' => 'produtos', 'as' => 'product.'], function () {
-      Route::get('/', 'Admin\ProductController@index')->name('index');
-      Route::get('/create', 'Admin\ProductController@create')->name('create');
-      Route::post('/store', 'Admin\ProductController@store')->name('store');
-      Route::get('/edit/{product}', 'Admin\ProductController@edit')->name('edit');
-      Route::post('/update/{product}', 'Admin\ProductController@update')->name('update');
-      Route::get('/status/{product}', 'Admin\ProductController@status')->name('status');
-      Route::get('/delete/{product}', 'Admin\ProductController@delete')->name('delete');
+        Route::get('/', 'Admin\ProductController@index')->name('index');
+        Route::get('/create', 'Admin\ProductController@create')->name('create');
+        Route::post('/store', 'Admin\ProductController@store')->name('store');
+        Route::get('/edit/{product}', 'Admin\ProductController@edit')->name('edit');
+        Route::post('/update/{product}', 'Admin\ProductController@update')->name('update');
+        Route::get('/status/{product}', 'Admin\ProductController@status')->name('status');
+        Route::get('/delete/{product}', 'Admin\ProductController@delete')->name('delete');
     });
 
     // Bancos
@@ -48,7 +48,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::post('/store', 'Admin\BankController@store')->name('store');
         Route::post('/update/', 'Admin\BankController@update')->name('update');
         Route::get('/delete/{bank}', 'Admin\BankController@delete')->name('delete');
-      });
+    });
 
     // Páginas
     Route::group(['prefix' => 'pages', 'as' => 'pages.'], function () {
@@ -70,7 +70,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::get('/edit/{document}', 'Admin\DocumentController@edit')->name('edit');
         Route::post('/update/{document}', 'Admin\DocumentController@update')->name('update');
         Route::get('/delete/{document}', 'Admin\DocumentController@delete')->name('delete');
-
     });
 
     Route::group(['prefix' => 'pedido', 'as' => 'order.'], function () {
@@ -104,7 +103,8 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
 
     Route::get('/produtos', 'User\ProductController@index')->name('product');
 
-    Route::group(['prefix' => 'carrinho', 'as' => 'cart.'], function(){
+    Route::group(['prefix' => 'carrinho', 'as' => 'cart.'], function () {
+        Route::get('/', 'User\CartController@cart')->name('index');
         Route::post('/incluir', 'User\CartController@include')->name('include');
         Route::get('/remover/{cart}', 'User\CartController@delete')->name('delete');
     });
@@ -136,7 +136,6 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
         Route::post('/checkout', 'User\OrderController@checkout')->name('checkout');
     });
 
-    Route::get('/checkout', 'User\CartController@checkout')->name('checkout');
 
     Route::get('/documents', function () {
         return view('user.pages.documents');
@@ -174,17 +173,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 });
 
+Route::post('session-pagseguro', 'User\OrderController@getSession')->name('session.pagseguro');
+Route::get('get-bonus', 'User\DashboardController@getBonus')->name('get-bonus');
 
-Route::get('/verificar-graduacao', function(){
+Route::get('/verificar-graduacao', function () {
     $sv = new App\Services\ServiceGraduation;
     $sv->getMaxGraduation();
 });
 
-Route::get('get-bonus', 'User\DashboardController@getBonus')->name('get-bonus');
 
-Route::get('teste', function(){
+Route::get('teste', function () {
     $sv = new \App\Services\ServiceGraduation;
-    $user = \App\User::find(2);
-    $teste = $sv->getGoldGraduation($user,3, 2000);
+    $user = \App\User::find(1);
+
+    return dd($user->activeUsers(9, 2019));
+    $teste = $sv->getGoldGraduation($user, 3, 2000);
     return dd($teste);
 });
+

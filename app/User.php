@@ -124,14 +124,23 @@ class User extends Authenticatable
         return $totalBonus;
     }
 
+    public function activeUsers($month, $year)
+    {
+        $usersNetwwork = $this->users()->pluck('id')->toArray();
+
+        $activeUsers = \App\ActiveUser::whereIn('user_id', $usersNetwwork)
+            ->whereMonth('date_active', $month)
+            ->whereYear('date_active', $year)->get();
+        return $activeUsers;
+    }
+
     public function getGraduation(): int
     {
         $sv = new ServiceGraduation;
-
-        $activeUsers = $this->users()->where('status', 1)->count();
-
         $date = date('m-Y', strtotime('-1 day'));
         list($month, $year) = explode('-', $date);
+
+        $activeUsers = $this->activeUsers($month, $year)->count();
 
         $bonusTotal = $this->getTotalBonus($month, $year);
 
@@ -167,7 +176,7 @@ class User extends Authenticatable
                                 $isGraduated = false;
                                 $graduation++;
                                 $isGraduated = $sv->getEmperorGraduation($this, $activeUsers, $bonusTotal);
-                                
+
                                 if ($isGraduated) {
                                     $isGraduated = false;
                                     $graduation++;

@@ -133,7 +133,7 @@
                         @endforelse
                     </tbody>
                     <tfoot>
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('user.checkout')}}'">Finalizar Pedido</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('user.cart.index')}}'">Finalizar Pedido</button>
                     </tfoot>
                 </table>
             </div>
