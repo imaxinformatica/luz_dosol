@@ -8,6 +8,7 @@ use App\{Order};
 use App\Http\Requests\CheckoutRequest;
 use App\Services\ServiceCheckout;
 use Auth;
+use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends Controller
 {
@@ -79,8 +80,8 @@ class OrderController extends Controller
         if ($user->total() >= 200 && $user->status == 0) {
             $svCheckout->activeUser($user);
         }
-        $order = $svOrder->generateOrder($request->all(),$array, $user->id);
-        
+        $order = $svOrder->generateOrder($request->all(), $array, $user->id);
+
         $svOrder->createComission($order->id, $user);
 
         foreach ($user->cart as $items) {
@@ -90,26 +91,27 @@ class OrderController extends Controller
         return redirect()->route('user.order.index')->with('success', 'Pedido finalizado');
     }
 
-    public function getDataTransaction($transactionCode)
+    public function callback(Request $request)
     {
+        $notification = $request->notificationCode;
         $data['email'] = config('services.pagseguro.pagseguro_email');
         $data['token'] = config('services.pagseguro.pagseguro_token');
         $data = http_build_query($data);
-
-        $url = "https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/{$transactionCode}?{$data}";
-        $headers = array('Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1');
+        $url = "https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/{$notification}?{$data}";
 
         $ch = curl_init();
+
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_URL, $url);
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $xml = curl_exec($ch);
         curl_close($ch);
-        echo $xml;
+
         $xml = simplexml_load_string($xml);
-        $reference = $xml->reference;
-        $status = $xml->status;
-        if ($reference && $status) { }
+        
+        $order = Order::where('code', $xml->code)->first();
+        if ($order) {
+            $order->update(['status' => $xml->status]);
+        }
     }
 
     public function index()
