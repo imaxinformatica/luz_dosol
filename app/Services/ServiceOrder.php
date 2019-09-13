@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\{Bonus, Product, OrderItem, OrderCommission, User, Commission};
+use App\{Bonus, Product, OrderItem, OrderCommission, User, Commission, Order};
 
 class ServiceOrder
 {
@@ -16,6 +16,26 @@ class ServiceOrder
         $orderItem->price = $product->price;
         $orderItem->subtotal = $product->price * $itemCart->qty;
         $orderItem->save();
+    }
+
+    public function generateOrder(array $data, array $arrayPagSeguro, int $user_id): Order
+    {
+        try {
+            $order = new Order();
+            $order->user_id = $user_id;
+            $order->shipping = $arrayPagSeguro['shipping']['cost'];
+            $order->payment_link = $data['payment_method'] == 'boleto' ? $arrayPagSeguro['paymentLink'] : null;
+            $order->subtotal = $arrayPagSeguro['grossAmount'];
+            $order->payment_method = $data['payment_method'];
+            $order->status = $arrayPagSeguro['status'];
+            $order->code = $arrayPagSeguro['code'];
+            $order->total = ($arrayPagSeguro['grossAmount'] + $arrayPagSeguro['shipping']['cost']);
+            $order->save();
+            return $order;
+        } catch (\Exception $e) {
+            $msg = ['error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores'.$e.getMessage()];
+            return null;
+        }
     }
 
     public function createComission($order_id, User $user)
@@ -62,7 +82,6 @@ class ServiceOrder
                     ]);
                 }
             }
-
             // level 2
             $usersLevel1 = $user->users()->pluck('id')->toArray();
             $usersLevel2 = User::whereIn('user_id', $usersLevel1)->where('status', 1)->get();
@@ -77,7 +96,6 @@ class ServiceOrder
                     ]);
                 }
             }
-
             // level 3
             $usersLevel2 = User::whereIn('user_id', $usersLevel1)->pluck('id')->toArray();
             $usersLevel3 = User::whereIn('user_id', $usersLevel2)->where('status', 1)->get();
@@ -92,7 +110,6 @@ class ServiceOrder
                     ]);
                 }
             }
-
             // level 4
             $usersLevel3 = User::whereIn('user_id', $usersLevel2)->pluck('id')->toArray();
             $usersLevel4 = User::whereIn('user_id', $usersLevel3)->where('status', 1)->get();
@@ -107,11 +124,9 @@ class ServiceOrder
                     ]);
                 }
             }
-
             // level 5
             $usersLevel4 = User::whereIn('user_id', $usersLevel3)->pluck('id')->toArray();
             $usersLevel5 = User::whereIn('user_id', $usersLevel4)->where('status', 1)->get();
-
             if (count($usersLevel5) >= 122) {
                 if (count($bonus->where('level_bonus', 5)) == 0) {
 

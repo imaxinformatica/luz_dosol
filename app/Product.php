@@ -11,6 +11,7 @@ class Product extends Model
         'reference',
         'description',
         'price',
+        'weight',
         'file',
         'status'
     ];

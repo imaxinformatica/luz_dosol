@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->double('price');
             $table->string('file');
+            $table->double('weight');
             $table->integer('status')->default(0);
             $table->timestamps();
         });

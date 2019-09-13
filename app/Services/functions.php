@@ -60,3 +60,20 @@ function datasArray($data_inicio, $data_fim = null): array
 
   	return $datas;
 }
+
+function limpaCPF_CNPJ($valor){
+    $valor = trim($valor);
+    $valor = str_replace(".", "", $valor);
+    $valor = str_replace(",", "", $valor);
+    $valor = str_replace("-", "", $valor);
+    $valor = str_replace("/", "", $valor);
+    return $valor;
+}
+function numberPhone($valor){
+    $valor = trim($valor);
+    $arrayRemove = [' ', '-', '(', ')'];
+    $valor = str_replace($arrayRemove, "", $valor);
+    $number['dd'] = substr($valor, 0, 2);
+    $number['num']  = substr($valor, 2);
+    return $number;
+}

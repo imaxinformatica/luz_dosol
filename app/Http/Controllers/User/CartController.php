@@ -54,6 +54,7 @@ class CartController extends Controller
             $total += $item->subtotal;
         }
         return view('user.pages.checkout.index')
+            ->with('user', $user)
             ->with('total', $total)
             ->with('itemsCart', $itemsCart);
     }

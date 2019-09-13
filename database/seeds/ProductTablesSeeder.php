@@ -18,6 +18,7 @@ class ProductTablesSeeder extends Seeder
             $array['description'] = 'Descrição '.$i;
             $array['price'] = 10.00;
             $array['status'] = 1;
+            $array['weight'] = 15;
             $array['file'] = "Suco2019082115664126970531695001566412697.jpeg";
             DB::table('products')->insert([
                     $array

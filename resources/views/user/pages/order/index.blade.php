@@ -92,7 +92,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Pedido</th>
+                                    <th scope="col">Total produtos</th>
+                                    <th scope="col">Frete</th>
                                     <th scope="col">Total</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Ação</th>
                                 </tr>
                             </thead>
@@ -100,12 +103,21 @@
                                 @forelse($orders as $order)
                                 <tr>
                                     <td>#{{str_pad($order->id, 5, 0, STR_PAD_LEFT )}}</td>
+                                    <td>R${{convertMoneyUSAtoBrazil($order->subtotal)}}</td>
+                                    <td>R${{convertMoneyUSAtoBrazil($order->shipping)}}</td>
                                     <td>R${{convertMoneyUSAtoBrazil($order->total)}}</td>
+                                    <td>{{$order->status}}</td>
                                     <td>
-                                        <a href="{{ route('user.order.show', ['order' => $order])}}"
-                                            title="Editar" class="act-list">
+                                        <a href="{{ route('user.order.show', ['order' => $order])}}" title="Editar"
+                                            class="act-list">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
+                                        @if($order->payment_method == 'boleto')
+                                        <a href="{{$order->payment_link}}" target="_blank"  title="Visualizar Boleto"
+                                            class="act-list">
+                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                        </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty

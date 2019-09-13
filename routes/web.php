@@ -176,18 +176,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::post('session-pagseguro', 'User\OrderController@getSession')->name('session.pagseguro');
 Route::get('get-bonus', 'User\DashboardController@getBonus')->name('get-bonus');
 
+Route::get('/card-content', function(){
+    return view('user.parts.card');
+})->name('card.content');
+Route::get('/address-content', function(){
+    return view('user.parts.address');
+})->name('address.content');
+Route::get('/callback-pagseguro', 'User\OrderController@callback')->name('callback.pagseguro');
+
 Route::get('/verificar-graduacao', function () {
     $sv = new App\Services\ServiceGraduation;
     $sv->getMaxGraduation();
-});
-
-
-Route::get('teste', function () {
-    $sv = new \App\Services\ServiceGraduation;
-    $user = \App\User::find(1);
-
-    return dd($user->activeUsers(9, 2019));
-    $teste = $sv->getGoldGraduation($user, 3, 2000);
-    return dd($teste);
 });
 

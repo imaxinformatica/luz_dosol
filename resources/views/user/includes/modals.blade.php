@@ -21,9 +21,31 @@
     <!-- /.modal-dialog -->
 </div>
 <!--/.Exclusão-->
+<!--CEP não encontrado-->
+<div class="modal fade" style="z-index: 9999;" id="modalCEPNotFound">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">CEP não encontrado</h4>
+            </div>
+            <div class="modal-body">
+                <p>Verifique se o CEP que você digitou está correto</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Confirmar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--/.CEP não encontrado-->
 
 <!--Mudar foto de perfil-->
-<div class="modal fade" id="changeAvatar">
+<div class="modal fade"  id="changeAvatar">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

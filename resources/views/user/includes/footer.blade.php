@@ -56,6 +56,10 @@
 <script type="text/javascript" src=
 "https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
 
+<script type="text/javascript"
+src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js">
+</script>
+
 <script type="text/javascript">
 $('.change-avatar').on('click', function(){
   $('#changeAvatar').modal('show');
@@ -84,6 +88,68 @@ $('.change-avatar').on('click', function(){
     });
   });
 
+  function limpa_formulário_cep() {
+    //Limpa valores do formulário de cep.
+    $('#street_billing').val("");
+    $('#neighborhood_billing').val("");
+    $('#city_billing').val("");
+    $('#state_billing').val("");
+  }
+
+  function meu_callback(conteudo) {
+    if (!("erro" in conteudo)) {
+      //Atualiza os campos com os valores.
+      $('#street_billing').val(conteudo.logradouro);
+      $('#neighborhood_billing').val(conteudo.bairro);
+      $('#city_billing').val(conteudo.localidade);
+      $('#state_billing').val(conteudo.uf);
+    } //end if.
+    else {
+      //CEP não Encontrado.
+      limpa_formulário_cep();
+      $('#modalCEPNotFound').modal('show');
+    }
+  }
+        
+    function pesquisacep(valor) {
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+                //Preenche os campos com "..." enquanto consulta webservice.
+                $('#street_billing').val("Carregando...");
+                $('#neighborhood_billing').val("Carregando...");
+                $('#city_billing').val("Carregando...");
+                $('#state_billing').val("Carregando...");
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulário_cep();
+                $('#modalCEPNotFound').modal('show');
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+    };
+
   // Mask
   $( document ).ready(function() {
     $('.input-telefone').each( function(){
@@ -96,10 +162,28 @@ $('.change-avatar').on('click', function(){
     });
 
     $('.input-cep').inputmask({"mask": "99999-999", "placeholder":"_"});
+    $('.input-cpf').inputmask({"mask": "999.999.999-99", "placeholder":"_"});
 
     $('.input-cnpj').inputmask({"mask": "99.999.999/9999-99", "placeholder":"_"});
 
   });
+  function maskCpf(){
+    $('.input-cpf').inputmask({"mask": "999.999.999-99", "placeholder":"_"});
+      
+  }
+
+  function maskCep(){
+    $('.input-cep').inputmask({"mask": "99999-999", "placeholder":"_"});
+      
+  }
+  function maskDate(){
+    $('.input-date').datepicker({
+      language: 'pt-BR',
+      format: 'dd/mm/yyyy',
+      autoclose: true
+  });
+      
+  }
 
   $('.input-phone').focusout( function(){
     var phone = $(this).val().replace(/\D/g, '');
@@ -109,6 +193,7 @@ $('.change-avatar').on('click', function(){
       $(this).inputmask({"mask": "(99) 9999-99999", "placeholder":" "});
     }
   });
+
   function copyClipboard()
   {
     $('input').select();
