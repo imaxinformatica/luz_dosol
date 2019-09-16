@@ -13,6 +13,7 @@ class Product extends Model
         'price',
         'weight',
         'file',
+        'category_id',
         'status'
     ];
 
@@ -25,6 +26,11 @@ class Product extends Model
     public function orderitems()
     {
         return $this->hasMany('App\Orderitem', 'product_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
     }
 
 }

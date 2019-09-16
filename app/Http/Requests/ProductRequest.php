@@ -31,6 +31,8 @@ class ProductRequest extends FormRequest
             'name' =>'required|max:35',
             'description' => 'required|max:400',
             'price' => 'required',
+            'category_id' => 'required',
+            'weight' => 'required',
         ];
 
         if(Input::has('product_id')){

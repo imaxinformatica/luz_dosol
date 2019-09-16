@@ -31,6 +31,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::get('/delete/{user}', 'Admin\UserController@delete')->name('delete');
     });
 
+    // Cadastro de categoriass
+    Route::group(['prefix' => 'categorias', 'as' => 'category.'], function () {
+        Route::get('/', 'Admin\CategoryController@index')->name('index');
+        Route::get('/create', 'Admin\CategoryController@create')->name('create');
+        Route::post('/store', 'Admin\CategoryController@store')->name('store');
+        Route::get('/edit/{category}', 'Admin\CategoryController@edit')->name('edit');
+        Route::post('/update/{category}', 'Admin\CategoryController@update')->name('update');
+        Route::get('/delete/{category}', 'Admin\CategoryController@delete')->name('delete');
+    });
+
     // Cadastro de usuários
     Route::group(['prefix' => 'produtos', 'as' => 'product.'], function () {
         Route::get('/', 'Admin\ProductController@index')->name('index');

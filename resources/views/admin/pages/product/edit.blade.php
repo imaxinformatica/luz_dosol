@@ -56,7 +56,8 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Dados</h3>
                     </div>
-                    <form method="POST" action="{{route('admin.product.update', ['product' => $product])}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('admin.product.update', ['product' => $product])}}"
+                        enctype="multipart/form-data">
                         {{csrf_field()}}
                         <input type="hidden" name="product_id" value="">
                         <div class="box-body">
@@ -64,8 +65,8 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="reference">Referência <small>*</small></label>
-                                        <input type="text" class="form-control" max="35" value="{{$product->reference}}" onkeyup="upperCase(this);"
-                                            id="reference" name="reference" required>
+                                        <input type="text" class="form-control" max="35" value="{{$product->reference}}"
+                                            onkeyup="upperCase(this);" id="reference" name="reference" required>
                                     </div>
                                 </div>
                             </div>
@@ -75,6 +76,31 @@
                                         <label for="name">Nome <small>*</small></label>
                                         <input type="text" class="form-control" value="{{$product->name}}" id="name"
                                             name="name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="category_id">Categoria <small>*</small></label>
+                                        <select name="category_id" id="category_id" class="form-control">
+                                            <option disabled selected>Selecione..</option>
+                                            @foreach($categories as $category)
+                                            <option value="{{$category->id}}"
+                                                {{$category->id == $product->category_id ? 'selected' : '' }}>
+                                                {{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="weight">Peso <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="weight" value="{{convertMoneyUSAtoBrazil($product->weight)}}" class="form-control input-money"
+                                                required>
+                                            <span class="input-group-addon">kg</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +120,8 @@
                                         <label for="price">Preço <small>*</small></label>
                                         <div class="input-group">
                                             <span class="input-group-addon">R$</span>
-                                            <input type="text" name="price" value="{{convertMoneyUSAtoBrazil($product->price)}}"
+                                            <input type="text" name="price"
+                                                value="{{convertMoneyUSAtoBrazil($product->price)}}"
                                                 class="form-control input-money" required>
                                         </div>
                                     </div>

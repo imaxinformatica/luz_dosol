@@ -37,10 +37,16 @@
                     <i class="fa fa-picture-o" aria-hidden="true"></i> <span>BANNERS</span>
                 </a>
             </li>
+            <li {{ (Request::is('admin/categorias') ? 'class=active' : '') }}
+                {{ (Request::is('admin/categorias/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.category.index')}}">
+                    <i class="fa fa-cubes"></i> <span>CATEGORIAS</span>
+                </a>
+            </li>
             <li {{ (Request::is('admin/produtos') ? 'class=active' : '') }}
                 {{ (Request::is('admin/produtos/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.product.index')}}">
-                    <i class="fa fa-cubes"></i> <span>PRODUTOS</span>
+                    <i class="fa fa-cube"></i> <span>PRODUTOS</span>
                 </a>
             </li>
             <li {{ (Request::is('admin/banco') ? 'class=active' : '') }}

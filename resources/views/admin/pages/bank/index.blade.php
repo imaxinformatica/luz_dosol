@@ -63,6 +63,7 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>Código do Banco</th>
                                     <th>Nome do Banco</th>
                                     <th>Ações</th>
                                 </tr>
@@ -70,7 +71,7 @@
                             <tbody>
                                 @forelse($banks as $bank)
                                 <tr>
-                                    <td>{{$bank->bank_code}}</td>
+                                    <td> {{str_pad($bank->bank_code, 3, 0, STR_PAD_LEFT )}}</td>
                                     <td>{{$bank->bank_name}}</td>
                                     <td>
                                         <a href="#" title="Editar" class="act-list act-edit editBank"

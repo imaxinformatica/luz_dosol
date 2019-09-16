@@ -86,10 +86,10 @@ class User extends Authenticatable
         return $status;
     }
 
-    public function getActive($month, $year)
+    public function getActive($month, $year): bool
     {
         $active = $this->active()->whereMonth('date_active', $month)->whereYear('date_active', $year)->first();
-        return $active;
+        return $active == null ? false : true;
     }
 
     public function total()
@@ -116,6 +116,11 @@ class User extends Authenticatable
     {
         $bonus = $this->bonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
         return $bonus;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
     }
 
     public function getTotalBonus($month, $year)

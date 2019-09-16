@@ -63,8 +63,8 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="reference">Referência <small>*</small></label>
-                                        <input type="text" class="form-control" max="35" value="{{old('reference')}}" onkeyup="upperCase(this);"
-                                            id="reference" name="reference" required>
+                                        <input type="text" class="form-control" value="{{old('reference')}}"
+                                            id="reference" name="reference" onkeyup="upperCase(this);" required>
                                     </div>
                                 </div>
                             </div>
@@ -78,9 +78,34 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="category_id">Categoria <small>*</small></label>
+                                        <select name="category_id" id="category_id" class="form-control">
+                                            <option disabled selected>Selecione..</option>
+                                            @foreach($categories as $category)
+                                            <option value="{{$category->id}}"
+                                                {{$category->id == old('category_id') ? 'selected' : '' }}>
+                                                {{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="weight">Peso <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="weight" value="" class="form-control input-money"
+                                                required>
+                                            <span class="input-group-addon">kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label for="description">Descrição <small>*</small></label>
+                                        <label for="description">Breve Descrição <small>*</small></label>
                                         <input type="text" class="form-control" value="{{old('description')}}"
                                             id="description" name="description" required>
                                     </div>
@@ -93,8 +118,8 @@
                                         <label for="price">Preço <small>*</small></label>
                                         <div class="input-group">
                                             <span class="input-group-addon">R$</span>
-                                            <input type="text" name="price" value=""
-                                                class="form-control input-money" required>
+                                            <input type="text" name="price" value="" class="form-control input-money"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
@@ -137,9 +162,9 @@
 @stop
 @section('scripts')
 <script type="text/javascript">
-$('#reference').on('keyup', function(){
+$('#reference').on('keyup', function() {
     let letter = $(this).val();
-    
+
 });
 </script>
 @endsection

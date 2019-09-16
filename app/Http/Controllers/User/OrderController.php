@@ -39,6 +39,16 @@ class OrderController extends Controller
         $svOrder = new ServiceOrder;
 
         $user = Auth::guard('user')->user();
+
+        $date = date('m-Y');
+        list($month, $year) = explode('-', $date);
+
+        $totalOrders = $user->orders()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->count();
+
+        if($totalOrders == 0 && $user->total() < 200){
+            return redirect()->back()->with('warning', 'O primeiro pedido do mês precisa ser no mínimo de R$200,00');
+
+        }
         if (count($user->cart) == 0) {
             return redirect()->back()->with('warning', 'O pedido precisa ter ao mínimo um item no carrinho');
         }
@@ -79,7 +89,7 @@ class OrderController extends Controller
 
         if ($user->total() >= 200 && $user->status == 0) {
             $svCheckout->activeUser($user);
-        }
+    }
         $order = $svOrder->generateOrder($request->all(), $array, $user->id);
 
         $svOrder->createComission($order->id, $user);

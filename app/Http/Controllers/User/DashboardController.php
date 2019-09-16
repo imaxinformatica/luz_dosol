@@ -27,7 +27,6 @@ class DashboardController extends Controller
     public function getBonus(Request $request)
     {
         $user =  Auth::guard('user')->user();
-
         $isActive = $user->getActive($request->month, $request->year);
         if (!$isActive) {
             return view('user.parts.active');

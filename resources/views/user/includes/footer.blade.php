@@ -255,6 +255,13 @@ $('.change-avatar').on('click', function(){
 }
     
 
+$('.clear-filters').click(function() {
+    $(':input', '#filterForm')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .prop('checked', false)
+        .prop('selected', false);
+});
 	$('.alert .close').click( function(){
     $(this).parent().hide();
   });

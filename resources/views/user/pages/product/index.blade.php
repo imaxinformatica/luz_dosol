@@ -63,6 +63,87 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
+            <section class="col-lg-12">
+                <div class="box">
+                    <form id="filterForm" method="GET" autocomplete="off">
+                        <div class="box-header">
+                            <h3 class="box-title">Filtrar resultados</h3>
+                            <div class="box-tools">
+                                <?php
+
+                                $paginate = $products;
+
+                                $link_limit = 7;
+
+                                $filters = '&name=' . request('name');
+                                $filters .= '&reference=' . request('reference');
+                                $filters .= '&category_id=' . request('category_id');
+                                ?>
+
+                                @if($paginate->lastPage() > 1)
+                                <ul class="pagination pagination-sm no-margin pull-right">
+                                    <li class="{{ ($paginate->currentPage() == 1) ? ' disabled' : '' }}">
+                                        <a href="{{ $paginate->url(1) . $filters}}">«</a>
+                                    </li>
+                                    @for($i = 1; $i <= $paginate->lastPage(); $i++)
+                                        <?php
+                                        $half_total_links = floor($link_limit / 2);
+                                        $from = $paginate->currentPage() - $half_total_links;
+                                        $to = $paginate->currentPage() + $half_total_links;
+                                        if ($paginate->currentPage() < $half_total_links) {
+                                            $to += $half_total_links - $paginate->currentPage();
+                                        }
+                                        if ($paginate->lastPage() - $paginate->currentPage() < $half_total_links) {
+                                            $from -= $half_total_links - ($paginate->lastPage() - $paginate->currentPage()) - 1;
+                                        }
+                                        ?>
+                                        @if ($from < $i && $i < $to) <li
+                                            class="{{ ($paginate->currentPage() == $i) ? ' active' : '' }}">
+                                            <a href="{{ $paginate->url($i) . $filters}}">{{ $i }}</a>
+                                            </li>
+                                            @endif
+                                            @endfor
+                                            <li
+                                                class="{{ ($paginate->currentPage() == $paginate->lastPage()) ? ' disabled' : '' }}">
+                                                <a href="{{ $paginate->url($paginate->lastPage()) . $filters}}">»</a>
+                                            </li>
+                                </ul>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Referência</label>
+                                    <input type="text" class="form-control" value="{{request('reference')}}"
+                                        name="reference">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Nome</label>
+                                    <input type="text" class="form-control" value="{{request('name')}}" name="name">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="category_id">Categoria</label>
+                                    <select name="category_id" id="category_id" class="form-control">
+                                        <option disabled selected>Selecione..</option>
+                                        @foreach($categories as $category)
+                                        <option value="{{$category->id}}"
+                                            {{$category->id == request('category_id') ? 'selected': ''}}>
+                                            {{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                            <button type="button" class="btn btn-default clear-filters">Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <div class="row">
             <div class="col-sm-9">
                 <div class="row">
                     <?php
@@ -82,7 +163,7 @@
                                 <div class="product-footer">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <button class="more-info" data-id="{{$product->id}}" ><i class="fa fa-info"
+                                            <button class="more-info" data-id="{{$product->id}}"><i class="fa fa-info"
                                                     aria-hidden="true"></i></button>
                                             <button class="add-cart" data-product_id="{{$product->id}}">ADD AO
                                                 CARRINHO</button>
@@ -90,7 +171,8 @@
                                     </div>
                                 </div>
                                 <div class="box-description display-none" id="box-description-{{$product->id}}">
-                                    <span class="close-box" data-id="{{$product->id}}"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                                    <span class="close-box" data-id="{{$product->id}}"><i class="fa fa-times-circle"
+                                            aria-hidden="true"></i></span>
                                     <h4>{{$product->description}}</h4>
                                 </div>
                             </div>
@@ -133,7 +215,8 @@
                         @endforelse
                     </tbody>
                     <tfoot>
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('user.cart.index')}}'">Finalizar Pedido</button>
+                        <button type="button" class="btn btn-primary"
+                            onclick="window.location.href='{{route('user.cart.index')}}'">Finalizar Pedido</button>
                     </tfoot>
                 </table>
             </div>
@@ -147,12 +230,12 @@
 <script type="text/javascript">
 $('.more-info').on('click', function() {
     let id = $(this).data('id');
-    $('#box-description-'+id).removeClass('display-none');
+    $('#box-description-' + id).removeClass('display-none');
 });
 
 $('.close-box').on('click', function() {
     let id = $(this).data('id');
-    $('#box-description-'+id).addClass('display-none');
+    $('#box-description-' + id).addClass('display-none');
 });
 
 $('.add-cart').on('click', function(e) {
