@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="category_id">Categoria <small>*</small></label>
                                         <select name="category_id" id="category_id" class="form-control">
@@ -93,12 +93,46 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="height">Altura <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="height" value="{{convertMoneyUSAtoBrazil($product->height)}}"
+                                                class="form-control input-money" required>
+                                            <span class="input-group-addon">cm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="width">Largura <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="width" value="{{convertMoneyUSAtoBrazil($product->width)}}"
+                                                class="form-control input-money" required>
+                                            <span class="input-group-addon">cm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="length">Profundidade <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="length" value="{{convertMoneyUSAtoBrazil($product->length)}}"
+                                                class="form-control input-money" required>
+                                            <span class="input-group-addon">cm</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="weight">Peso <small>*</small></label>
                                         <div class="input-group">
-                                            <input type="text" name="weight" value="{{convertMoneyUSAtoBrazil($product->weight)}}" class="form-control input-money"
-                                                required>
+                                            <input type="text" name="weight" value="{{convertMoneyUSAtoBrazil($product->weight)}}"
+                                                class="form-control input-money" required>
                                             <span class="input-group-addon">kg</span>
                                         </div>
                                     </div>

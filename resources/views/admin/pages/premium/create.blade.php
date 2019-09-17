@@ -1,6 +1,6 @@
 @extends('admin.templates.default')
 
-@section('title', 'Nova Categoria')
+@section('title', 'Novo Prêmio')
 
 @section('description', 'Descrição')
 
@@ -11,7 +11,7 @@
     <section class="content-header">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Nova Categoria</h1>
+                <h1>Novo Prêmio</h1>
             </div>
         </div>
     </section>
@@ -51,12 +51,12 @@
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
-            <section class="col-lg-4">
+            <section class="col-lg-6">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Dados</h3>
                     </div>
-                    <form method="POST" action="{{route('admin.category.store')}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('admin.premium.store')}}" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="box-body">
                             <div class="row">
@@ -71,13 +71,28 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label for="slug">Slug <small>*</small></label>
-                                        <input type="text" class="form-control input-slug" value="{{old('slug')}}"
-                                            id="slug" name="slug" required>
+                                        <label for="graduation">Graduação <small>*</small></label>
+                                        <select name="graduation" class="form-control" id="graduation">
+                                            <option disabled selected>Selecione..</option>
+                                            <option value="platinum">Platina</option>
+                                            <option value="diamond">Diamente</option>
+                                            <option value="master">Mestre</option>
+                                            <option value="emperor">Imperador/Imperatriz</option>
+                                            <option value="prince">Príncipe/Princesa</option>
+                                            <option value="king">Rei/Rainha</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+
+                                        <input type="file" name="file" id="file">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Criar</button>

@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="category_id">Categoria <small>*</small></label>
                                         <select name="category_id" id="category_id" class="form-control">
@@ -91,11 +91,45 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="height">Altura <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="height" value="{{old('height')}}" class="form-control input-money"
+                                                required>
+                                            <span class="input-group-addon">cm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="width">Largura <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="width" value="{{old('width')}}" class="form-control input-money"
+                                                required>
+                                            <span class="input-group-addon">cm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="length">Profundidade <small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="length" value="{{old('length')}}" class="form-control input-money"
+                                                required>
+                                            <span class="input-group-addon">cm</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="weight">Peso <small>*</small></label>
                                         <div class="input-group">
-                                            <input type="text" name="weight" value="" class="form-control input-money"
+                                            <input type="text" name="weight" value="{{old('weight')}}" class="form-control input-money"
                                                 required>
                                             <span class="input-group-addon">kg</span>
                                         </div>
@@ -118,7 +152,7 @@
                                         <label for="price">Preço <small>*</small></label>
                                         <div class="input-group">
                                             <span class="input-group-addon">R$</span>
-                                            <input type="text" name="price" value="" class="form-control input-money"
+                                            <input type="text" name="price" value="{{old('price')}}" class="form-control input-money"
                                                 required>
                                         </div>
                                     </div>
@@ -150,7 +184,7 @@
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Criar</button>
                             <button type="button" class="btn btn-secondary"
-                                onclick="window.location.href='{{route('admin.user.index')}}'">Voltar</button>
+                                onclick="window.location.href='{{route('admin.category.index')}}'">Voltar</button>
                         </div>
                     </form>
                 </div>

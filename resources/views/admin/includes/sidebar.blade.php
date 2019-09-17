@@ -55,6 +55,12 @@
                     <i class="fa fa-university"></i> <span>BANCOS</span>
                 </a>
             </li>
+            <li {{ (Request::is('admin/premios') ? 'class=active' : '') }}
+                {{ (Request::is('admin/premios/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.premium.index')}}">
+                    <i class="fa fa-gift"></i> <span>PRÊMIOS</span>
+                </a>
+            </li>
             <li {{ (Request::is('admin/user') ? 'class=active' : '') }}
                 {{ (Request::is('admin/user/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.user.index')}}">

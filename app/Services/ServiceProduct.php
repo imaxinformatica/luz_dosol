@@ -30,6 +30,9 @@ class ServiceProduct
         $data['file'] = $this->saveImage($data['file'], $data['name']);
         $data['price'] = convertMoneyBraziltoUSA($data['price']);
         $data['weight'] = convertMoneyBraziltoUSA($data['weight']);
+        $data['height'] = convertMoneyBraziltoUSA($data['height']);
+        $data['width'] = convertMoneyBraziltoUSA($data['width']);
+        $data['length'] = convertMoneyBraziltoUSA($data['length']);
         Product::create($data);
     }
 
@@ -40,6 +43,10 @@ class ServiceProduct
         }
         $data['price'] = convertMoneyBraziltoUSA($data['price']);
         $data['weight'] = convertMoneyBraziltoUSA($data['weight']);
+        $data['height'] = convertMoneyBraziltoUSA($data['height']);
+        $data['width'] = convertMoneyBraziltoUSA($data['width']);
+        $data['length'] = convertMoneyBraziltoUSA($data['length']);
         $product->update($data);
     }
+
 }

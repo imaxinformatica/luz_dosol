@@ -41,7 +41,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::get('/delete/{category}', 'Admin\CategoryController@delete')->name('delete');
     });
 
-    // Cadastro de usuários
+    // Cadastro de produtos
     Route::group(['prefix' => 'produtos', 'as' => 'product.'], function () {
         Route::get('/', 'Admin\ProductController@index')->name('index');
         Route::get('/create', 'Admin\ProductController@create')->name('create');
@@ -50,6 +50,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::post('/update/{product}', 'Admin\ProductController@update')->name('update');
         Route::get('/status/{product}', 'Admin\ProductController@status')->name('status');
         Route::get('/delete/{product}', 'Admin\ProductController@delete')->name('delete');
+    });
+
+    // Cadastro de premios
+    Route::group(['prefix' => 'premios', 'as' => 'premium.'], function () {
+        Route::get('/', 'Admin\PremiumController@index')->name('index');
+        Route::get('/create', 'Admin\PremiumController@create')->name('create');
+        Route::post('/store', 'Admin\PremiumController@store')->name('store');
+        Route::get('/edit/{premium}', 'Admin\PremiumController@edit')->name('edit');
+        Route::post('/update', 'Admin\PremiumController@update')->name('update');
+        Route::get('/delete/{premium}', 'Admin\PremiumController@delete')->name('delete');
     });
 
     // Bancos

@@ -12,10 +12,14 @@ class Product extends Model
         'description',
         'price',
         'weight',
+        'height',
+        'width',
+        'length',
         'file',
         'category_id',
-        'status'
+        'status',
     ];
+    
 
     public function status()
     {
