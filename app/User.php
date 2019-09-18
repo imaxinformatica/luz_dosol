@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     public function graduation()
     {
-        return $this->hasOne('App\Graduation', 'user_id');
+        return $this->hasMany('App\Graduation', 'user_id');
     }
 
     public function active()

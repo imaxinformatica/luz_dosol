@@ -34,6 +34,7 @@ class CheckoutRequest extends FormRequest
             'state' => 'required|max:2',
             'shipping_type' => 'required',
             'shipping_price' => 'required',
+            'delivery_time' => 'required|integer',
             'payment_method' => 'required',
         ];
 

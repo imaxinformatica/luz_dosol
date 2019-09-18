@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Banner;
+use App\Premium;
 use Auth;
 
 class DashboardController extends Controller
@@ -15,10 +16,12 @@ class DashboardController extends Controller
         $user =  Auth::guard('user')->user();
 
         $userDate = date("d-m-Y", strtotime($user->created_at));
+        $premium = Premium::first();
 
         $dates = datasArray($userDate);
         $banners = Banner::where('status', 1)->get();
         return view('user.pages.dashboard.index')
+            ->with('premium', $premium)
             ->with('user', $user)
             ->with('dates', $dates)
             ->with('banners', $banners);

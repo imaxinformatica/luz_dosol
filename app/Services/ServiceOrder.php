@@ -18,7 +18,7 @@ class ServiceOrder
         $orderItem->save();
     }
 
-    public function generateOrder(array $data, array $arrayPagSeguro, int $user_id): Order
+    public function generateOrder(array $data, array $arrayPagSeguro, int $user_id)
     {
         try {
             $order = new Order();
@@ -29,11 +29,12 @@ class ServiceOrder
             $order->payment_method = $data['payment_method'];
             $order->status = $arrayPagSeguro['status'];
             $order->code = $arrayPagSeguro['code'];
+            $order->delivery_time = $data['delivery_time'];
             $order->total = ($arrayPagSeguro['grossAmount'] + $arrayPagSeguro['shipping']['cost']);
             $order->save();
             return $order;
         } catch (\Exception $e) {
-            $msg = ['error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores'.$e.getMessage()];
+            $msg = ['error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores: '.$e->getMessage()];
             return null;
         }
     }

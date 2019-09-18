@@ -74,6 +74,14 @@ function limpaCPF_CNPJ($valor){
     $valor = str_replace("/", "", $valor);
     return $valor;
 }
+
+function clearSpecialCaracters(String $string)
+{
+    $specialCaracters = ['“', '‘', '!', '@', '#', '$','%','&', '*','(',')','_','-','+','=','{','[','}',']','|','<','>','.',':',';','?','/'];
+    $string = str_replace($specialCaracters, "", $string);
+    return $string;
+}
+
 function numberPhone($valor){
     $valor = trim($valor);
     $arrayRemove = [' ', '-', '(', ')'];

@@ -18,7 +18,7 @@
                     <p>Ciclo do painel:</p>
                     <select name="cycle" id="cycle" required>
                         @foreach($dates as $date)
-                        <option value="{{$date}}" {{end($dates) ? 'selected' : ""}} >{{$date}}</option>
+                        <option value="{{$date}}" {{end($dates) ? 'selected' : ""}}>{{$date}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -51,8 +51,29 @@
             <div class="bonus">
                 <!-- Conteudo carregado via ajax -->
             </div>
-            
+
         </div>
+        @if($premium)
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-8">
+
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Premiação</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                      
+                            <div class="col-md-12">
+                                <img class="premium-img" src="{{ asset('uploads/premium/thumbnail/'.$premium->file)}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        @endif
         @if(count($banners))
         <!-- Main row -->
         <div class="row">
@@ -97,14 +118,14 @@
 
 @section('scripts')
 <script type="text/javascript">
-$('document').ready(function(){
+$('document').ready(function() {
     getCycle();
 });
-$('#cycle').on('change', function(){
+$('#cycle').on('change', function() {
     getCycle();
 });
 
-function getCycle(){
+function getCycle() {
     let cycle = $('#cycle').val();
     let array_cycle = cycle.split("/");
     $.ajax({
@@ -114,8 +135,7 @@ function getCycle(){
             month: array_cycle[0],
             year: array_cycle[1]
         },
-        beforeSend: function() {
-        },
+        beforeSend: function() {},
         success: function(data) {
             $('.bonus').html(data);
         }

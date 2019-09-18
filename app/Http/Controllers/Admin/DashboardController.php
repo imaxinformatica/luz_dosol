@@ -8,6 +8,7 @@ use App\Banner;
 use App\User;
 use App\Product;
 use App\Order;
+use App\Premium;
 
 class DashboardController extends Controller
 {

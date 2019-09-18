@@ -38,5 +38,9 @@ return [
         'pagseguro_email' => 'informaticaimax@gmail.com',
         'pagseguro_token' => 'CA316749D1E146FDB42D57726424D2C9',
     ],
+    'correios' => [
+        'cep_destino' => '04101300',
+        'pagseguro_token' => 'CA316749D1E146FDB42D57726424D2C9',
+    ],
 
 ];

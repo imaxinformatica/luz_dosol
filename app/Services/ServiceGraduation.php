@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\ActiveUser;
 use App\User;
 
 class ServiceGraduation
@@ -16,22 +17,25 @@ class ServiceGraduation
     }
     public function getMaxGraduation()
     {
-        $users = User::where('status', 1)->get();
-
-        // foreach ($users as $user) {
-        //     $typeGraduation = $user->typeOfGraduation($user->getGraduation());
-        //     if ($user->graduation()->count() > 0) {
-        //         if ($typeGraduation > $user->graduation->max_graduation) {
-        //             $user->graduation()->update([
-        //                 'max_graduation' => $typeGraduation,
-        //             ]);
-        //         }
-        //     } else {
-        //         $user->graduation()->create([
-        //             'max_graduation' => $typeGraduation,
-        //         ]);
-        //     }
-        // }
+        $activeUser = ActiveUser::whereMonth('date_active', $this->month)
+        ->whereYear('date_active', $this->year)->pluck('user_id')->toArray();;
+        $users = User::whereIn('id',$activeUser)->get();
+        
+        foreach ($users as $user) {
+            $maxGraduation = $user->getGraduation();
+            $actualGraduation = $user->graduation()
+            ->whereMonth('updated_at', $this->month)
+            ->whereYear('updated_at', $this->year)->first();
+            if(!$actualGraduation){
+                $user->graduation()->create([
+                    'max_graduation' => $maxGraduation
+                ]);
+            }else{
+                $actualGraduation->update([
+                    'max_graduation' => $maxGraduation
+                ]);
+            }
+        }
     }
 
     public function getBronzeGraduation($activeUsers, $bonusTotal): bool

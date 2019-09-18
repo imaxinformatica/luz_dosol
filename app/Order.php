@@ -13,7 +13,9 @@ class Order extends Model
         'payment_link',
         'subtotal',
         'payment_method',
+        'delivery_time',
         'status',
+        'code',
         'code',
         'total',
     ];

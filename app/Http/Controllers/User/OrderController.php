@@ -7,6 +7,7 @@ use App\Services\ServiceOrder;
 use App\{Order};
 use App\Http\Requests\CheckoutRequest;
 use App\Services\ServiceCheckout;
+use App\Services\ServiceShipping;
 use Auth;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,9 +46,8 @@ class OrderController extends Controller
 
         $totalOrders = $user->orders()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->count();
 
-        if($totalOrders == 0 && $user->total() < 200){
+        if ($totalOrders == 0 && $user->total() < 200) {
             return redirect()->back()->with('warning', 'O primeiro pedido do mês precisa ser no mínimo de R$200,00');
-
         }
         if (count($user->cart) == 0) {
             return redirect()->back()->with('warning', 'O pedido precisa ter ao mínimo um item no carrinho');
@@ -82,23 +82,64 @@ class OrderController extends Controller
         $json = json_encode($xml);
         $array = json_decode($json, TRUE);
         if (isset($array['error'])) {
-            $msg = "Ops, tivemos um problema no nosso servidor, entre em contato com um de nossos adminsitradores. Erro: {$array['error']['code']}";
+            $error = isset($array['error'][0]) ? $array['error'][0]['message'] : $array['error']['message'];
+            $msg = "Ops, tivemos um problema no nosso servidor, entre em contato com um de nossos adminsitradores. Erro: {$error}";
             // return dd($array['error']['code']. " - " .$array['error']['message']);
             return redirect()->back()->with('error', $msg);
         }
 
         if ($user->total() >= 200 && $user->status == 0) {
             $svCheckout->activeUser($user);
-    }
-        $order = $svOrder->generateOrder($request->all(), $array, $user->id);
-
-        $svOrder->createComission($order->id, $user);
-
-        foreach ($user->cart as $items) {
-            $svOrder->createOrderItem($user->id, $order->id, $items, $items->pivot);
-            $items->pivot->delete();
         }
-        return redirect()->route('user.order.index')->with('success', 'Pedido finalizado');
+        $order = $svOrder->generateOrder($request->all(), $array, $user->id);
+        if ($order) {
+
+            $svOrder->createComission($order->id, $user);
+            foreach ($user->cart as $items) {
+                $svOrder->createOrderItem($user->id, $order->id, $items, $items->pivot);
+                $items->pivot->delete();
+            }
+            return redirect()->route('user.order.index')->with('success', 'Pedido finalizado');
+        }
+        return redirect()->route('user.order.index')
+            ->with('error', 'Tivemos um problema ao processar o seu pedido, por favor entre em contato com um de nossos administradores');
+    }
+
+    public function getShipping(Request $request, ServiceShipping $svShipping)
+    {
+        $user = Auth::guard('user')->user();
+        $error = $svShipping->getError();
+        if ($error) {
+            return 'null';
+        }
+        $data = $svShipping->generateArrayShipping($request->zip_code, $request->shipping_type);
+
+        $data = http_build_query($data);
+
+        $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx";
+        try {
+            // cURL
+            $curl = curl_init($url . '?' .  $data);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec($curl);
+            curl_close($curl);
+            //!end cUrl 
+
+            $xml = simplexml_load_string($result);
+            $json = json_encode($xml);
+            $json = json_decode($json, TRUE);
+
+            $newTotal = $user->total() + convertMoneyBraziltoUSA($json['cServico']['Valor']);
+
+            $array = [
+                'shipping_price' => $json['cServico']['Valor'],
+                'delivery_time' => $json['cServico']['PrazoEntrega'],
+                'new_total' => convertMoneyUSAtoBrazil($newTotal)
+            ];
+            return json_encode($array);
+        } catch (\Exception $e) {
+            return 'error';
+        }
     }
 
     public function callback(Request $request)
@@ -117,7 +158,7 @@ class OrderController extends Controller
         curl_close($ch);
 
         $xml = simplexml_load_string($xml);
-        
+
         $order = Order::where('code', $xml->code)->first();
         if ($order) {
             $order->update(['status' => $xml->status]);

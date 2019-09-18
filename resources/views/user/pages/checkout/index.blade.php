@@ -208,6 +208,44 @@ function getHashScript() {
 $("#cvv").keyup(function() { //criar token
     getTokenCreditCard();
 });
+$('#shipping_type').on('change', function() {
+    var shipping_type = $(this).val();
+    var zip_code = $('input[name="zip_code"]').val();
+    getShippingScript(shipping_type,zip_code);
+});
+
+function getShippingScript(shipping_type,zip_code) {
+    $.ajax({
+        type: 'GET',
+        url: "{{route('get.shipping')}}",
+        data: {
+            shipping_type: shipping_type,
+            zip_code: zip_code
+        },  
+        beforeSend: function() {
+            $('#delivery_time').val('Carregando..');
+            $('#shipping_price').val('Carregando..');
+            $('#total').val('Carregando..');
+        },
+        success: function(data) {
+            if (data == 'null') {
+                $('#modalGeneric .modal-title').html('Peso superior ao permitido!');
+                $('#modalGeneric .modal-body').html('<p>As informações referente ao seu pedido possuem divergências em relação ao permitido pelo Correios!</p>');
+                $('#modalGeneric').modal('show');
+            } else if(data == 'error'){
+                $('#modalGeneric .modal-title').html('Erro!');
+                $('#modalGeneric .modal-body').html('<p>Ops, tivemos um problema, por favor, entre em contato com um de nossos administradores.</p>');
+                $('#modalGeneric').modal('show');
+            }else{
+                let responseDelivery = $.parseJSON(data);
+                console.log(responseDelivery);
+                $('#delivery_time').val(responseDelivery.delivery_time);
+                $('#shipping_price').val(responseDelivery.shipping_price);
+                $('#total').val(responseDelivery.new_total);
+            }
+        }
+    });
+}
 
 $(document).on('change', '#isBilling', function() {
     let billing = $(this).val();
@@ -291,6 +329,7 @@ function getTokenCreditCard() {
                 {{csrf_field()}}
                 <input type="hidden" name="session_id">
                 <input type="hidden" name="sender_hash">
+                <input type="hidden" name="price" value="{{convertMoneyUSAtoBrazil($total)}}>
                 <input type="hidden" name="token_card" class="token_card">
                 <div class="modal-body">
 
@@ -350,23 +389,33 @@ function getTokenCreditCard() {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <div class="form-group">
                                 <label for="shipping_type">Tipo de frete</label>
                                 <select name="shipping_type" id="shipping_type" class="form-control" required>
                                     <option disabled selected>Selecione..</option>
-                                    <option value="1">PAC</option>
-                                    <option value="2">Sedex</option>
+                                    <option value="04510">PAC</option>
+                                    <option value="04014">Sedex</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <div class="form-group">
                                 <label for="shipping_price">Total frete</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">R$</span>
-                                    <input type="text" name="shipping_price" value="12.50"
+                                    <input type="text" name="shipping_price" id="shipping_price" value="0,00"
                                         class="form-control input-money" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="delivery_time">Prazo de entrega</label>
+                                <div class="input-group">
+                                    <input type="text" name="delivery_time" id="delivery_time"
+                                        class="form-control" readonly>
+                                    <span class="input-group-addon">dias</span>
                                 </div>
                             </div>
                         </div>
@@ -374,10 +423,10 @@ function getTokenCreditCard() {
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label for="price">Total</label>
+                                <label for="total">Total</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">R$</span>
-                                    <input type="text" name="price" value="{{convertMoneyUSAtoBrazil($total)}}"
+                                    <input type="text" name="total" id="total" value="{{convertMoneyUSAtoBrazil($total)}}"
                                         class="form-control input-money" readonly>
                                 </div>
                             </div>

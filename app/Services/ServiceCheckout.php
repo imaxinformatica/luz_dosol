@@ -89,8 +89,8 @@ class ServiceCheckout
         $dataShipping['shippingAddressCountry'] = 'BRA';
         $dataShipping['shippingAddressPostalCode'] = str_replace('-', '', $data['zip_code']);
 
-        $dataShipping['shippingType'] = $data['shipping_type'];
-        $dataShipping['shippingCost'] = $data['shipping_price'];
+        $dataShipping['shippingType'] = $data['shipping_type'] == '04510' ? 1 : 2;
+        $dataShipping['shippingCost'] = convertMoneyBraziltoUSA( $data['shipping_price']);
 
         return $dataShipping;
     }

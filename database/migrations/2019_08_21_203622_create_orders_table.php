@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->double('subtotal');
             $table->string('payment_method');
             $table->integer('status');
+            $table->integer('delivery_time');
             $table->string('code');
             $table->double('total');
             $table->timestamps();
