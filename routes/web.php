@@ -100,6 +100,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::group(['prefix' => 'export', 'as' => 'export.'], function () {
         Route::get('/', 'Admin\ExportController@index')->name('index');
         Route::post('/gerar', 'Admin\ExportController@generate')->name('generate');
+        Route::post('/transfeera', 'Admin\ExportController@transfeera')->name('transfeera');
     });
     Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
         Route::get('/', 'Admin\ConfigurationController@index')->name('index');

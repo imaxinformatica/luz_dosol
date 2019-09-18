@@ -106,7 +106,7 @@
                                     <td>R${{convertMoneyUSAtoBrazil($order->subtotal)}}</td>
                                     <td>R${{convertMoneyUSAtoBrazil($order->shipping)}}</td>
                                     <td>R${{convertMoneyUSAtoBrazil($order->total)}}</td>
-                                    <td>{{$order->status}}</td>
+                                    <td>{{$order->getStatus()}}</td>
                                     <td>
                                         <a href="{{ route('user.order.show', ['order' => $order])}}" title="Editar"
                                             class="act-list">

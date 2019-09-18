@@ -2,10 +2,11 @@
 
 namespace App\Exports;
 
+
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PaymentsExport implements FromArray, WithHeadings
+class TransfeeraExport implements FromArray, WithHeadings
 {
     protected $data;
 
@@ -28,17 +29,17 @@ class PaymentsExport implements FromArray, WithHeadings
 
         return [
             [
-                'código',
                 'nome',
-                'valor',
+                'cpf titular',
+                'e-mail',
                 'código banco',
                 'agência',
                 'conta',
                 'díg. conta',
-                'cpf titular',
-                'nome titular',
-                'graduação',
+                'tipo de conta', //verificar
+                'valor',
             ],
         ];
     }
 }
+

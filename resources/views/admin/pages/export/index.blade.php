@@ -79,6 +79,34 @@
                     </form>
                 </div>
             </section>
+            <section class="col-lg-6">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Exportar dados Transfeera</h3>
+                    </div>
+                    <form method="POST" action="{{route('admin.export.transfeera')}}" autocomplete="off">
+                        {{csrf_field()}}
+                        <div class="box-body">
+                            <div class="form-group row">
+
+                                <div class="col-xs-6">
+                                    <label for="cycle">Selecione o ciclo <small>*</small></label>
+                                    <select name="cycle" id="cycle" class="form-control" required>
+                                        @foreach($dates as $date)
+                                        <option value="{{$date}}" {{end($dates) ? 'selected' : ""}}>{{$date}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Exportar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
         </div>
     </section>
 </div>

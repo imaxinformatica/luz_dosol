@@ -29,4 +29,38 @@ class Order extends Model
     {
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case 1:
+                $status = "Agendada";
+
+                break;
+            case 2:
+                $status = "Processando";
+
+                break;
+            case 3:
+                $status = "Não Processada";
+
+                break;
+            case 4:
+                $status = "Suspensa";
+
+                break;
+            case 5:
+                $status = "Paga";
+
+                break;
+            case 6:
+                $status = "Não Paga";
+
+                break;
+            default:
+                $status = "";
+                break;
+        }
+        return $status;
+    }
 }

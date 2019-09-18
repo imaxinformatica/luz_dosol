@@ -37,11 +37,11 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <img class="graduation-img" src="{{ asset('images/'.$user->getGraduation())}}">
+                                <img class="graduation-img" src="{{ asset('images/'.$user->getGraduation())}}.png">
                                 <p class="text-center">Graduação<br>máxima alcançada</p>
                             </div>
                             <div class="col-md-6">
-                                <img class="graduation-img" src="{{ asset('images/'.$user->getGraduation())}}">
+                                <img class="graduation-img" src="{{ asset('images/'.$user->getGraduation())}}.png">
                                 <p class="text-center">Graduação<br>do mês atual</p>
                             </div>
                         </div>
@@ -53,23 +53,43 @@
             </div>
 
         </div>
-        @if($premium)
+        @if(count($premiums))
         <div class="row">
             <!-- Left col -->
             <section class="col-lg-8">
-
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Premiação</h3>
+                        <h3 class="box-title">Lista de Prêmios</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="row">
-                      
-                            <div class="col-md-12">
-                                <img class="premium-img" src="{{ asset('uploads/premium/thumbnail/'.$premium->file)}}">
-                            </div>
-                        </div>
+                    <div class="box-body table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Imagem</th>
+                                    <th>Nome</th>
+                                    <th>Graduação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($premiums as $premium)
+                                <tr>
+
+                                    <td>
+                                        <img src="{{asset('uploads/premium/thumbnail/'.$premium->file)}}" alt="Prêmio">
+                                    </td>
+                                    <td>{{$premium->name}}</td>
+                                    <td>{{$premium->getGraduation()}}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6">Ainda nenhum pedido foi realizado</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+
+                        </table>
                     </div>
+                    <!-- /.box-body -->
                 </div>
             </section>
         </div>

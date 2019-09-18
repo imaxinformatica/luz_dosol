@@ -12,16 +12,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
         $user =  Auth::guard('user')->user();
 
         $userDate = date("d-m-Y", strtotime($user->created_at));
-        $premium = Premium::first();
+        $premiums = Premium::get();
 
         $dates = datasArray($userDate);
         $banners = Banner::where('status', 1)->get();
         return view('user.pages.dashboard.index')
-            ->with('premium', $premium)
+            ->with('premiums', $premiums)
             ->with('user', $user)
             ->with('dates', $dates)
             ->with('banners', $banners);

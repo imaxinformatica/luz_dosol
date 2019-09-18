@@ -139,6 +139,47 @@ class User extends Authenticatable
         return $activeUsers;
     }
 
+    public function getNameGraduation()
+    {
+        switch ($this->getGraduation()) {
+            case 1:
+                $graduation = "Bronze";
+                break;
+            case 2:
+                $graduation = "Prata";
+                break;
+            case 3:
+                $graduation = "Ouro";
+
+                break;
+            case 4:
+                $graduation = "Platina";
+
+                break;
+            case 5:
+                $graduation = "Diamante";
+
+                break;
+            case 6:
+                $graduation = "Mestre";
+
+                break;
+            case 7:
+                $graduation = "Principe/Princesa";
+
+                break;
+            case 8:
+                $graduation = "Rei/Rainha";
+
+                break;
+
+            default:
+                $graduation = "Não Graduado";
+                break;
+        }
+        return $graduation;
+    }
+
     public function getGraduation(): int
     {
         $sv = new ServiceGraduation;

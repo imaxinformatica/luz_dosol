@@ -91,18 +91,24 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">Pedido</th>
+                                <th scope="col">Pedido</th>
+                                    <th scope="col">Total produtos</th>
+                                    <th scope="col">Frete</th>
                                     <th scope="col">Total</th>
                                     <th scope="col">Usuário</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($orders as $order)
                                 <tr>
-                                    <td>#{{str_pad($order->id, 5, 0, STR_PAD_LEFT )}}</td>
+                                <td>#{{str_pad($order->id, 5, 0, STR_PAD_LEFT )}}</td>
+                                    <td>R${{convertMoneyUSAtoBrazil($order->subtotal)}}</td>
+                                    <td>R${{convertMoneyUSAtoBrazil($order->shipping)}}</td>
                                     <td>R${{convertMoneyUSAtoBrazil($order->total)}}</td>
                                     <td>{{$order->user->name}}</td>
+                                    <td>{{$order->getStatus()}}</td>
                                     <td>
                                         <a href="{{ route('admin.order.show', ['order' => $order])}}"
                                             title="Editar" class="act-list">
