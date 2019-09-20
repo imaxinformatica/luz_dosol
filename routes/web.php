@@ -30,6 +30,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::get('/status/{user}', 'Admin\UserController@status')->name('status');
         Route::get('/delete/{user}', 'Admin\UserController@delete')->name('delete');
     });
+    // Graduados
+    Route::group(['prefix' => 'graduados', 'as' => 'graduated.'], function () {
+        Route::get('/', 'Admin\GraduatedController@index')->name('index');
+    });
 
     // Cadastro de categoriass
     Route::group(['prefix' => 'categorias', 'as' => 'category.'], function () {

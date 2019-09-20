@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-       use RefreshDatabase;
+    use RefreshDatabase;
     public function testVerificaUsuarioEstaCriado()
     {
         $data['name'] = 'Thales Serra';
@@ -33,6 +33,7 @@ class UserTest extends TestCase
         $dataBank['account_type'] = '1234';
         $dataBank['cpf_holder'] = '1234';
         $dataBank['name_holder'] = 'Thales Serra';
+        $dataBank['type_account'] = '1';
 
         $sv = new ServiceUser;
         $sv->createUser($data, $dataAddress, $dataBank);

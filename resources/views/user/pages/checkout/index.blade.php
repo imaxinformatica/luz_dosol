@@ -329,7 +329,7 @@ function getTokenCreditCard() {
                 {{csrf_field()}}
                 <input type="hidden" name="session_id">
                 <input type="hidden" name="sender_hash">
-                <input type="hidden" name="price" value="{{convertMoneyUSAtoBrazil($total)}}>
+                <input type="hidden" name="price" value="{{convertMoneyUSAtoBrazil($total)}}">
                 <input type="hidden" name="token_card" class="token_card">
                 <div class="modal-body">
 

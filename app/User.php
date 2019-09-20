@@ -86,6 +86,78 @@ class User extends Authenticatable
         return $status;
     }
 
+    public function getTotalPlatinumGraduation($year_init = null, $year_final = null)
+    {
+        if($year_init != null && $year_final != null){
+            $graduated = $this->graduation()->where('max_graduation', 4)
+            ->whereYear('updated_at', '>=', $year_init)
+            ->whereYear('updated_at', '<=', $year_final)->count();    
+        }else{
+            $graduated = $this->graduation()->where('max_graduation', 4)->count();
+        }
+        return $graduated;
+    }
+
+    public function getTotalDiamondGraduation($year_init = null, $year_final = null)
+    {
+        if($year_init != null && $year_final != null){
+            $graduated = $this->graduation()->where('max_graduation', 5)
+            ->whereYear('updated_at', '>=', $year_init)
+            ->whereYear('updated_at', '<=', $year_final)->count();    
+        }else{
+            $graduated = $this->graduation()->where('max_graduation', 5)->count();
+        }
+        return $graduated;
+    }
+
+    public function getTotalMasterGraduation($year_init = null, $year_final = null)
+    {
+        if($year_init != null && $year_final != null){
+            $graduated = $this->graduation()->where('max_graduation', 6)
+            ->whereYear('updated_at', '>=', $year_init)
+            ->whereYear('updated_at', '<=', $year_final)->count();    
+        }else{
+            $graduated = $this->graduation()->where('max_graduation', 6)->count();
+        }
+        return $graduated;
+    }
+
+    public function getTotalEmperorGraduation($year_init = null, $year_final = null)
+    {
+        if($year_init != null && $year_final != null){
+            $graduated = $this->graduation()->where('max_graduation', 7)
+            ->whereYear('updated_at', '>=', $year_init)
+            ->whereYear('updated_at', '<=', $year_final)->count();    
+        }else{
+            $graduated = $this->graduation()->where('max_graduation', 7)->count();
+        }
+        return $graduated;
+    }
+
+    public function getTotalPrinceGraduation($year_init = null, $year_final = null)
+    {
+        if($year_init != null && $year_final != null){
+            $graduated = $this->graduation()->where('max_graduation', 8)
+            ->whereYear('updated_at', '>=', $year_init)
+            ->whereYear('updated_at', '<=', $year_final)->count();    
+        }else{
+            $graduated = $this->graduation()->where('max_graduation', 8)->count();
+        }
+        return $graduated;
+    }
+
+    public function getTotalKingGraduation($year_init = null, $year_final = null)
+    {
+        if($year_init != null && $year_final != null){
+            $graduated = $this->graduation()->where('max_graduation', 9)
+            ->whereYear('updated_at', '>=', $year_init)
+            ->whereYear('updated_at', '<=', $year_final)->count();    
+        }else{
+            $graduated = $this->graduation()->where('max_graduation', 9)->count();
+        }
+        return $graduated;
+    }
+
     public function getActive($month, $year): bool
     {
         $active = $this->active()->whereMonth('date_active', $month)->whereYear('date_active', $year)->first();

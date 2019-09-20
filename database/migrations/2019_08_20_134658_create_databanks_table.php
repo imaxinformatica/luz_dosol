@@ -22,6 +22,7 @@ class CreateDatabanksTable extends Migration
             $table->integer('account_type');
             $table->string('cpf_holder');
             $table->string('name_holder');
+            $table->string('type_account');
             $table->timestamps();
         });
     }

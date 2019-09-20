@@ -65,7 +65,7 @@
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
-            <section class="col-lg-8">
+            <section class="col-lg-10">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Dados bancários</h3>
@@ -106,21 +106,33 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-2">
+                                <div class="col-sm-2 col-xs-6">
                                     <div class="form-group">
                                         <label for="account_type">Dígito conta <small>*</small></label>
                                         <input type="text" class="form-control" value="{{$dataBank->account_type}}"
                                             name="account_type" required>
                                     </div>
                                 </div>
-                                <div class="col-xs-5">
+                                <div class="col-xs-6 col-sm-4">
                                     <div class="form-group">
                                         <label for="name_holder">Nome Titular <small>*</small></label>
                                         <input type="text" class="form-control" value="{{$dataBank->name_holder}}"
                                             name="name_holder" required>
                                     </div>
                                 </div>
-                                <div class="col-xs-5">
+                                <div class="col-sm-3 col-xs-6">
+                                    <div class="form-group">
+                                        <label for="type_account">Tipo de Conta <small>*</small></label>
+                                        <select name="type_account" id="type_account" class="form-control">
+                                            <option disabled hidden selected>Selecione...</option>
+                                            <option value="1" {{$dataBank->type_account == 1 ? "selected" : "" }}>Conta corrente</option>
+                                            <option value="2" {{$dataBank->type_account == 2 ? "selected" : "" }}>Conta poupança</option>
+                                            <option value="3" {{$dataBank->type_account == 3 ? "selected" : "" }}>Conta conjunta</option>
+                                            <option value="4" {{$dataBank->type_account == 4 ? "selected" : "" }}>Poupança conjunta</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-3">
                                     <div class="form-group">
                                         <label for="cpf_holder">CPF Titular <small>*</small></label>
                                         <input type="text" class="form-control input-cpf"

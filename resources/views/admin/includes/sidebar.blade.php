@@ -43,6 +43,7 @@
                     <i class="fa fa-cubes"></i> <span>CATEGORIAS</span>
                 </a>
             </li>
+            
             <li {{ (Request::is('admin/produtos') ? 'class=active' : '') }}
                 {{ (Request::is('admin/produtos/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.product.index')}}">
@@ -65,6 +66,12 @@
                 {{ (Request::is('admin/user/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.user.index')}}">
                     <i class="fa fa-user"></i> <span>USUÁRIOS</span>
+                </a>
+            </li>
+            <li {{ (Request::is('admin/graduados') ? 'class=active' : '') }}
+                {{ (Request::is('admin/graduados/*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.graduated.index')}}">
+                    <i class="fa fa-cubes"></i> <span>GRADUADOS</span>
                 </a>
             </li>
             <li {{ (Request::is('admin/pages') ? 'class=active' : '') }}

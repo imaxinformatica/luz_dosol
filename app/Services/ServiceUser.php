@@ -56,6 +56,7 @@ class ServiceUser
         $dataBank['account_type'] = $data['account_type'];
         $dataBank['cpf_holder'] = $data['cpf_holder'];
         $dataBank['name_holder'] = $data['name_holder'];
+        $dataBank['type_account'] = $data['type_account'];
 
         return $dataBank;
     }

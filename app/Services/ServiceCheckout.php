@@ -40,7 +40,7 @@ class ServiceCheckout
     public function dataCard(array $data)
     {
         $phone = numberPhone($data['user']->cellphone);
-        $total = convertMoneyBraziltoUSA($data['price']) + $data['shipping_price'];
+        $total = convertMoneyBraziltoUSA($data['price']) + convertMoneyBraziltoUSA($data['shipping_price']);
         $dataCard['paymentMethod'] = 'creditCard';
         $dataCard['creditCardToken'] = $data['token_card'];
         $dataCard['installmentQuantity'] = 1;

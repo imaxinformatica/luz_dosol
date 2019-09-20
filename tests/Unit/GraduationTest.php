@@ -67,17 +67,17 @@ class GraduationTest extends TestCase
 
 
 
-        $this->assertEquals(7,$graduationUserEmperor);
-        $this->assertEquals(6,$graduationUserMaster);
+        $this->assertEquals(7, $graduationUserEmperor);
+        $this->assertEquals(6, $graduationUserMaster);
 
-        $this->assertEquals(5,$graduationUserDiamond1);
-        $this->assertEquals(5,$graduationUserDiamond2);
-        $this->assertEquals(5,$graduationUserDiamond3);
+        $this->assertEquals(5, $graduationUserDiamond1);
+        $this->assertEquals(5, $graduationUserDiamond2);
+        $this->assertEquals(5, $graduationUserDiamond3);
 
-        $this->assertEquals(4,$graduationUserPlatinum1);
-        $this->assertEquals(4,$graduationUserPlatinum2);
-        $this->assertEquals(4,$graduationUserPlatinum3);
-        $this->assertEquals(4,$graduationUserPlatinum4);
+        $this->assertEquals(4, $graduationUserPlatinum1);
+        $this->assertEquals(4, $graduationUserPlatinum2);
+        $this->assertEquals(4, $graduationUserPlatinum3);
+        $this->assertEquals(4, $graduationUserPlatinum4);
 
         $this->assertEquals(3, $graduationUserGold1);
         $this->assertEquals(3, $graduationUserGold2);
@@ -117,6 +117,7 @@ class GraduationTest extends TestCase
         $dataBank['account_type'] = '1234';
         $dataBank['cpf_holder'] = '1234';
         $dataBank['name_holder'] = 'Thales Serra';
+        $dataBank['type_account'] = '1';
 
         $user = $svUser->createUser($data, $dataAddress, $dataBank);
         $svCheckout->activeUser($user);
@@ -146,6 +147,7 @@ class GraduationTest extends TestCase
             $dataBank['account_type'] = '1234';
             $dataBank['cpf_holder'] = '1234';
             $dataBank['name_holder'] = 'Thales Serra';
+            $dataBank['type_account'] = '1';
             $user = $svUser->createUser($data, $dataAddress, $dataBank);
             $svCheckout->activeUser($user);
         }
@@ -158,7 +160,7 @@ class GraduationTest extends TestCase
             43, 42, 41, 40, 39, 38, 37, 36, 35, 34,
             32, 30, 29, 27, 26, 24, 70, 71, 72, 73,
             74, 75, 76, 77, 122, 123, 124, 125, 126,
-            127, 128, 129, 130, 131,150
+            127, 128, 129, 130, 131, 150
         ];
         $arrayGold = [11, 13, 15, 17, 19, 22, 25, 28, 31, 33];
         $arrayPlatinum = [5, 6, 7, 8];

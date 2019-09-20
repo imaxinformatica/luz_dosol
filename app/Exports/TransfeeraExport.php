@@ -36,7 +36,7 @@ class TransfeeraExport implements FromArray, WithHeadings
                 'agência',
                 'conta',
                 'díg. conta',
-                'tipo de conta', //verificar
+                'tipo de conta', 
                 'valor',
             ],
         ];

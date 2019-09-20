@@ -242,14 +242,26 @@
                                                 name="account_type" required>
                                         </div>
                                     </div>
-                                    <div class="col-xs-5">
+                                    <div class="col-xs-4">
                                         <div class="form-group">
                                             <label for="name_holder">Nome Titular <small>*</small></label>
                                             <input type="text" class="btn-form" value="{{old('name_holder')}}"
                                                 name="name_holder" required>
                                         </div>
                                     </div>
-                                    <div class="col-xs-5">
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="form-group">
+                                            <label for="type_account">Tipo de Conta <small>*</small></label>
+                                            <select name="type_account" id="type_account" class="btn-form">
+                                                <option disabled hidden selected>Selecione...</option>
+                                                <option value="1">Conta corrente</option>
+                                                <option value="2">Conta poupança</option>
+                                                <option value="3">Conta conjunta</option>
+                                                <option value="4">Poupança conjunta</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
                                         <div class="form-group">
                                             <label for="cpf_holder">CPF Titular <small>*</small></label>
                                             <input type="text" class="btn-form input-cpf" value="{{old('cpf_holder')}}"

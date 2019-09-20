@@ -67,6 +67,7 @@ class RegisterController extends Controller
             'account' => 'required',
             'account_type' => 'required',
             'cpf_holder' => 'required',
+            'type_account' => 'required',
             'name_holder' => 'required'
         ]);
     }

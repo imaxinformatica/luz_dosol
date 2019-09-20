@@ -183,7 +183,7 @@ class ServiceOrder
             $data['agência'] = str_pad($user->databank->agency, 4, 0, STR_PAD_LEFT );
             $data['conta'] = $user->databank->account;
             $data['díg. conta'] = $user->databank->account_type;
-            $data['tipo de conta'] = 'VERIFICAR';
+            $data['tipo de conta'] = $user->databank->type_account;
             $data['valor'] = convertMoneyUSAtoBrazil($valor);
             $array[$key] = $data;
         }
