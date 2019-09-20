@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\{Bonus, Product, OrderItem, OrderCommission, User, Commission, Order};
+use App\{Bonus, Product, Orderitem, OrderCommission, User, Commission, Order};
 
 class ServiceOrder
 {
