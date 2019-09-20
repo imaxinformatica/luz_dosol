@@ -13,7 +13,6 @@ class DashboardController extends Controller
     public function index()
     {
         $user =  Auth::guard('user')->user();
-
         $userDate = date("d-m-Y", strtotime($user->created_at));
         $premiums = Premium::get();
 

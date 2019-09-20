@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Services\ServiceOrder;
-use App\{Order};
+use App\{Order, User};
 use App\Http\Requests\CheckoutRequest;
 use App\Services\ServiceCheckout;
 use App\Services\ServiceShipping;
@@ -84,17 +84,12 @@ class OrderController extends Controller
         if (isset($array['error'])) {
             $error = isset($array['error'][0]) ? $array['error'][0]['message'] : $array['error']['message'];
             $msg = "Ops, tivemos um problema no nosso servidor, entre em contato com um de nossos adminsitradores. Erro: {$error}";
-            // return dd($array['error']['code']. " - " .$array['error']['message']);
             return redirect()->back()->with('error', $msg);
         }
 
-        if ($user->total() >= 200 && $user->status == 0) {
-            $svCheckout->activeUser($user);
-        }
         $order = $svOrder->generateOrder($request->all(), $array, $user->id);
         if ($order) {
 
-            $svOrder->createComission($order->id, $user);
             foreach ($user->cart as $items) {
                 $svOrder->createOrderItem($user->id, $order->id, $items, $items->pivot);
                 $items->pivot->delete();
@@ -142,7 +137,7 @@ class OrderController extends Controller
         }
     }
 
-    public function callback(Request $request)
+    public function callback(Request $request, ServiceCheckout $svCheckout)
     {
         $notification = $request->notificationCode;
         $data['email'] = config('services.pagseguro.pagseguro_email');
@@ -161,6 +156,16 @@ class OrderController extends Controller
 
         $order = Order::where('code', $xml->code)->first();
         if ($order) {
+            $user = User::find($order->user_id);
+            $svOrder = new ServiceOrder;
+            if($user->orders()->count() == 0 && $user->user_id !== null){
+                $svOrder->createSpecialBonus($user->user_id);
+            }
+            $svOrder->createComission($order->id, $user);
+
+            if ($user->total() >= 200 && $user->status == 0) {
+                $svCheckout->activeUser($user);
+            }
             $order->update(['status' => $xml->status]);
         }
     }

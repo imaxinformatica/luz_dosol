@@ -62,11 +62,20 @@ class ServiceOrder
         }
     }
 
+    public function createSpecialBonus($user_id)
+    {
+        Bonus::create([
+            'user_id' => $user_id,
+            'price' => 30,
+            'level_bonus' => 1
+        ]);
+    }
+
     public function createBonus()
     {
         $users = User::where('status', 1)->get();
-        $month = date("m");
-        $year = date("Y");
+        $date = date('m-Y', strtotime('-1 day'));
+        list($month, $year) = explode('-', $date);
 
         foreach ($users as $user) {
             // level 1

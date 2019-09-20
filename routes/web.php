@@ -213,3 +213,7 @@ Route::get('/verificar-graduacao', function () {
     $sv = new App\Services\ServiceGraduation;
     $sv->getMaxGraduation();
 });
+Route::get('/criar-bonus', function () {
+    $sv = new App\Services\ServiceOrder;
+    $sv->createBonus();
+});
