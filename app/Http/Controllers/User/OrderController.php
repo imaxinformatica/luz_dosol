@@ -137,8 +137,9 @@ class OrderController extends Controller
         }
     }
 
-    public function callback(Request $request, ServiceCheckout $svCheckout)
+    public function callback(Request $request)
     {
+        $svCheckout = new ServiceCheckout; 
         $notification = $request->notificationCode;
         $data['email'] = config('services.pagseguro.pagseguro_email');
         $data['token'] = config('services.pagseguro.pagseguro_token');

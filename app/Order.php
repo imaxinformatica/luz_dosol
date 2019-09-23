@@ -33,28 +33,36 @@ class Order extends Model
     public function getStatus()
     {
         switch ($this->status) {
+            case 0:
+                $status = "Pendente";
+
+                break;
             case 1:
-                $status = "Agendada";
+                $status = "Aguardando Pagamento";
 
                 break;
             case 2:
-                $status = "Processando";
+                $status = "Em Análise";
 
                 break;
             case 3:
-                $status = "Não Processada";
+                $status = "Pago";
 
                 break;
             case 4:
-                $status = "Suspensa";
+                $status = "Disponível";
 
                 break;
             case 5:
-                $status = "Paga";
+                $status = "Em Disputa";
 
                 break;
             case 6:
-                $status = "Não Paga";
+                $status = "Devolvida";
+
+                break;
+            case 6:
+                $status = "Cancelada";
 
                 break;
             default:
