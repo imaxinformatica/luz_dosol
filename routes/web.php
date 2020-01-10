@@ -180,7 +180,7 @@ Route::group(['prefix' => 'user'], function () {
 
     Route::post('/password/email', 'UserAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
     Route::post('/password/reset', 'UserAuth\ResetPasswordController@reset')->name('password.email');
-    Route::get('/password/reset', 'UserAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+    Route::get('/password/reset', 'UserAuth\ForgotPasswordController@showLinkRequestForm')->name('user.password.reset');
     Route::get('/password/reset/{token}', 'UserAuth\ResetPasswordController@showResetForm');
 });
 
@@ -192,7 +192,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm')->name('register');
     Route::post('/register', 'AdminAuth\RegisterController@register');
 
-    Route::post('/password/email', 'AdminAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
+    Route::post('/password/email', 'AdminAuth\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.request');
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('password.email');
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');

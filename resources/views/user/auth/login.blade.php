@@ -80,6 +80,9 @@
                                 <div class="col-sm-3">
                                     <button class="btn-form" type="submit">LOGIN</button>
                                 </div>
+                                <div class="col-sm-3" style="padding-top:30px">
+                                    <a href="{{route('user.password.reset')}}">Esqueceu a senha?</a>
+                                </div>
                             </div>
                         </form>
                     </div>
