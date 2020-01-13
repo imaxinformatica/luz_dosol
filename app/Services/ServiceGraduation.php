@@ -15,6 +15,8 @@ class ServiceGraduation
         $this->month = $month;
         $this->year = $year;
     }
+
+    
     public function getMaxGraduation()
     {
         $activeUser = ActiveUser::whereMonth('date_active', $this->month)

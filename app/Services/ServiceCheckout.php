@@ -8,7 +8,7 @@ use App\User;
 class ServiceCheckout
 {
 
-    public function activeUser(User $user)
+    public static function activeUser(User $user)
     {
         $date = date('Y-m-d');
         ActiveUser::create([

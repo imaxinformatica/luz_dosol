@@ -207,13 +207,19 @@ Route::get('/card-content', function(){
 Route::get('/address-content', function(){
     return view('user.parts.address');
 })->name('address.content');
-Route::post('/callback-pagseguro', 'User\OrderController@callback')->name('callback.pagseguro');
+Route::get('/callback-pagseguro', 'User\OrderController@callback')->name('callback.pagseguro');
+
+
 Route::get('/get-shipping', 'User\OrderController@getShipping')->name('get.shipping');
+
 Route::get('/verificar-graduacao', function () {
     $sv = new App\Services\ServiceGraduation;
     $sv->getMaxGraduation();
 });
+
+Route::get('/reiniciar-mes', function(){
+    App\Services\ServiceUser::resetMonth();
+});
 Route::get('/criar-bonus', function () {
-    $sv = new App\Services\ServiceOrder;
-    $sv->createBonus();
+    App\Services\ServiceOrder::createBonus();
 });

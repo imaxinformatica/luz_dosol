@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Image;
 use App\User;
+use Image;
 
 class ServiceUser
 {
@@ -74,5 +74,13 @@ class ServiceUser
         $image->save($originalPath . $fileName);
 
         return $fileName;
+    }
+
+    public static function resetMonth()
+    {
+        $users = User::get();
+        $users->each(function($user){
+            $user->update(['status' => 0]);
+        });
     }
 }

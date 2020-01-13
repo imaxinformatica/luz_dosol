@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Services\ServiceOrder;
-use App\{Order, User};
-use App\Http\Requests\CheckoutRequest;
-use App\Services\ServiceCheckout;
-use App\Services\ServiceShipping;
-use Auth;
 use Symfony\Component\HttpFoundation\Request;
+use App\Http\Requests\CheckoutRequest;
+use App\Http\Controllers\Controller;
+use App\Services\ServiceShipping;
+use App\Services\ServiceCheckout;
+use App\Services\ServiceOrder;
+use App\Order;
+use App\User;
+use Auth;
 
 class OrderController extends Controller
 {
@@ -19,7 +20,6 @@ class OrderController extends Controller
         $data['token'] = config('services.pagseguro.pagseguro_token');
 
         $curl = curl_init();
-
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
@@ -64,6 +64,7 @@ class OrderController extends Controller
             $svCheckout->dataItems($user),
             $svCheckout->getShipping($request->all())
         );
+
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -80,7 +81,7 @@ class OrderController extends Controller
         $xml = simplexml_load_string($resp);
 
         $json = json_encode($xml);
-        $array = json_decode($json, TRUE);
+        $array = json_decode($json, true);
         if (isset($array['error'])) {
             $error = isset($array['error'][0]) ? $array['error'][0]['message'] : $array['error']['message'];
             $msg = "Ops, tivemos um problema no nosso servidor, entre em contato com um de nossos adminsitradores. Erro: {$error}";
@@ -114,22 +115,22 @@ class OrderController extends Controller
         $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx";
         try {
             // cURL
-            $curl = curl_init($url . '?' .  $data);
+            $curl = curl_init($url . '?' . $data);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($curl);
             curl_close($curl);
-            //!end cUrl 
+            //!end cUrl
 
             $xml = simplexml_load_string($result);
             $json = json_encode($xml);
-            $json = json_decode($json, TRUE);
+            $json = json_decode($json, true);
 
             $newTotal = $user->total() + convertMoneyBraziltoUSA($json['cServico']['Valor']);
 
             $array = [
                 'shipping_price' => $json['cServico']['Valor'],
                 'delivery_time' => $json['cServico']['PrazoEntrega'],
-                'new_total' => convertMoneyUSAtoBrazil($newTotal)
+                'new_total' => convertMoneyUSAtoBrazil($newTotal),
             ];
             return json_encode($array);
         } catch (\Exception $e) {
@@ -139,7 +140,7 @@ class OrderController extends Controller
 
     public function callback(Request $request)
     {
-        $svCheckout = new ServiceCheckout; 
+        $svCheckout = new ServiceCheckout;
         $notification = $request->notificationCode;
         $data['email'] = config('services.pagseguro.pagseguro_email');
         $data['token'] = config('services.pagseguro.pagseguro_token');
@@ -154,18 +155,22 @@ class OrderController extends Controller
         curl_close($ch);
 
         $xml = simplexml_load_string($xml);
-
         $order = Order::where('code', $xml->code)->first();
         if ($order) {
             $user = User::find($order->user_id);
             $svOrder = new ServiceOrder;
-            if($user->orders()->count() == 0 && $user->user_id !== null){
-                $svOrder->createSpecialBonus($user->user_id);
+
+            $date = date('m-Y');
+            list($month, $year) = explode('-', $date);
+            $totalOrders = $user->orders()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->count();
+
+            if ($totalOrders == 0 && $user->user_id !== null) {
+                ServiceOrder::createSpecialBonus($user->user_id);
             }
             $svOrder->createComission($order->id, $user);
 
-            if ($user->total() >= 200 && $user->status == 0) {
-                $svCheckout->activeUser($user);
+            if ($user->getTotalMonth() >= 200 && $user->status == 0) {
+                ServiceCheckout::activeUser($user);
             }
             $order->update(['status' => $xml->status]);
         }

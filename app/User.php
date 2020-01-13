@@ -24,7 +24,6 @@ class User extends Authenticatable
         'password',
     ];
 
-
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -64,6 +63,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Bonus', 'user_id');
     }
+    public function extraBonus()
+    {
+        return $this->hasMany('App\ExtraBonus', 'user_id');
+    }
 
     public function commission()
     {
@@ -88,11 +91,11 @@ class User extends Authenticatable
 
     public function getTotalPlatinumGraduation($year_init = null, $year_final = null)
     {
-        if($year_init != null && $year_final != null){
+        if ($year_init != null && $year_final != null) {
             $graduated = $this->graduation()->where('max_graduation', 4)
-            ->whereYear('updated_at', '>=', $year_init)
-            ->whereYear('updated_at', '<=', $year_final)->count();    
-        }else{
+                ->whereYear('updated_at', '>=', $year_init)
+                ->whereYear('updated_at', '<=', $year_final)->count();
+        } else {
             $graduated = $this->graduation()->where('max_graduation', 4)->count();
         }
         return $graduated;
@@ -100,11 +103,11 @@ class User extends Authenticatable
 
     public function getTotalDiamondGraduation($year_init = null, $year_final = null)
     {
-        if($year_init != null && $year_final != null){
+        if ($year_init != null && $year_final != null) {
             $graduated = $this->graduation()->where('max_graduation', 5)
-            ->whereYear('updated_at', '>=', $year_init)
-            ->whereYear('updated_at', '<=', $year_final)->count();    
-        }else{
+                ->whereYear('updated_at', '>=', $year_init)
+                ->whereYear('updated_at', '<=', $year_final)->count();
+        } else {
             $graduated = $this->graduation()->where('max_graduation', 5)->count();
         }
         return $graduated;
@@ -112,11 +115,11 @@ class User extends Authenticatable
 
     public function getTotalMasterGraduation($year_init = null, $year_final = null)
     {
-        if($year_init != null && $year_final != null){
+        if ($year_init != null && $year_final != null) {
             $graduated = $this->graduation()->where('max_graduation', 6)
-            ->whereYear('updated_at', '>=', $year_init)
-            ->whereYear('updated_at', '<=', $year_final)->count();    
-        }else{
+                ->whereYear('updated_at', '>=', $year_init)
+                ->whereYear('updated_at', '<=', $year_final)->count();
+        } else {
             $graduated = $this->graduation()->where('max_graduation', 6)->count();
         }
         return $graduated;
@@ -124,11 +127,11 @@ class User extends Authenticatable
 
     public function getTotalEmperorGraduation($year_init = null, $year_final = null)
     {
-        if($year_init != null && $year_final != null){
+        if ($year_init != null && $year_final != null) {
             $graduated = $this->graduation()->where('max_graduation', 7)
-            ->whereYear('updated_at', '>=', $year_init)
-            ->whereYear('updated_at', '<=', $year_final)->count();    
-        }else{
+                ->whereYear('updated_at', '>=', $year_init)
+                ->whereYear('updated_at', '<=', $year_final)->count();
+        } else {
             $graduated = $this->graduation()->where('max_graduation', 7)->count();
         }
         return $graduated;
@@ -136,11 +139,11 @@ class User extends Authenticatable
 
     public function getTotalPrinceGraduation($year_init = null, $year_final = null)
     {
-        if($year_init != null && $year_final != null){
+        if ($year_init != null && $year_final != null) {
             $graduated = $this->graduation()->where('max_graduation', 8)
-            ->whereYear('updated_at', '>=', $year_init)
-            ->whereYear('updated_at', '<=', $year_final)->count();    
-        }else{
+                ->whereYear('updated_at', '>=', $year_init)
+                ->whereYear('updated_at', '<=', $year_final)->count();
+        } else {
             $graduated = $this->graduation()->where('max_graduation', 8)->count();
         }
         return $graduated;
@@ -148,11 +151,11 @@ class User extends Authenticatable
 
     public function getTotalKingGraduation($year_init = null, $year_final = null)
     {
-        if($year_init != null && $year_final != null){
+        if ($year_init != null && $year_final != null) {
             $graduated = $this->graduation()->where('max_graduation', 9)
-            ->whereYear('updated_at', '>=', $year_init)
-            ->whereYear('updated_at', '<=', $year_final)->count();    
-        }else{
+                ->whereYear('updated_at', '>=', $year_init)
+                ->whereYear('updated_at', '<=', $year_final)->count();
+        } else {
             $graduated = $this->graduation()->where('max_graduation', 9)->count();
         }
         return $graduated;
@@ -174,6 +177,18 @@ class User extends Authenticatable
         return $total;
     }
 
+    public function getTotalMonth()
+    {
+        $total = 0;
+        $date = date('m-Y');
+
+        list($month, $year) = explode('-', $date);
+        $totalOrders = $this->orders()
+            ->whereMonth('updated_at', $month)
+            ->whereYear('updated_at', $year)->sum('total');
+        return $totalOrders;
+    }
+
     public function getCommission($month, $year)
     {
         $totalCommission = 0;
@@ -187,7 +202,8 @@ class User extends Authenticatable
     public function getBonus($month, $year)
     {
         $bonus = $this->bonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
-        return $bonus;
+        $extrabonus = $this->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
+        return $bonus+$extrabonus;
     }
 
     public function orders()
