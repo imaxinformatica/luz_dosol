@@ -1,5 +1,11 @@
-input, select, textarea, button,
-input:focus, select:focus, textarea:focus, button:focus {
+input,
+select,
+textarea,
+button,
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
     outline: none;
 }
 
@@ -29,11 +35,24 @@ button.btn-header {
     text-transform: uppercase;
 }
 
-@media(max-width: 767px){
+.remove-item i {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 20px;
+}
+
+
+ul.menu li {
+    position: relative;
+}
+
+@media(max-width: 767px) {
     button.btn-header {
         margin-top: 10px;
     }
 }
+
 a.act-list {
     text-decoration: none;
     font-size: 24px;
@@ -56,7 +75,7 @@ a.act-edit {
 }
 
 .box-auth button {
-    width: 100%;   
+    width: 100%;
 }
 
 .box-auth input {
@@ -128,6 +147,7 @@ img.graduation-img {
     max-height: 250px;
     object-fit: cover;
 }
+
 .product-box {
     position: relative;
 }
@@ -175,6 +195,7 @@ button.more-info {
     max-height: 435px;
     object-fit: cover;
 }
+
 .cursor {
     cursor: pointer;
 }
@@ -189,6 +210,7 @@ button.more-info {
     background: #fff;
     padding: 20px;
 }
+
 .display-none {
     display: none;
 }
@@ -246,7 +268,8 @@ button.more-info {
     width: 22px;
 }
 
-.delete-number-to-qty, .add-number-to-qty {
+.delete-number-to-qty,
+.add-number-to-qty {
     z-index: 999;
     position: absolute;
     right: 6px;
@@ -272,23 +295,30 @@ button.more-info {
     width: 90px;
     margin-right: 11px;
 }
+
 .image-product-cart {
     max-height: 100px;
     width: 100%;
     object-fit: cover;
 }
+
 .image-product-checkout {
     max-height: 100px;
     width: 50%;
     object-fit: cover;
 }
+
 .configuration:hover {
     cursor: pointer;
 }
+
 .generate-invitation:hover {
     cursor: pointer;
 }
-.btn-add-widget, .btn-add-widget:focus, .btn-add-widget:hover {
+
+.btn-add-widget,
+.btn-add-widget:focus,
+.btn-add-widget:hover {
     border: 1px solid transparent;
     outline: none;
     box-shadow: none;
@@ -296,6 +326,7 @@ button.more-info {
     color: #fff;
     width: 30px;
 }
+
 .change-avatar:hover {
     cursor: pointer;
 }

@@ -37,13 +37,13 @@ class UserController extends Controller
         ->with('states', $states);
     }
 
-    public function store(UserRequest $request, ServiceUser $service)
+    public function store(UserRequest $request)
     {
-        $dataUser = $service->generateDatauser($request->all());
-        $dataAdress = $service->generateDataAddress($request->all());
-        $dataBank = $service->generateDataBank($request->all());
+        $dataUser = ServiceUser::generateDatauser($request->all());
+        $dataAdress = ServiceUser::generateDataAddress($request->all());
+        $dataBank = ServiceUser::generateDataBank($request->all());
         try {
-            $service->createUser($dataUser, $dataAdress, $dataBank);
+            ServiceUser::createUser($dataUser, $dataAdress, $dataBank);
         } catch (\Exception $e) {
             return redirect()->back()
             ->with('error','Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: '. $e->getMessage() );
@@ -61,11 +61,11 @@ class UserController extends Controller
         ->with('user', $user);
     }
 
-    public function update(User $user, UserRequest $request, ServiceUser $service)
+    public function update(User $user, UserRequest $request)
     {
-        $dataUser = $service->generateDatauser($request->all());
-        $dataAdress = $service->generateDataAddress($request->all());
-        $dataBank = $service->generateDataBank($request->all());
+        $dataUser = ServiceUser::generateDatauser($request->all());
+        $dataAdress = ServiceUser::generateDataAddress($request->all());
+        $dataBank = ServiceUser::generateDataBank($request->all());
         try {
             $user->update($dataUser);
             $user->address()->update($dataAdress);

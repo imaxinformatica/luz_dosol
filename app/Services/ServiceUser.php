@@ -8,7 +8,7 @@ use Image;
 class ServiceUser
 {
 
-    public function generateDatauser(array $data): array
+    public static function generateDatauser(array $data): array
     {
         $dataUser['name'] = $data['name'];
         $dataUser['email'] = $data['email'];
@@ -27,7 +27,7 @@ class ServiceUser
         return $dataUser;
     }
 
-    public function createUser($dataUser, $dataAdress, $dataBank): User
+    public static function createUser($dataUser, $dataAdress, $dataBank): User
     {
         $user = User::create($dataUser, $dataAdress, $dataBank);
         $user->address()->create($dataAdress);
@@ -36,7 +36,7 @@ class ServiceUser
         return $user;
     }
 
-    public function generateDataAddress(array $data): array
+    public static function generateDataAddress(array $data): array
     {
         $dataAddress['zip_code'] = $data['zip_code'];
         $dataAddress['street'] = $data['street'];
@@ -48,7 +48,7 @@ class ServiceUser
         return $dataAddress;
     }
 
-    public function generateDataBank(array $data): array
+    public static function generateDataBank(array $data): array
     {
         $dataBank['bank_code'] = $data['bank_code'];
         $dataBank['agency'] = $data['agency'];
@@ -61,7 +61,7 @@ class ServiceUser
         return $dataBank;
     }
 
-    public function saveAvatar($file, $name)
+    public static function saveAvatar($file, $name)
     {
         $originalPath = public_path() . '/uploads/profile/';
         $originalImage = $file;

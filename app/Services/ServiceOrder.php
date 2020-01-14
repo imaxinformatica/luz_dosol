@@ -13,6 +13,18 @@ use App\OrderCommission;
 
 class ServiceOrder
 {
+
+    protected static $level = [
+        "1" => 1.5,
+        "2" => 1.5,
+        "3" => 1.5,
+        "4" => 1,
+        "5" => 1,
+        "6" => 1,
+        "7" => 0.5,
+        "8" => 0.5,
+    ];
+    
     public function createOrderItem(int $user_id, int $order_id, Product $product, $itemCart): void
     {
         $orderItem = new Orderitem;
@@ -87,6 +99,7 @@ class ServiceOrder
             // level 1
             $networkUser = $user->users()->where('status', 1)->count();
             $bonus = $user->bonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->get();
+            
             $extraBonus = $user->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year);
             if ($networkUser >= 3) {
                 $extraUser = $networkUser - 3 - $extraBonus->where('level_bonus', 1)->count();
@@ -172,6 +185,8 @@ class ServiceOrder
                     ]);
                 }
             }
+            $realExtraBonus = $user->extraBonus()->whereMonth('updated_at',$month )->whereYear('updated_at', $year)->get(); 
+            ServiceOrder::updateExtraBonus($realExtraBonus, $graduation);
         }
     }
 
@@ -224,27 +239,28 @@ class ServiceOrder
         return $array;
     }
 
-    public static function createExtraBonus($extraUser, $leveBonus, $graduation, $user)
+    public static function updateExtraBonus($extraBonus, $graduation)
     {
         if(!$graduation){
             return;
         }
-        $level = [
-            "1" => 1.5,
-            "2" => 1.5,
-            "3" => 1.5,
-            "4" => 1,
-            "5" => 1,
-            "6" => 1,
-            "7" => 0.5,
-            "8" => 0.5,
-        ];
+       
+        foreach($extraBonus as $extra){
+            $extra->update(['price' => self::$level[$graduation]]);
+        }
+    }
+
+    public static function createExtraBonus($extraUser, $levelBonus, $graduation, $user)
+    {
+        if(!$graduation){
+            return;
+        }
 
         for ($i = 0; $i < $extraUser; $i++) {
             ExtraBonus::create([
                 'user_id' => $user->id,
-                'price' => $level[$graduation],
-                'level_bonus' => $leveBonus,
+                'price' => self::$level[$graduation],
+                'level_bonus' => $levelBonus,
             ]);
         }
     }

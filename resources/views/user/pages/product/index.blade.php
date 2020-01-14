@@ -185,41 +185,6 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-sm-3">
-                <h1>Carrinho</h1>
-                <table class="table">
-                    <tbody>
-                        @forelse($itemscart as $item)
-                        <tr>
-                            <td>
-                                <img class="image-product-cart"
-                                    src="{{asset('uploads/products/thumbnail/'. $item->file)}}" alt="Imagem do produto">
-                            </td>
-                            <td>
-                                <span class="cart-preview-title">{{$item->name}}</span><br>
-                                <b>Ref.:</b> {{$item->reference}}<br>
-                                <b>Qtd.:</b> {{$item->pivot->qty}}<br>
-
-                            </td>
-                            <td>
-                                <a href="{{route('user.cart.delete', ['cart' => $item->pivot->id])}}" title="Excluir"
-                                    class="act-list act-delete">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td>Nenhum item adicionado ao carrinho</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                    <tfoot>
-                        <button type="button" class="btn btn-primary"
-                            onclick="window.location.href='{{route('user.cart.index')}}'">Finalizar Pedido</button>
-                    </tfoot>
-                </table>
-            </div>
         </div>
     </section>
     <!-- /.content -->

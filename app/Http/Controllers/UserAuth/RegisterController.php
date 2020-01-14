@@ -80,12 +80,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $service = new ServiceUser;
         $data['status'] = 0;
-        $dataUser = $service->generateDatauser($data);
+        $dataUser = ServiceUser::generateDatauser($data);
         $dataUser['user_id'] = session('user_id');
-        $dataAdress = $service->generateDataAddress($data);
-        $dataBank = $service->generateDataBank($data);
+        $dataAdress = ServiceUser::generateDataAddress($data);
+        $dataBank = ServiceUser::generateDataBank($data);
 
         $user = User::create($dataUser);
         $user->address()->create($dataAdress);

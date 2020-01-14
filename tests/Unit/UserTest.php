@@ -35,8 +35,7 @@ class UserTest extends TestCase
         $dataBank['name_holder'] = 'Thales Serra';
         $dataBank['type_account'] = '1';
 
-        $sv = new ServiceUser;
-        $sv->createUser($data, $dataAddress, $dataBank);
+        ServiceUser::createUser($data, $dataAddress, $dataBank);
 
 
         $this->assertDatabaseHas('users', $data);

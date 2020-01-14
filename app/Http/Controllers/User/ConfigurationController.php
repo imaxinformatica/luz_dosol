@@ -20,12 +20,12 @@ class ConfigurationController extends Controller
             ->with('user', $user);
     }
 
-    public function update(ConfigurationRequest $request, ServiceUser $service)
+    public function update(ConfigurationRequest $request)
     {
         $user = Auth::guard('user')->user();
 
-        $dataUser = $service->generateDatauser($request->all());
-        $dataAddress = $service->generateDataAddress($request->all());
+        $dataUser = ServiceUser::generateDatauser($request->all());
+        $dataAddress = ServiceUser::generateDataAddress($request->all());
 
         try {
             $user->update($dataUser);
@@ -45,7 +45,7 @@ class ConfigurationController extends Controller
 
         $user = Auth::guard('user')->user();
         try {
-            $data['avatar'] = $sv->saveAvatar($request->file('avatar'), $user->id);
+            $data['avatar'] = ServiceUser::saveAvatar($request->file('avatar'), $user->id);
             $user->update($data);
         } catch (\Exception $e) {
             return redirect()->back()
