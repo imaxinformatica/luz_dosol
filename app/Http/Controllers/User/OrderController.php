@@ -101,15 +101,15 @@ class OrderController extends Controller
             ->with('error', 'Tivemos um problema ao processar o seu pedido, por favor entre em contato com um de nossos administradores');
     }
 
-    public function getShipping(Request $request, ServiceShipping $svShipping)
+    public function getShipping(Request $request)
     {
         $user = Auth::guard('user')->user();
-        $error = $svShipping->getError();
+        $repeatCalculatePrice = ServiceShipping::repeatCalculatePrice();
+        $error = ServiceShipping::getError($repeatCalculatePrice);
         if ($error) {
             return 'null';
         }
-        $data = $svShipping->generateArrayShipping($request->zip_code, $request->shipping_type);
-
+        $data = ServiceShipping::generateArrayShipping($request->zip_code, $request->shipping_type, $repeatCalculatePrice);
         $data = http_build_query($data);
 
         $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx";
@@ -120,15 +120,16 @@ class OrderController extends Controller
             $result = curl_exec($curl);
             curl_close($curl);
             //!end cUrl
-
             $xml = simplexml_load_string($result);
             $json = json_encode($xml);
             $json = json_decode($json, true);
-
-            $newTotal = $user->total() + convertMoneyBraziltoUSA($json['cServico']['Valor']);
-
+            if(isset($json['cServico']['Erro']) && $json['cServico']['Erro'] != 0){
+                throw new \Exception;
+            }
+            $shippinPrice = convertMoneyBraziltoUSA($json['cServico']['Valor']) * $repeatCalculatePrice;
+            $newTotal = $user->total() + $shippinPrice;
             $array = [
-                'shipping_price' => $json['cServico']['Valor'],
+                'shipping_price' =>convertMoneyUSAtoBrazil( $shippinPrice),
                 'delivery_time' => $json['cServico']['PrazoEntrega'],
                 'new_total' => convertMoneyUSAtoBrazil($newTotal),
             ];

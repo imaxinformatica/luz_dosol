@@ -25,17 +25,16 @@ class ServiceProduct
         return $fileName;
     }
 
-    public function createProduct(array $data): void
+    public static function createProduct(array $data): void
     {
-        $data['file'] = $this->saveImage($data['file'], $data['name']);
+        $sv = new ServiceProduct();
+        $data['file'] = $sv->saveImage($data['file'], $data['name']);
         $data['price'] = convertMoneyBraziltoUSA($data['price']);
         $data['weight'] = convertMoneyBraziltoUSA($data['weight']);
-        $data['height'] = convertMoneyBraziltoUSA($data['height']);
-        $data['width'] = convertMoneyBraziltoUSA($data['width']);
-        $data['length'] = convertMoneyBraziltoUSA($data['length']);
+        $data['volume'] = convertMoneyBraziltoUSA($data['volume']);
         Product::create($data);
     }
-
+    
     public function updateProduct(array $data, Product $product): void
     {
         if (isset($data['file'])) {
@@ -43,9 +42,7 @@ class ServiceProduct
         }
         $data['price'] = convertMoneyBraziltoUSA($data['price']);
         $data['weight'] = convertMoneyBraziltoUSA($data['weight']);
-        $data['height'] = convertMoneyBraziltoUSA($data['height']);
-        $data['width'] = convertMoneyBraziltoUSA($data['width']);
-        $data['length'] = convertMoneyBraziltoUSA($data['length']);
+        $data['volume'] = convertMoneyBraziltoUSA($data['volume']);
         $product->update($data);
     }
 

@@ -54,7 +54,7 @@
 
                                 </ul>
                             </li>
-                            <li class="footer"><a href="{{route('user.cart.index')}}">Finalizar Pedido</a></li>
+                            <li class="footer"><a class="finaliza-btn" href="{{route('user.cart.index')}}">Finalizar Pedido</a></li>
                         </ul>
                     </li>
 

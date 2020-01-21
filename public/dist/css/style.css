@@ -145,6 +145,7 @@ img.graduation-img {
 .product-box img {
     width: 100%;
     max-height: 250px;
+    height: 250px;
     object-fit: cover;
 }
 
@@ -329,4 +330,10 @@ button.more-info {
 
 .change-avatar:hover {
     cursor: pointer;
+}
+.navbar-nav>.messages-menu>.dropdown-menu>li.footer>a {
+    padding: 15px ;
+    font-size: 18px ;
+    color: #fff !important;
+    background-color: #f4a425 ;
 }

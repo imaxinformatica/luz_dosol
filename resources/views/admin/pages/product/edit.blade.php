@@ -94,7 +94,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="height">Altura <small>*</small></label>
@@ -115,15 +115,15 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-xs-6">
                                     <div class="form-group">
-                                        <label for="length">Profundidade <small>*</small></label>
+                                        <label for="volume">Volume <small>*</small></label>
                                         <div class="input-group">
-                                            <input type="text" name="length" value="{{convertMoneyUSAtoBrazil($product->length)}}"
+                                            <input type="text" name="volume" value="{{convertMoneyUSAtoBrazil($product->volume)}}"
                                                 class="form-control input-money" required>
-                                            <span class="input-group-addon">cm</span>
+                                            <span class="input-group-addon">cm³</span>
                                         </div>
                                     </div>
                                 </div>

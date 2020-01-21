@@ -6,28 +6,30 @@ use Illuminate\Support\Facades\Auth;
 
 class ServiceShipping
 {
-    public function generateArrayShipping($zip_code, $shipping_type)
+    public static function generateArrayShipping($zip_code, $shipping_type, $repeatCalculatePrice)
     {
-        $weight = $this->getWeight();
-        $volume = $this->getVolume();
         $user = Auth::guard('user')->user();
-        $cepDestino = clearSpecialCaracters(config('services.correios.cep_destino'));
 
+        $weight = ServiceShipping::getWeight();
+        $volumeTotal = ServiceShipping::getVolume();
+        $total = $user->total() / $repeatCalculatePrice;
+
+        $cepDestino = clearSpecialCaracters(config('services.correios.cep_destino'));
         $data['nCdEmpresa'] = '';
         $data['sDsSenha'] = '';
         $data['sCepOrigem'] = clearSpecialCaracters($zip_code);
         $data['sCepDestino'] = $cepDestino;
         $data['nCdServico'] = $shipping_type;
 
-        $data['nVlPeso'] = $weight;
+        $data['nVlPeso'] = $weight / $repeatCalculatePrice;
         $data['nCdFormato'] = '1';
 
-        $data['nVlComprimento'] = $volume;
-        $data['nVlAltura'] = $volume;
-        $data['nVlLargura'] = $volume;
+        $data['nVlComprimento'] = '50';
+        $data['nVlAltura'] = '32';
+        $data['nVlLargura'] = '33';
         $data['nVlDiametro'] = '0';
         $data['sCdMaoPropria'] = 'n';
-        $data['nVlValorDeclarado'] = convertMoneyUSAtoBrazil($user->total());
+        $data['nVlValorDeclarado'] = number_format($total, 0, '', '');
         $data['sCdAvisoRecebimento'] = 'n';
 
         $data['StrRetorno'] = 'xml';
@@ -35,8 +37,8 @@ class ServiceShipping
         return $data;
     }
 
-    public function getWeight()
-    {
+    public static function getWeight()
+    {   
         $user = Auth::guard('user')->user();
         $items = $user->cart;
         $weight = 0;
@@ -44,40 +46,52 @@ class ServiceShipping
             $weight += ($item->weight * $item->pivot->qty);
         }
         $weight = number_format($weight, 0, '', '');
-        return $weight;
+
+        return ($weight);
     }
 
-    public function getVolume()
+    public static function getVolume()
     {
         $user = Auth::guard('user')->user();
         $items = $user->cart;
-        $total = 0;
+
+        $volumeTotal = 0;
         foreach ($items as $item) {
-            $volume = $item->width * $item->length * $item->height;
-            $total +=$volume;
+            $volume = $item->volume * $item->pivot->qty;
+            $volumeTotal += $volume;
         }
-        $total = pow ($total , 1/3 );
-        $total = $total < 18 ? 18 : $total;
-        $total = number_format($total, 0, '', '');
-        return $total;
+        return $volumeTotal;
     }
-    public function getError(): bool
+    public static function getError(int $repeatCalculatePrice): bool
     {
-        $weight = $this->getWeight();
         $user = Auth::guard('user')->user();
-        if($weight > 30){
+
+        $weight = ServiceShipping::getWeight();
+        $weight /= $repeatCalculatePrice;
+        if ($weight > 30) {
             return true;
         }
 
         $total = $user->total();
-        if($total > 10000){
-            return true;
-        }
-
-        $volume = $this->getVolume();
-        if($volume > 105){
+        if ($total > 10000) {
             return true;
         }
         return false;
+    }
+
+    public static function repeatCalculatePrice()
+    {
+        $weight = ServiceShipping::getWeight();
+
+        $volumeTotal = ServiceShipping::getVolume();
+        $volumeBox = 52800;
+        $count = 1;
+        while ($volumeTotal > $volumeBox || $weight > 30) {
+            $volumeTotal -= $volumeBox;
+            $weight /= 2;
+            $count++;
+        }
+        return $count;
+        
     }
 }

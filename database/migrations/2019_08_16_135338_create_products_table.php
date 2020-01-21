@@ -21,9 +21,10 @@ class CreateProductsTable extends Migration
             $table->double('price');
             $table->string('file');
             $table->double('weight');
-            $table->double('height');
-            $table->double('width');
-            $table->double('length');
+            $table->double('volume');
+            // $table->double('height');
+            // $table->double('width');
+            // $table->double('length');
             $table->double('category_id');
             $table->integer('status')->default(0);
             $table->timestamps();
