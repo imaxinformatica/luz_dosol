@@ -15,8 +15,8 @@ class ServiceShipping
         $total = $user->total() / $repeatCalculatePrice;
 
         $cepDestino = clearSpecialCaracters(config('services.correios.cep_destino'));
-        $data['nCdEmpresa'] = '';
-        $data['sDsSenha'] = '';
+        $data['nCdEmpresa'] = config('services.correios.empresa');
+        $data['sDsSenha'] = config('services.correios.senha');
         $data['sCepOrigem'] = clearSpecialCaracters($zip_code);
         $data['sCepDestino'] = $cepDestino;
         $data['nCdServico'] = $shipping_type;
