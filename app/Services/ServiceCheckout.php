@@ -22,16 +22,18 @@ class ServiceCheckout
     public function dataMain(array $data)
     {
         $phone = numberPhone($data['user']->cellphone);
+        $email = config('services.pagseguro.pagseguro_email');
+        $token = config('services.pagseguro.pagseguro_token');
 
         $mainData['paymentMode'] = 'default';
         $mainData['currency'] = 'BRL';
-        $mainData['receiverEmail'] = 'informaticaimax@gmail.com';
+        $mainData['receiverEmail'] = $email;
         $mainData['senderHash'] = $data['sender_hash'];
         $mainData['senderName'] = $data['user']->name;
         $mainData['senderCPF'] = limpaCPF_CNPJ($data['user']->cpf);
         $mainData['senderAreaCode'] = $phone['dd'];
         $mainData['senderPhone'] = $phone['num'];
-        $mainData['senderEmail'] = "c68878754963475503724@sandbox.pagseguro.com.br"; //$data['user']->email;
+        $mainData['senderEmail'] = "c50147060771229680044@sandbox.pagseguro.com.br";//$data['user']->email;
         $mainData['notificationURL'] = route('callback.pagseguro');
 
         return $mainData;

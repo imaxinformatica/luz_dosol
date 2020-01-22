@@ -18,7 +18,6 @@ class OrderController extends Controller
     {
         $data['email'] = config('services.pagseguro.pagseguro_email');
         $data['token'] = config('services.pagseguro.pagseguro_token');
-
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
