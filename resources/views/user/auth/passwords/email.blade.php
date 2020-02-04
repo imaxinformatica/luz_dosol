@@ -66,10 +66,17 @@
                                     <h3>Esqueci a Senha</h3>
                                 </div>
                             </div>
+                            @if (session('status'))
+                            <div>
+                                <p>
+                                    {{ session('status') }}
+                                </p>
+                            </div>
+                            @endif
                             <div class="row">
                                 <div class="col-sm-8">
                                     <label for="email">E-mail</label>
-                                    <input type="text" name="email" id="email" value="{{old('email')}}" >
+                                    <input type="text" name="email" id="email" value="{{old('email')}}">
                                 </div>
                             </div>
                             <div class="row">

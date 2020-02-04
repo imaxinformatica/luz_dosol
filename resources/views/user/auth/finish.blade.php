@@ -78,6 +78,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <h3>Finalize seu Cadastro</h3>
+                                    <h4>Dados Pessoais</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -142,6 +143,11 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Endereço do Titular</h4>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-3">
                                     <div class="form-group">
                                         <label for="zip_code">CEP <small>*</small></label>
@@ -203,6 +209,11 @@
                                 </div>
                             </div>
                             <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Dados Financeiros</h4>
+                                </div>
+                            </div>
                                 <div class="row">
                                     <div class="col-xs-4">
                                         <div class="form-group">
