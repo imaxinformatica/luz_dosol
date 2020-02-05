@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
-use Symfony\Component\HttpFoundation\Request;
-use App\Http\Requests\CheckoutRequest;
 use App\Http\Controllers\Controller;
-use App\Services\ServiceShipping;
+use App\Http\Requests\CheckoutRequest;
+use App\Order;
 use App\Services\ServiceCheckout;
 use App\Services\ServiceOrder;
-use App\Order;
+use App\Services\ServiceShipping;
 use App\User;
 use Auth;
+use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends Controller
 {
@@ -103,38 +103,73 @@ class OrderController extends Controller
     public function getShipping(Request $request)
     {
         $user = Auth::guard('user')->user();
-        $repeatCalculatePrice = ServiceShipping::repeatCalculatePrice();
-        $error = ServiceShipping::getError($repeatCalculatePrice);
-        if ($error) {
-            return 'null';
-        }
-        $data = ServiceShipping::generateArrayShipping($request->zip_code, $request->shipping_type, $repeatCalculatePrice);
-        $data = http_build_query($data);
+        $repeatBox = ServiceShipping::repeatCalculatePrice();
+        // $error = ServiceShipping::getError($repeatBox);
+        // if ($error) {
+        //     return 'null';
+        // }
+        $dataSmall;
+        $dataBig;
+        $shipping = [
+            'small' => 0,
+            'big' => 0,
+        ];
+        $deliveryTime = [
+            'small' => 0,
+            'big' => 0,
+        ];
 
-        $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx";
+        $smallBox = [
+            'length' => 35,
+            'height' => 32,
+            'width' => 33,
+            'volume' => 36960,
+            'repeatBox' => $repeatBox,
+        ];
+        $bigBox = [
+            'length' => 50,
+            'height' => 32,
+            'width' => 33,
+            'volume' => 52800,
+            'repeatBox' => $repeatBox ,
+        ];
+
+        if($repeatBox['small'] != 0){
+            $dataSmall = ServiceShipping::generateArrayShipping(
+                $request->zip_code,
+                $request->shipping_type,
+                $repeatBox['small'],
+                $smallBox
+            );
+            $ship['small'] = ServiceShipping::getShippingPrice($dataSmall);
+            $shipping['small'] = convertMoneyBraziltoUSA($ship['small']['cServico']['Valor']);
+            $deliveryTime['small'] = $ship['small']['cServico']['PrazoEntrega'];
+        }
+        if($repeatBox['big'] != 0){
+            $dataBig = ServiceShipping::generateArrayShipping(
+                $request->zip_code,
+                $request->shipping_type, 
+                $repeatBox['big'],
+                $bigBox
+            );
+            $ship['big'] = ServiceShipping::getShippingPrice($dataBig);
+            $shipping['big'] = convertMoneyBraziltoUSA($ship['big']['cServico']['Valor']);
+            $deliveryTime['big'] = $ship['big']['cServico']['PrazoEntrega'];
+        }
+        $deliveryTimeReal = $deliveryTime['big'] > $deliveryTime['small'] ? $deliveryTime['big'] : $deliveryTime['small'];
+        
         try {
-            // cURL
-            $curl = curl_init($url . '?' . $data);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($curl);
-            curl_close($curl);
-            //!end cUrl
-            $xml = simplexml_load_string($result);
-            $json = json_encode($xml);
-            $json = json_decode($json, true);
-            if(isset($json['cServico']['Erro']) && $json['cServico']['Erro'] != 0){
-                throw new \Exception;
-            }
-            $shippinPrice = convertMoneyBraziltoUSA($json['cServico']['Valor']) * $repeatCalculatePrice;
+            $shippinPrice = ($shipping['small'] * $repeatBox['small']) + ($shipping['big'] * $repeatBox['big']);
             $newTotal = $user->total() + $shippinPrice;
+
             $array = [
-                'shipping_price' =>convertMoneyUSAtoBrazil( $shippinPrice),
-                'delivery_time' => $json['cServico']['PrazoEntrega'],
+                'delivery_time' => $deliveryTimeReal,
+                'shipping_price' => convertMoneyUSAtoBrazil($shippinPrice),
                 'new_total' => convertMoneyUSAtoBrazil($newTotal),
             ];
             return json_encode($array);
         } catch (\Exception $e) {
-            return 'error';
+            return 'error'. $e->getMessage();
         }
     }
 

@@ -6,13 +6,28 @@ use Illuminate\Support\Facades\Auth;
 
 class ServiceShipping
 {
-    public static function generateArrayShipping($zip_code, $shipping_type, $repeatCalculatePrice)
+
+    public static function generateArrayShipping($zip_code, $shipping_type, $repeatCalculatePrice, $box)
     {
         $user = Auth::guard('user')->user();
 
         $weight = ServiceShipping::getWeight();
         $volumeTotal = ServiceShipping::getVolume();
-        $total = $user->total() / $repeatCalculatePrice;
+        $volumeRealBox = $repeatCalculatePrice * $box['volume'];
+        if (
+            ($box['repeatBox']['big'] == 0 && $box['repeatBox']['small'] == 1) || ($box['repeatBox']['big'] == 1 && $box['repeatBox']['small'] == 0)
+        ) {
+            $percentageBox = 100;
+        }else{
+            $percentageBox = ($volumeRealBox * 100) / $volumeTotal;
+        }
+
+        $weightBox = ($weight * $percentageBox) / 100;
+        $weightPerBox = $weightBox / $repeatCalculatePrice;
+
+        $total = $user->total();
+        $totalBox = ($total * $percentageBox) / 100;
+        $totalPerBox = $totalBox / $repeatCalculatePrice;
 
         $cepDestino = clearSpecialCaracters(config('services.correios.cep_destino'));
         $data['nCdEmpresa'] = config('services.correios.empresa');
@@ -21,15 +36,15 @@ class ServiceShipping
         $data['sCepDestino'] = $cepDestino;
         $data['nCdServico'] = $shipping_type;
 
-        $data['nVlPeso'] = $weight / $repeatCalculatePrice;
+        $data['nVlPeso'] = $weightPerBox;
         $data['nCdFormato'] = '1';
 
-        $data['nVlComprimento'] = '50';
-        $data['nVlAltura'] = '32';
-        $data['nVlLargura'] = '33';
+        $data['nVlComprimento'] = $box['length'];
+        $data['nVlAltura'] = $box['height'];
+        $data['nVlLargura'] = $box['width'];
         $data['nVlDiametro'] = '0';
         $data['sCdMaoPropria'] = 'n';
-        $data['nVlValorDeclarado'] = number_format($total, 0, '', '');
+        $data['nVlValorDeclarado'] = number_format($totalPerBox, 0, '', '');
         $data['sCdAvisoRecebimento'] = 'n';
 
         $data['StrRetorno'] = 'xml';
@@ -38,7 +53,7 @@ class ServiceShipping
     }
 
     public static function getWeight()
-    {   
+    {
         $user = Auth::guard('user')->user();
         $items = $user->cart;
         $weight = 0;
@@ -62,12 +77,13 @@ class ServiceShipping
         }
         return $volumeTotal;
     }
-    public static function getError(int $repeatCalculatePrice): bool
+    public static function getError(array $repeatBox): bool
     {
         $user = Auth::guard('user')->user();
 
         $weight = ServiceShipping::getWeight();
-        $weight /= $repeatCalculatePrice;
+
+        $weight /= $repeatBox['big'];
         if ($weight > 30) {
             return true;
         }
@@ -79,19 +95,52 @@ class ServiceShipping
         return false;
     }
 
-    public static function repeatCalculatePrice()
+    public static function repeatCalculatePrice(): array
     {
-        $weight = ServiceShipping::getWeight();
+        $repeatBox = [
+            'big' => 0,
+            'small' => 0,
+        ];
 
         $volumeTotal = ServiceShipping::getVolume();
-        $volumeBox = 52800;
-        $count = 1;
-        while ($volumeTotal > $volumeBox || $weight > 30) {
-            $volumeTotal -= $volumeBox;
-            $weight /= 2;
-            $count++;
+        $volumeBigBox = 52800;
+        $volumeSmallBox = 36960;
+
+        if ($volumeTotal > $volumeSmallBox) {
+            if ($volumeTotal > $volumeBigBox) {
+                $repeatBox['big'] = intval($volumeTotal / $volumeBigBox);
+            } else {
+                $repeatBox['small']++;
+            }
+            $newTotal = $repeatBox['big'] * $volumeBigBox;
+            $total = $volumeTotal - $newTotal;
+            $total > $volumeSmallBox ? $repeatBox['big']++ : $repeatBox['small']++;
+        } else {
+            $repeatBox['small']++;
         }
-        return $count;
-        
+
+        return $repeatBox;
+
+    }
+
+    public static function getShippingPrice($data)
+    {
+        $data = http_build_query($data);
+
+        $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx";
+        // cURL
+        $curl = curl_init($url . '?' . $data);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        //!end cUrl
+        $xml = simplexml_load_string($result);
+        $json = json_encode($xml);
+        $json = json_decode($json, true);
+        if (isset($json['cServico']['Erro']) && $json['cServico']['Erro'] != 0) {
+            throw new \Exception;
+        }
+        return $json;
+
     }
 }
