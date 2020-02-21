@@ -13,11 +13,6 @@ class AdminTableSeeder extends Seeder
     {
         DB::table("admins")->insert([
             [
-                "name"          => "Luz do Sol",
-                "email"         => "luzdosol@luzdosol.com",
-                "password"      => bcrypt("010203"),
-            ], 
-            [
                 "name"          => "Thales",
                 "email"         => "thales@imaxinformatica.com.br",
                 "password"      => bcrypt("Thales100%"),
@@ -27,6 +22,21 @@ class AdminTableSeeder extends Seeder
                 "email"         => "lucas@imaxinformatica.com.br",
                 "password"      => bcrypt(".Welcome09"),
             ], 
+            [
+                "name"          => "Alan Ribeiro",
+                "email"         => "alan.ribeiro@luzdosolmmn.com.br",
+                "password"      => bcrypt("lds@895201"),
+            ],
+            [
+                "name"          => "Guilherme Neto",
+                "email"         => "guilherme.neto@luzdosolmmn.com.br",
+                "password"      => bcrypt("lds@999225"),
+            ], 
+            [
+                "name"          => "Matheus Biasotto",
+                "email"         => "matheus.biasotto@luzdosolmmn.com.br",
+                "password"      => bcrypt("lds@782338"),
+            ]
         ]);
     }
 }
