@@ -17,6 +17,16 @@ class AdminTableSeeder extends Seeder
                 "email"         => "luzdosol@luzdosol.com",
                 "password"      => bcrypt("010203"),
             ], 
+            [
+                "name"          => "Thales",
+                "email"         => "thales@imaxinformatica.com.br",
+                "password"      => bcrypt("Thales100%"),
+            ], 
+            [
+                "name"          => "Lucas",
+                "email"         => "lucas@imaxinformatica.com.br",
+                "password"      => bcrypt(".Welcome09"),
+            ], 
         ]);
     }
 }
