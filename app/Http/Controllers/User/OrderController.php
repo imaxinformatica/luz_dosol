@@ -133,7 +133,6 @@ class OrderController extends Controller
             'volume' => 52800,
             'repeatBox' => $repeatBox ,
         ];
-
         if($repeatBox['small'] != 0){
             $dataSmall = ServiceShipping::generateArrayShipping(
                 $request->zip_code,
@@ -157,7 +156,6 @@ class OrderController extends Controller
             $deliveryTime['big'] = $ship['big']['cServico']['PrazoEntrega'];
         }
         $deliveryTimeReal = $deliveryTime['big'] > $deliveryTime['small'] ? $deliveryTime['big'] : $deliveryTime['small'];
-        
         try {
             $shippinPrice = ($shipping['small'] * $repeatBox['small']) + ($shipping['big'] * $repeatBox['big']);
             $newTotal = $user->total() + $shippinPrice;
@@ -191,7 +189,7 @@ class OrderController extends Controller
 
         $xml = simplexml_load_string($xml);
         $order = Order::where('code', $xml->code)->first();
-        if ($order) {
+        if ($order) {   
             $user = User::find($order->user_id);
             $svOrder = new ServiceOrder;
 
@@ -202,7 +200,7 @@ class OrderController extends Controller
             if ($totalOrders == 0 && $user->user_id !== null) {
                 ServiceOrder::createSpecialBonus($user->user_id);
             }
-            $svOrder->createComission($order->id, $user);
+            ServiceOrder::createComission($order->id, $user);
 
             if ($user->getTotalMonth() >= 200 && $user->status == 0) {
                 ServiceCheckout::activeUser($user);

@@ -58,7 +58,7 @@ class ServiceOrder
         }
     }
 
-    public function createComission($order_id, User $user)
+    public static function createComission($order_id, User $user)
     {
         for ($i = 1; $i < 11; $i++) {
 

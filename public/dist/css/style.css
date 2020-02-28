@@ -146,11 +146,12 @@ img.graduation-img {
     width: 100%;
     max-height: 250px;
     height: 250px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .product-box {
     position: relative;
+    box-shadow: 5px 5px 20px #888;
 }
 
 .product-body h3 {

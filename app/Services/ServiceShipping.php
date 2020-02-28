@@ -126,7 +126,6 @@ class ServiceShipping
     public static function getShippingPrice($data)
     {
         $data = http_build_query($data);
-
         $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx";
         // cURL
         $curl = curl_init($url . '?' . $data);
@@ -138,9 +137,8 @@ class ServiceShipping
         $json = json_encode($xml);
         $json = json_decode($json, true);
         if (isset($json['cServico']['Erro']) && $json['cServico']['Erro'] != 0) {
-            throw new \Exception;
+            throw new \Exception('Problema em buscar os dados');
         }
         return $json;
-
     }
 }
