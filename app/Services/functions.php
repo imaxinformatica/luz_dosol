@@ -31,6 +31,7 @@ function convertDateUSAtoBrazil($date)
 
 function getNameFile($originalImage, $name_image)
 {
+    $name_image = rand (1500 , 20000);
     $extension = '.' . $originalImage->extension();
     $fileName = $name_image . date('Ymd') . time() . microtime();
     $fileName = str_replace('.', '', $fileName);
