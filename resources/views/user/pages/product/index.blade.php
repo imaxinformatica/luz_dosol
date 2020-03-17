@@ -173,7 +173,7 @@
                                 <div class="box-description display-none" id="box-description-{{$product->id}}">
                                     <span class="close-box" data-id="{{$product->id}}"><i class="fa fa-times-circle"
                                             aria-hidden="true"></i></span>
-                                    <h4>{{$product->description}}</h4>
+                                    <h4 style="font-size:13px">{{$product->description}}</h4>
                                 </div>
                             </div>
                         </div>

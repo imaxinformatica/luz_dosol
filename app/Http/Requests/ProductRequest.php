@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
         $rules = [
             'reference' => 'required',
             'name' =>'required|max:45',
-            'description' => 'required|max:400',
+            'description' => 'required|max:800',
             'price' => 'required',
             'category_id' => 'required',
             'weight' => 'required',
