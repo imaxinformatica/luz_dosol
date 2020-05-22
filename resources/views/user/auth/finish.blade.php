@@ -139,14 +139,14 @@
                                 <div class="col-xs-3">
                                     <div class="form-group">
                                         <label for="zip_code">CEP <small>*</small></label>
-                                        <input type="text" class="btn-form input-cep" value="{{old('zip_code')}}"
+                                        <input type="text" class="btn-form input-cep" id="cep" value="{{old('zip_code')}}"
                                             name="zip_code" required>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="street">Logradouro <small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('street')}}" name="street"
+                                        <input type="text" class="btn-form" value="{{old('street')}}" id="street" name="street"
                                             required>
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="neighborhood">Bairro<small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('neighborhood')}}"
+                                        <input type="text" class="btn-form" id="neighborhood" value="{{old('neighborhood')}}"
                                             name="neighborhood" required>
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="city">Cidade<small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('city')}}" name="city"
+                                        <input type="text" class="btn-form" id="city" value="{{old('city')}}" name="city"
                                             required>
                                     </div>
                                 </div>
@@ -219,8 +219,8 @@
                                     <div class="col-xs-4">
                                         <div class="form-group">
                                             <label for="agency">Agência <small>*</small></label>
-                                            <input type="number" class="btn-form" value="{{old('agency')}}" name="agency"
-                                                required>
+                                            <input type="number" class="btn-form" value="{{old('agency')}}"
+                                                name="agency" required>
                                         </div>
                                     </div>
 
@@ -296,6 +296,71 @@
 
     <script src="{{asset('alertify/alertify.min.js')}}"></script>
     <script type="text/javascript">
+    $(document).ready(function() {
+
+        function limpa_formulário_cep() {
+            // Limpa valores do formulário de cep.
+            $("#street").val("");
+            $("#neighborhood").val("");
+            $("#city").val("");
+            $("#state").val("");
+        }
+
+        //Quando o campo cep perde o foco.
+        $("#cep").blur(function() {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = $(this).val().replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if (validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    $("#street").val("...");
+                    $("#neighborhood").val("...");
+                    $("#city").val("...");
+                    $("#state").val("...");
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#street").val(dados.logradouro);
+                            $("#neighborhood").val(dados.bairro);
+                            $("#city").val(dados.localidade);
+                            $("#state").val(dados.uf);
+                            
+                            $('#street').attr('disabled', true);
+                            $('#neighborhood').attr('disabled', true);
+                            $('#city').attr('disabled', true);
+                            $('#state').attr('disabled', true);
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            limpa_formulário_cep();
+                            alertify.error("CEP não encontrado.");
+                        }
+                    });
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alertify.error("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        });
+    });
     $('.input-cep').inputmask({
         "mask": "99999-999",
         "placeholder": "_"
@@ -329,11 +394,11 @@
     });
     </script>
     @if ($errors->any())
-        @foreach ($errors->all() as $error)
-        <script type="text/javascript">
-        alertify.error("{{ $error }}");
-        </script>
-        @endforeach
+    @foreach ($errors->all() as $error)
+    <script type="text/javascript">
+    alertify.error("{{ $error }}");
+    </script>
+    @endforeach
     @endif
 </body>
 

@@ -10,7 +10,14 @@
                         <i class="ion ion-pie-graph"></i>
                     </div>
                 </div>
-                <a href="#" class="small-box-footer">Disponível após ATIVAÇÃO mensal</a>
+
+                <a href="#" class="small-box-footer">
+                    @if(auth()->guard('user')->user()->status == 0)
+                    Disponível após ATIVAÇÃO mensal
+                    @else
+                    -
+                    @endif
+                </a>
             </div>
         </div>
         <div class="col-xs-12 col-sm-6">
@@ -23,7 +30,13 @@
                         <i class="ion ion-pie-graph"></i>
                     </div>
                 </div>
-                <a href="#" class="small-box-footer">Disponível após ATIVAÇÃO mensal</a>
+                <a href="#" class="small-box-footer">
+                    @if(auth()->guard('user')->user()->status == 0)
+                    Disponível após ATIVAÇÃO mensal
+                    @else
+                    -
+                    @endif
+                </a>
             </div>
         </div>
     </div>
@@ -38,7 +51,13 @@
                         <i class="ion ion-pie-graph"></i>
                     </div>
                 </div>
-                <a href="#" class="small-box-footer">Disponível após ATIVAÇÃO mensal</a>
+                <a href="#" class="small-box-footer">
+                    @if(auth()->guard('user')->user()->status == 0)
+                    Disponível após ATIVAÇÃO mensal
+                    @else
+                    -
+                    @endif
+                </a>
             </div>
         </div>
     </div>

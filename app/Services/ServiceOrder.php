@@ -188,6 +188,7 @@ class ServiceOrder
             $realExtraBonus = $user->extraBonus()->whereMonth('updated_at',$month )->whereYear('updated_at', $year)->get(); 
             ServiceOrder::updateExtraBonus($realExtraBonus, $graduation);
         }
+        echo'ok';
     }
 
     public function generateReport($date)
