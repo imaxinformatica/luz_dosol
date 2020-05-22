@@ -173,6 +173,7 @@ class OrderController extends Controller
 
     public function callback(Request $request)
     {
+        return response()->json($request->all());
         $svCheckout = new ServiceCheckout;
         $notification = $request->notificationCode;
         $data['email'] = config('services.pagseguro.pagseguro_email');

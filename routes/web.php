@@ -207,7 +207,7 @@ Route::get('/card-content', function(){
 Route::get('/address-content', function(){
     return view('user.parts.address');
 })->name('address.content');
-Route::get('/callback-pagseguro', 'User\OrderController@callback')->name('callback.pagseguro');
+Route::post('/callback-pagseguro', 'User\OrderController@callback')->name('callback.pagseguro');
 
 
 Route::get('/get-shipping', 'User\OrderController@getShipping')->name('get.shipping');
