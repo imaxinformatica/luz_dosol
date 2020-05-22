@@ -26,6 +26,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.css')}}"> -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css?ver=1.5')}}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('alertify/css/alertify.css')}}">
 </head>
 
 <body>
@@ -54,20 +55,7 @@
             </div>
         </nav>
     </header>
-    @if ($errors->any())
-    <div class="content-header">
-        @foreach ($errors->all() as $error)
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ $error }}
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-    @endif
+
     <section class="register">
         <div class="container">
             <div class="row">
@@ -136,7 +124,7 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
-                                        <label for="phone">Telefone</label>
+                                        <label for="phone">Telefone <small>(Opcional)</small></label>
                                         <input type="text" class="btn-form input-phone" value="{{old('phone')}}"
                                             name="phone">
                                     </div>
@@ -209,11 +197,11 @@
                                 </div>
                             </div>
                             <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4>Dados Financeiros</h4>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4>Dados Financeiros</h4>
+                                    </div>
                                 </div>
-                            </div>
                                 <div class="row">
                                     <div class="col-xs-4">
                                         <div class="form-group">
@@ -231,7 +219,7 @@
                                     <div class="col-xs-4">
                                         <div class="form-group">
                                             <label for="agency">Agência <small>*</small></label>
-                                            <input type="text" class="btn-form" value="{{old('agency')}}" name="agency"
+                                            <input type="number" class="btn-form" value="{{old('agency')}}" name="agency"
                                                 required>
                                         </div>
                                     </div>
@@ -239,7 +227,7 @@
                                     <div class="col-xs-4">
                                         <div class="form-group">
                                             <label for="account">Conta (s/ dígito) <small>*</small></label>
-                                            <input type="text" class="btn-form" value="{{old('account')}}"
+                                            <input type="number" class="btn-form" value="{{old('account')}}"
                                                 name="account" required>
                                         </div>
                                     </div>
@@ -249,7 +237,7 @@
                                     <div class="col-xs-2">
                                         <div class="form-group">
                                             <label for="account_type">Dig. conta<small>*</small></label>
-                                            <input type="text" class="btn-form" value="{{old('account_type')}}"
+                                            <input type="number" class="btn-form" value="{{old('account_type')}}"
                                                 name="account_type" required>
                                         </div>
                                     </div>
@@ -305,6 +293,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
     <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script src="{{ asset('bower_components/select2/dist/js/i18n/pt-BR.js')}}"></script>
+
+    <script src="{{asset('alertify/alertify.min.js')}}"></script>
     <script type="text/javascript">
     $('.input-cep').inputmask({
         "mask": "99999-999",
@@ -338,7 +328,13 @@
         }
     });
     </script>
-
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+        <script type="text/javascript">
+        alertify.error("{{ $error }}");
+        </script>
+        @endforeach
+    @endif
 </body>
 
 </html>

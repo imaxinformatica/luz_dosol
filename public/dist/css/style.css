@@ -47,6 +47,15 @@ ul.menu li {
     position: relative;
 }
 
+input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    
+}
+input[type=number] { 
+   -moz-appearance: textfield;
+   appearance: textfield;
+
+}
 @media(max-width: 767px) {
     button.btn-header {
         margin-top: 10px;

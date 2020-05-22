@@ -44,12 +44,12 @@ class ServiceOrder
             $order->user_id = $user_id;
             $order->shipping = $arrayPagSeguro['shipping']['cost'];
             $order->payment_link = $data['payment_method'] == 'boleto' ? $arrayPagSeguro['paymentLink'] : null;
-            $order->subtotal = $arrayPagSeguro['grossAmount'];
+            $order->subtotal = convertMoneyBraziltoUSA($data['price']);
             $order->payment_method = $data['payment_method'];
             $order->status = $arrayPagSeguro['status'];
             $order->code = $arrayPagSeguro['code'];
             $order->delivery_time = $data['delivery_time'];
-            $order->total = ($arrayPagSeguro['grossAmount'] + $arrayPagSeguro['shipping']['cost']);
+            $order->total = ($arrayPagSeguro['grossAmount']);
             $order->save();
             return $order;
         } catch (\Exception $e) {

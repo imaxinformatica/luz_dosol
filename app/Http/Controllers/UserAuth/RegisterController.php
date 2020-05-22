@@ -4,10 +4,12 @@ namespace App\Http\Controllers\UserAuth;
 
 use App\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use App\Rules\CPFValidate;
+use App\Rules\PhoneValidate;
 use App\Services\ServiceUser;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -53,20 +55,20 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-            'cpf' => 'required',
+            'cpf' => ['required', new CPFValidate("CPF")],
             'rg' => 'required',
-            'cellphone' => 'required',
+            'cellphone' => ['required', 'string', 'max:255', new PhoneValidate()],
             'zip_code' => 'required',
             'street' => 'required',
             'number' => 'required',
             'neighborhood' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'bank_code' => 'required',
-            'agency' => 'required',
-            'account' => 'required',
+            'bank_code' => 'required|numeric',
+            'agency' => 'required|numeric',
+            'account' => 'required|numeric',
             'account_type' => 'required',
-            'cpf_holder' => 'required',
+            'cpf_holder' => ['required', new CPFValidate('CPF titular do cartão')],
             'type_account' => 'required',
             'name_holder' => 'required'
         ]);
@@ -80,6 +82,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        dd($data);
+
         $data['status'] = 0;
         $dataUser = ServiceUser::generateDatauser($data);
         $dataUser['user_id'] = session('user_id');

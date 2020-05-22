@@ -29,8 +29,6 @@ class DashboardController extends Controller
     {
         $user =  Auth::guard('user')->user();
         $isActive = $user->getActive($request->month, $request->year);
-       
-
         $data['bonus'] = !$isActive ? "-" : convertMoneyUSAtoBrazil($user->getBonus($request->month, $request->year));
         $data['commission'] = !$isActive ? "-" :convertMoneyUSAtoBrazil($user->getCommission($request->month, $request->year));
         $data['total'] = !$isActive ? "-" :convertMoneyUSAtoBrazil($user->getTotalBonus($request->month, $request->year));

@@ -17,7 +17,6 @@ class ServiceUser
         $dataUser['cellphone'] = $data['cellphone'];
         $dataUser['phone'] = $data['phone'];
         if (isset($data['password'])) {
-
             $dataUser['password'] = bcrypt($data['password']);
         }
         if (isset($data['status'])) {

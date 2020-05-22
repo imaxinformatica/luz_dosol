@@ -163,6 +163,9 @@ class User extends Authenticatable
 
     public function getActive($month, $year): bool
     {
+        if($this->status == 1){
+            return true;
+        }
         $active = $this->active()->whereMonth('date_active', $month)->whereYear('date_active', $year)->first();
         return $active == null ? false : true;
     }
