@@ -337,10 +337,10 @@
                             $("#city").val(dados.localidade);
                             $("#state").val(dados.uf);
                             
-                            $('#street').attr('disabled', true);
-                            $('#neighborhood').attr('disabled', true);
-                            $('#city').attr('disabled', true);
-                            $('#state').attr('disabled', true);
+                            $('#street').attr('direadonlysabled', true);
+                            $('#neighborhood').attr('readonly', true);
+                            $('#city').attr('readonly', true);
+                            $('#state').attr('readonly', true);
                         } //end if.
                         else {
                             //CEP pesquisado não foi encontrado.

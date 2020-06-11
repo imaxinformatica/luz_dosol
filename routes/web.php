@@ -224,10 +224,6 @@ Route::get('/criar-bonus', function () {
     App\Services\ServiceOrder::createBonus();
 });
 
-Route::get('/edita-extra-bonus', function(){
-    App\Services\ServiceOrder::createBonus();
-});
-
 Route::get('atualiza',function(){
     alteraMedidas();
 });
