@@ -113,6 +113,47 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Lista de usuários</h3>
+                        <div class="box-tools">
+                            <?php
+
+                            $paginate = $users;
+
+                            $link_limit = 7;
+
+                            $filters = '&name='.request('name');
+                            $filters .= '&email='.request('email');
+
+                            ?>
+                            @if($paginate->lastPage() > 1)
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                <li class="{{ ($paginate->currentPage() == 1) ? ' disabled' : '' }}">
+                                    <a href="{{ $paginate->url(1) . $filters}}">«</a>
+                                </li>
+                                @for($i = 1; $i <= $paginate->lastPage(); $i++)
+                                    <?php
+                          $half_total_links = floor($link_limit / 2);
+                          $from = $paginate->currentPage() - $half_total_links;
+                          $to = $paginate->currentPage() + $half_total_links;
+                          if ($paginate->currentPage() < $half_total_links) {
+                             $to += $half_total_links - $paginate->currentPage();
+                          }
+                          if ($paginate->lastPage() - $paginate->currentPage() < $half_total_links) {
+                              $from -= $half_total_links - ($paginate->lastPage() - $paginate->currentPage()) - 1;
+                          }
+                          ?>
+                                    @if ($from < $i && $i < $to) <li
+                                        class="{{ ($paginate->currentPage() == $i) ? ' active' : '' }}">
+                                        <a href="{{ $paginate->url($i) . $filters}}">{{ $i }}</a>
+                                        </li>
+                                        @endif
+                                        @endfor
+                                        <li
+                                            class="{{ ($paginate->currentPage() == $paginate->lastPage()) ? ' disabled' : '' }}">
+                                            <a href="{{ $paginate->url($paginate->lastPage()) . $filters}}">»</a>
+                                        </li>
+                            </ul>
+                            @endif
+                        </div>
                     </div>
                     <div class="box-body table-responsive">
                         <table class="table table-bordered table-striped">
@@ -142,17 +183,19 @@
                                             <i class="fa fa-toggle-on" aria-hidden="true"></i>
                                             @endif
                                         </a>
-                                        <a href="#" data-user_id="{{$user->id}}" title="Alterar Senha" class="act-list change-password">
+                                        <a href="#" data-user_id="{{$user->id}}" title="Alterar Senha"
+                                            class="act-list change-password">
                                             <i class="fa fa-key" aria-hidden="true"></i>
                                         </a>
-                                        <a href="#" data-user_id="{{$user->id}}" title="Vincular Usuário a Rede" class="act-list attach-user">
+                                        <a href="#" data-user_id="{{$user->id}}" title="Vincular Usuário a Rede"
+                                            class="act-list attach-user">
                                             <i class="fa fa-users" aria-hidden="true"></i>
                                         </a>
                                         <a href="{{ route('admin.user.edit', ['user' => $user])}}" title="Editar"
                                             class="act-list">
                                             <i class="fa fa-pencil-square" aria-hidden="true"></i>
                                         </a>
-                                        
+
                                         <a href="{{ route('admin.user.delete', ['user' => $user])}}" title="Excluir"
                                             class="act-list act-delete">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -187,7 +230,7 @@ $('.change-password').on('click', function() {
     $('#changePassword').modal('show');
 });
 
-$('.attach-user').on('click', function(){
+$('.attach-user').on('click', function() {
     let user_id = $(this).data('user_id');
     $('#attachUser form input[name="user_id"]').val(user_id);
     $('#attachUser').modal('show');
@@ -208,7 +251,7 @@ $('.attach-user').on('click', function(){
                 <h4 class="modal-title">Alterar Senha</h4>
             </div>
             <form action="{{ route('admin.user.password')}}" method="post">
-            {{csrf_field()}}
+                {{csrf_field()}}
                 <input type="hidden" name="user_id" value="">
                 <div class="modal-body">
                     <div class="row">
@@ -219,12 +262,13 @@ $('.attach-user').on('click', function(){
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="password_confirmation">Confirmação de Senha</label>
-                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation">
+                                <input type="password" name="password_confirmation" class="form-control"
+                                    id="password_confirmation">
                             </div>
                         </div>
                     </div>
@@ -252,7 +296,7 @@ $('.attach-user').on('click', function(){
                 <h4 class="modal-title">Vincular Usuário</h4>
             </div>
             <form action="{{ route('admin.user.attach')}}" method="post">
-            {{csrf_field()}}
+                {{csrf_field()}}
                 <input type="hidden" name="user_id" value="">
                 <div class="modal-body">
                     <div class="row">
@@ -263,7 +307,7 @@ $('.attach-user').on('click', function(){
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
