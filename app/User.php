@@ -196,7 +196,7 @@ class User extends Authenticatable
     {
         $totalCommission = 0;
         foreach ($this->commission()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->get() as $commission) {
-            $orderTotal = ($commission->commission_percentage / 100) * $commission->order->total;
+            $orderTotal = ($commission->commission_percentage / 100) * $commission->order->subtotal;
             $totalCommission += $orderTotal;
         }
         return $totalCommission;
