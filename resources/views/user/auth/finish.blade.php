@@ -337,7 +337,7 @@
                             $("#city").val(dados.localidade);
                             $("#state").val(dados.uf);
                             
-                            $('#street').attr('direadonlysabled', true);
+                            $('#street').attr('readonly', true);
                             $('#neighborhood').attr('readonly', true);
                             $('#city').attr('readonly', true);
                             $('#state').attr('readonly', true);
