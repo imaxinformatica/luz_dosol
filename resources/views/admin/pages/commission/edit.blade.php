@@ -168,10 +168,19 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <div class="col-xs-2">
+                                    <label for="total">Comissão Total <small>*</small></label>
+                                    <div class="input-group">
+                                        <input type="text" name="total" disabled class="form-control input-money"
+                                            required id="total">
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary">Editar</button>
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
                         </div>
                     </form>
                 </div>
@@ -181,3 +190,24 @@
 </div>
 
 @stop
+@section('scripts')
+<script type="text/javascript">
+$(document).ready(function() {
+    getTotalComission();
+});
+
+$('.input-money').on('blur keyup',function() {
+    getTotalComission();
+});
+
+const getTotalComission = () => {
+    var total = 0;
+    $(".input-money").each(function() {
+        if ($(this).attr('name') != 'total') {
+            total += realToFloat($(this).val());
+        }
+    });
+    $('#total').val(floatToReal(total));
+}
+</script>
+@endsection

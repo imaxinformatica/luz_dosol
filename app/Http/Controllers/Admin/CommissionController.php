@@ -20,6 +20,11 @@ class CommissionController extends Controller
     public function update(CommissionRequest $request, ServiceCommission $service)
     {
         $data = $service->validateDataService($request->except('_token'));
+        $total = array_sum($data);
+        if($total > 25){
+            return redirect()->back()
+            ->with('error','O valor de comissões está superiro a 25%.');
+        }
         try {
             Commission::first()->update($data);
         } catch (\Exception $e) {

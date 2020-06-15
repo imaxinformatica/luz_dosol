@@ -185,12 +185,12 @@
                                         </a>
                                         <a href="#" data-user_id="{{$user->id}}" title="Alterar Senha"
                                             class="act-list change-password">
-                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                            <i class="fa fa-lock" aria-hidden="true"></i>
                                         </a>
-                                        <a href="#" data-user_id="{{$user->id}}" title="Vincular Usuário a Rede"
+                                        <!-- <a href="#" data-user_id="{{$user->id}}" title="Vincular Usuário a Rede"
                                             class="act-list attach-user">
                                             <i class="fa fa-users" aria-hidden="true"></i>
-                                        </a>
+                                        </a> -->
                                         <a href="{{ route('admin.user.edit', ['user' => $user])}}" title="Editar"
                                             class="act-list">
                                             <i class="fa fa-pencil-square" aria-hidden="true"></i>

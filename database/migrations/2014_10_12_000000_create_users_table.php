@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->default('default.png');
             $table->string('user_id')->nullable();
             $table->integer('status')->default(0);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
