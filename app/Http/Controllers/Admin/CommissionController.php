@@ -23,7 +23,7 @@ class CommissionController extends Controller
         $total = array_sum($data);
         if($total > 25){
             return redirect()->back()
-            ->with('error','O valor de comissões está superiro a 25%.');
+            ->with('error','O valor de comissões está superior a 25%.');
         }
         try {
             Commission::first()->update($data);
