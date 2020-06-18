@@ -24,14 +24,14 @@
                             <i class="fa fa-shopping-cart"></i>
                             <span class="label label-danger">{{auth()->guard('user')->user()->cart->count()}}</span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" style="min-width: 400px;">
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     @forelse($cartItems as $item)
                                     <li>
                                         <div class="pull-left">
-                                            <img class="img-circle"
+                                            <img
                                                 src="{{asset('uploads/products/thumbnail/'. $item->file)}}"
                                                 alt="Imagem do produto">
                                         </div>

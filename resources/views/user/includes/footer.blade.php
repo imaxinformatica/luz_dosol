@@ -60,6 +60,8 @@
 src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js">
 </script>
 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script type="text/javascript">
 $('.change-avatar').on('click', function(){
   $('#changeAvatar').modal('show');

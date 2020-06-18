@@ -58,4 +58,17 @@ class CartController extends Controller
             ->with('total', $total)
             ->with('itemsCart', $itemsCart);
     }
+
+    public function update(Request $request, Product $product)
+    {
+        $user = Auth::guard('user')->user();
+        $productCart = $user->cart()->where('product_id', $product->id)->first();
+        if($productCart){
+            $productCart->pivot->update([
+                'qty' => $request->value
+            ]);
+        }  
+        session()->flash('success', 'Atualizado com sucesso');
+        return response()->json();
+    }
 }

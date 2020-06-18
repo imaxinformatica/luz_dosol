@@ -114,7 +114,22 @@
                                     </td>
                                     <td>{{$item->reference}}</td>
                                     <td>{{$item->name}}</td>
-                                    <td>{{$item->pivot->qty}}</td>
+
+                                    <td>
+                                        <div class="input-group input-group-sm" style="max-width: 200px;">
+                                            <input type="text" class="form-control" disabled name="qty"
+                                                value="{{$item->pivot->qty}}" data-id="{{$item->id}}">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-info btn-flat btn-edit">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button"
+                                                    class="btn btn-success btn-flat display-none btn-save">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </td>
                                     <td>R${{convertMoneyUSAtoBrazil($item->price)}}</td>
                                     <td>R${{convertMoneyUSAtoBrazil($item->price * $item->pivot->qty)}}</td>
                                     <td>
@@ -144,8 +159,57 @@
 @stop
 @section('scripts')
 <script type="text/javascript">
+
+$('.btn-edit').on('click', function() {
+    let input = $(this).parent().parent().find('input');
+    let name = input.attr('name');
+    let value = input.val();
+    input.attr('disabled', false);
+    $(this).toggleClass('display-none');
+    $(this).next().toggleClass('display-none');
+});
+
+$('.btn-save').on('click', function() {
+    let input = $(this).parent().parent().find('input');
+    let name = input.attr('name');
+    let productId = input.attr('data-id');
+
+    let value = input.val();
+    let form = {
+        _token: "{{csrf_token()}}",
+        name,
+        value,
+    }
+    let url = "{{route('user.cart.update', ['product' => 'productValue'])}}";
+    
+    url = url.replace('productValue', productId);
+    updateInput(url, form, input, $(this));
+});
+
+
+function updateInput(url, data, input, btnSave) {
+    axios({
+            method: 'post',
+            url,
+            data
+        })
+        .then(function(response) {
+            const {
+                status
+            } = response;
+            if (status === 200) {
+                input.attr('disabled', true);
+                btnSave.toggleClass('display-none');
+                btnSave.prev().toggleClass('display-none');
+                document.location.reload(true);
+            }
+        }).catch(function(error) {
+            validateError(error.response);
+        });
+}
+
 $('.finishOrder').on('click', function() {
-    var total = {{$total}};
+    var total = "{{$total}}";
     if (total === 0) {
         $('#modalPriceInferior').modal('show');
 
@@ -211,17 +275,17 @@ $("#cvv").keyup(function() { //criar token
 $('#shipping_type').on('change', function() {
     var shipping_type = $(this).val();
     var zip_code = $('input[name="zip_code"]').val();
-    getShippingScript(shipping_type,zip_code);
+    getShippingScript(shipping_type, zip_code);
 });
 
-function getShippingScript(shipping_type,zip_code) {
+function getShippingScript(shipping_type, zip_code) {
     $.ajax({
         type: 'GET',
         url: "{{route('get.shipping')}}",
         data: {
             shipping_type: shipping_type,
             zip_code: zip_code
-        },  
+        },
         beforeSend: function() {
             $('#delivery_time').val('Carregando..');
             $('#shipping_price').val('Carregando..');
@@ -230,13 +294,17 @@ function getShippingScript(shipping_type,zip_code) {
         success: function(data) {
             if (data == 'null') {
                 $('#modalGeneric .modal-title').html('Peso superior ao permitido!');
-                $('#modalGeneric .modal-body').html('<p>As informações referente ao seu pedido possuem divergências em relação ao permitido pelo Correios!</p>');
+                $('#modalGeneric .modal-body').html(
+                    '<p>As informações referente ao seu pedido possuem divergências em relação ao permitido pelo Correios!</p>'
+                    );
                 $('#modalGeneric').modal('show');
-            } else if(data == 'error'){
+            } else if (data == 'error') {
                 $('#modalGeneric .modal-title').html('Erro!');
-                $('#modalGeneric .modal-body').html('<p>Ops, tivemos um problema, por favor, entre em contato com um de nossos administradores.</p>');
+                $('#modalGeneric .modal-body').html(
+                    '<p>Ops, tivemos um problema, por favor, entre em contato com um de nossos administradores.</p>'
+                    );
                 $('#modalGeneric').modal('show');
-            }else{
+            } else {
                 let responseDelivery = $.parseJSON(data);
                 console.log(responseDelivery);
                 $('#delivery_time').val(responseDelivery.delivery_time);
@@ -413,8 +481,8 @@ function getTokenCreditCard() {
                             <div class="form-group">
                                 <label for="delivery_time">Prazo de entrega</label>
                                 <div class="input-group">
-                                    <input type="text" name="delivery_time" id="delivery_time"
-                                        class="form-control" readonly>
+                                    <input type="text" name="delivery_time" id="delivery_time" class="form-control"
+                                        readonly>
                                     <span class="input-group-addon">dias</span>
                                 </div>
                             </div>
@@ -426,8 +494,9 @@ function getTokenCreditCard() {
                                 <label for="total">Total</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">R$</span>
-                                    <input type="text" name="total" id="total" value="{{convertMoneyUSAtoBrazil($total)}}"
-                                        class="form-control input-money" readonly>
+                                    <input type="text" name="total" id="total"
+                                        value="{{convertMoneyUSAtoBrazil($total)}}" class="form-control input-money"
+                                        readonly>
                                 </div>
                             </div>
                         </div>

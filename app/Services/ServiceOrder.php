@@ -91,9 +91,21 @@ class ServiceOrder
 
     public static function createBonus()
     {
-        $users = User::where('status', 1)->get();
         $date = date('m-Y', strtotime('-1 day'));
+        $dateNow = date('m-Y');
         list($month, $year) = explode('-', $date);
+        list($monthNow, $yearNow) = explode('-', $dateNow);
+        if($month == $monthNow && $year == $yearNow){
+            $users = User::get();   
+            $users->each(function($user) use($monthNow, $yearNow){
+                if($user->getActive($monthNow, $yearNow) && $user->getTotalMonth() >= 200){
+                    $user->update(['status' => 1]);
+                }
+            });
+        }
+
+        $users = User::where('status', 1)->get();
+        
         foreach ($users as $user) {
             $graduation = $user->getGraduation();
             // level 1

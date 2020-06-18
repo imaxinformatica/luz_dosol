@@ -190,7 +190,7 @@ class User extends Authenticatable
         list($month, $year) = explode('-', $date);
         $totalOrders = $this->orders()
             ->whereMonth('updated_at', $month)
-            ->whereYear('updated_at', $year)->sum('total');
+            ->whereYear('updated_at', $year)->sum('subtotal');
         return $totalOrders;
     }
 
