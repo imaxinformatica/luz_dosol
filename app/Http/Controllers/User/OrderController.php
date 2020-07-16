@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
+use Auth;
+use App\User;
+use App\Cycle;
+use App\Order;
+use App\Services\ServiceOrder;
+use App\Services\ServiceCheckout;
+use App\Services\ServiceShipping;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutRequest;
-use App\Order;
-use App\Services\ServiceCheckout;
-use App\Services\ServiceOrder;
-use App\Services\ServiceShipping;
-use App\User;
-use Auth;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends Controller
@@ -63,9 +64,7 @@ class OrderController extends Controller
             $svCheckout->dataItems($user),
             $svCheckout->getShipping($request->all())
         );
-
         $curl = curl_init();
-
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1'));
@@ -103,6 +102,18 @@ class OrderController extends Controller
     public function getShipping(Request $request)
     {
         $user = Auth::guard('user')->user();
+
+        if($request->shipping_type == "particular") {
+            $shippingPrice = ServiceShipping::getPriceParticular($request->zip_code);
+            $newTotal = $user->total() + $shippingPrice;
+            $cycle = Cycle::first();
+            $array = [
+                'delivery_time' => $cycle->particular_time,
+                'shipping_price' => convertMoneyUSAtoBrazil($shippingPrice),
+                'new_total' => convertMoneyUSAtoBrazil($newTotal),
+            ];
+            return json_encode($array);
+        }
         $repeatBox = ServiceShipping::repeatCalculatePrice();
         // $error = ServiceShipping::getError($repeatBox);
         // if ($error) {
@@ -133,6 +144,7 @@ class OrderController extends Controller
             'volume' => 52800,
             'repeatBox' => $repeatBox ,
         ];
+        
         if($repeatBox['small'] != 0){
             $dataSmall = ServiceShipping::generateArrayShipping(
                 $request->zip_code,
@@ -157,12 +169,12 @@ class OrderController extends Controller
         }
         $deliveryTimeReal = $deliveryTime['big'] > $deliveryTime['small'] ? $deliveryTime['big'] : $deliveryTime['small'];
         try {
-            $shippinPrice = ($shipping['small'] * $repeatBox['small']) + ($shipping['big'] * $repeatBox['big']);
-            $newTotal = $user->total() + $shippinPrice;
+            $shippingPrice = ($shipping['small'] * $repeatBox['small']) + ($shipping['big'] * $repeatBox['big']);
+            $newTotal = $user->total() + $shippingPrice;
 
             $array = [
                 'delivery_time' => $deliveryTimeReal,
-                'shipping_price' => convertMoneyUSAtoBrazil($shippinPrice),
+                'shipping_price' => convertMoneyUSAtoBrazil($shippingPrice),
                 'new_total' => convertMoneyUSAtoBrazil($newTotal),
             ];
             return json_encode($array);
@@ -195,9 +207,9 @@ class OrderController extends Controller
 
             $date = date('m-Y');
             list($month, $year) = explode('-', $date);
-            $totalOrders = $user->orders()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->count();
-
-            if ($totalOrders == 0 && $user->user_id !== null) {
+            
+            $firstOrder = $user->orders()->count();
+            if ($firstOrder == 0 && $user->user_id !== null) {
                 ServiceOrder::createSpecialBonus($user->user_id);
             }
             ServiceOrder::createComission($order->id, $user);

@@ -70,12 +70,12 @@ class ServiceOrder
             }
             $comission = Commission::first();
 
-            $commissionPercetage = "commission_" . $i;
+            $commissionPercentage = "commission_" . $i;
 
             OrderCommission::create([
                 'order_id' => $order_id,
                 'user_id' => $user->user_id,
-                'commission_percentage' => $comission->$commissionPercetage,
+                'commission_percentage' => $comission->$commissionPercentage,
             ]);
         }
     }
@@ -84,7 +84,7 @@ class ServiceOrder
     {
         Bonus::create([
             'user_id' => $user_id,
-            'price' => 30,
+            'price' => 34,
             'level_bonus' => 1,
         ]);
     }
@@ -210,7 +210,7 @@ class ServiceOrder
         foreach ($users as $key => $user) {
             $data['código'] = $user->id;
             $data['nome'] = $user->name;
-            $data['valor'] = ($user->getTotalBonnus($date[0], $date[1]));
+            $data['valor'] = ($user->getTotalBonus($date[0], $date[1]));
             if ($data['valor'] == 0) {
                 continue;
             }

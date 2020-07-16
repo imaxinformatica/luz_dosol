@@ -159,7 +159,6 @@
 @stop
 @section('scripts')
 <script type="text/javascript">
-
 $('.btn-edit').on('click', function() {
     let input = $(this).parent().parent().find('input');
     let name = input.attr('name');
@@ -172,7 +171,7 @@ $('.btn-edit').on('click', function() {
 $('.btn-save').on('click', function() {
     let input = $(this).parent().parent().find('input');
     let name = input.attr('name');
-    let productId = input.attr('data-id');
+    var productId = input.attr('data-id');
 
     let value = input.val();
     let form = {
@@ -180,11 +179,12 @@ $('.btn-save').on('click', function() {
         name,
         value,
     }
-    let url = "{{route('user.cart.update', ['product' => 'productValue'])}}";
-    
+    var url = "{{route('user.cart.update', ['product' => 'productValue'])}}";
+
     url = url.replace('productValue', productId);
     updateInput(url, form, input, $(this));
 });
+
 
 
 function updateInput(url, data, input, btnSave) {
@@ -209,6 +209,8 @@ function updateInput(url, data, input, btnSave) {
 }
 
 $('.finishOrder').on('click', function() {
+    let zipCode = "{{$user->address->zip_code}}";
+    validateCep(zipCode);
     var total = "{{$total}}";
     if (total === 0) {
         $('#modalPriceInferior').modal('show');
@@ -217,6 +219,39 @@ $('.finishOrder').on('click', function() {
         getSessionScript();
     }
 });
+$(".input-cep").blur(function() {
+    let zipCode = $(this).val();
+    validateCep(zipCode);
+});
+
+const validateCep = (zipCode) => {
+    console.log(zipCode);
+    axios.get(`{{url('api/check-cep')}}`, {
+            params: {
+                zip_code: zipCode
+            }
+        })
+        .then(response =>{
+            if(response.data >0){
+                $('#shipping_type').html(
+                    `<option disabled selected>Selecione..</option>
+                    <option value="04510">PAC</option>
+                    <option value="04014">Sedex</option>
+                    <option value="particular" id="particular">Particular</option>
+                    `
+                    );
+                }else{
+                    $('#shipping_type').html(
+                        `<option disabled selected>Selecione..</option>
+                        <option value="04510">PAC</option>
+                        <option value="04014">Sedex</option>
+                        `
+                        );
+
+            }
+        })
+        .catch(error=>console.log(error));
+}
 
 function getSessionScript() {
     $.ajax({
@@ -296,17 +331,16 @@ function getShippingScript(shipping_type, zip_code) {
                 $('#modalGeneric .modal-title').html('Peso superior ao permitido!');
                 $('#modalGeneric .modal-body').html(
                     '<p>As informações referente ao seu pedido possuem divergências em relação ao permitido pelo Correios!</p>'
-                    );
+                );
                 $('#modalGeneric').modal('show');
             } else if (data == 'error') {
                 $('#modalGeneric .modal-title').html('Erro!');
                 $('#modalGeneric .modal-body').html(
                     '<p>Ops, tivemos um problema, por favor, entre em contato com um de nossos administradores.</p>'
-                    );
+                );
                 $('#modalGeneric').modal('show');
             } else {
                 let responseDelivery = $.parseJSON(data);
-                console.log(responseDelivery);
                 $('#delivery_time').val(responseDelivery.delivery_time);
                 $('#shipping_price').val(responseDelivery.shipping_price);
                 $('#total').val(responseDelivery.new_total);

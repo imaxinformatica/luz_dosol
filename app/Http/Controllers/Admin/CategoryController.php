@@ -27,7 +27,7 @@ class CategoryController extends Controller
         $data =$request->all();
         try {
             $sv->createCategory($data);
-        } catch (\Excepetion $e) {
+        } catch (\Exception $e) {
             return redirect()->back()
             ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores: ' . $e->getMessage());
         }
@@ -45,7 +45,7 @@ class CategoryController extends Controller
         $data = $request->except('_token');
         try {
             $sv->updateCategory($data, $category);
-        } catch (\Excepetion $e) {
+        } catch (\Exception $e) {
             return redirect()->back()
             ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores: ' . $e->getMessage());
         }
@@ -56,7 +56,7 @@ class CategoryController extends Controller
     {
         try {
             $sv->deleteCategory( $category);
-        } catch (\Excepetion $e) {
+        } catch (\Exception $e) {
             return redirect()->back()
             ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores: ' . $e->getMessage());
         }

@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             // $table->double('width');
             // $table->double('length');
             $table->double('category_id');
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

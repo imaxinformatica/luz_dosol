@@ -2,11 +2,20 @@
 
 namespace App\Services;
 
+use App\ParticularShip;
+use App\Services\ServiceShipping;
 use Illuminate\Support\Facades\Auth;
 
 class ServiceShipping
 {
 
+    public static function getPriceParticular($zipCode)
+    {
+        $particular = ParticularShip::where('cep_initial','<', $zipCode)
+        ->where('cep_final', '>', $zipCode)
+        ->first();
+        return $particular->price;
+    }
     public static function generateArrayShipping($zip_code, $shipping_type, $repeatCalculatePrice, $box)
     {
         $user = Auth::guard('user')->user();

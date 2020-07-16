@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cycle extends Model
 {
     protected $fillable = [
-        'price'
+        'price',
+        'particular_time',
     ];
 }

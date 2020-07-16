@@ -100,6 +100,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="commission_1">Prazo de entrega particular<small>*</small></label>
+                                        <div class="input-group">
+                                            <input type="text" name="particular_time" value="{{$cycle->particular_time}}"
+                                                class="form-control" required>
+                                            <span class="input-group-addon">Dias</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="box-footer">

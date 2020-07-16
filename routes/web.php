@@ -80,6 +80,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::get('/edit/{page}', 'Admin\PageController@edit')->name('edit');
         Route::post('/update/{page}', 'Admin\PageController@update')->name('update');
     });
+    // Frete particular
+    Route::group(['prefix' => 'particular', 'as' => 'particular.'], function () {
+        Route::get('/', 'Admin\ParticularController@index')->name('index');
+        Route::get('create', 'Admin\ParticularController@create')->name('create');
+        Route::post('store', 'Admin\ParticularController@store')->name('store');
+        Route::get('edit/{particular}', 'Admin\ParticularController@edit')->name('edit');
+        Route::post('/update{particular}', 'Admin\ParticularController@update')->name('update');
+        Route::get('/delete/{particular}', 'Admin\ParticularController@delete')->name('delete');
+    });
 
     Route::group(['prefix' => 'commission', 'as' => 'commission.'], function () {
         Route::get('/', 'Admin\CommissionController@index')->name('index');
@@ -142,6 +151,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
         Route::post('/store', 'User\UserController@store')->name('store');
     });
 
+    
     Route::group(['prefix' => 'configuracao', 'as' => 'configuration.'], function () {
         Route::get('/', 'User\ConfigurationController@index')->name('index');
         Route::post('avatar', 'User\ConfigurationController@changeAvatar')->name('avatar');

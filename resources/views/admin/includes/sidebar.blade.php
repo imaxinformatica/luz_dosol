@@ -43,7 +43,7 @@
                     <i class="fa fa-cubes"></i> <span>CATEGORIAS</span>
                 </a>
             </li>
-            
+
             <li {{ (Request::is('admin/produtos') ? 'class=active' : '') }}
                 {{ (Request::is('admin/produtos/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.product.index')}}">
@@ -98,13 +98,18 @@
                     <i class="fa fa-archive"></i> <span>DOCUMENTOS</span>
                 </a>
             </li>
+            <li {{ (Request::is('admin/particular*') ? 'class=active' : '') }}>
+                <a href="{{ route('admin.particular.index')}}">
+                    <i class="fa fa-archive"></i> <span>FRETE PARTICULAR</span>
+                </a>
+            </li>
             <li {{ (Request::is('admin/configuracao') ? 'class=active' : '') }}
                 {{ (Request::is('admin/configuracao/*') ? 'class=active' : '') }}>
                 <a href="{{ route('admin.configuration.index')}}">
                     <i class="fa fa-cog"></i> <span>CONFIGURAÇÃO</span>
                 </a>
             </li>
-          
+
         </ul>
     </section>
     <!-- /.sidebar -->

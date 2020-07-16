@@ -14,6 +14,7 @@ class CyclesTableSeeder extends Seeder
         DB::table("cycles")->insert([
             [
                 'price' => 200.00,
+                'particular_time' => 4,
             ], 
         ]);
     }

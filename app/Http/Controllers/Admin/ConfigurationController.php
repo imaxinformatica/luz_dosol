@@ -37,8 +37,10 @@ class ConfigurationController extends Controller
     public function cycle(Request $request)
     {
         $request->validate([
-            'price' => 'required'
+            'price' => 'required',
+            'particular_time' => 'required',
         ]);
+        $data = $request->all();
         $data['price'] = convertMoneyBraziltoUSA($request->price);
         try {
             Cycle::first()->update($data);

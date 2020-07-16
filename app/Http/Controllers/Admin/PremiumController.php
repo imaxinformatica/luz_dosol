@@ -54,7 +54,7 @@ class PremiumController extends Controller
     {
         try {
             $sv->deletePremium($premium);
-        } catch (\Excepetion $e) {
+        } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores: ' . $e->getMessage());
         }

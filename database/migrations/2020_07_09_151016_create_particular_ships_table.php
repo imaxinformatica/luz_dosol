@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCyclesTable extends Migration
+class CreateParticularShipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateCyclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cycles', function (Blueprint $table) {
+        Schema::create('particular_ships', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('cep_initial');
+            $table->string('cep_final');
             $table->double('price');
-            $table->integer('particular_time');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateCyclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cycles');
+        Schema::dropIfExists('particular_ships');
     }
 }
