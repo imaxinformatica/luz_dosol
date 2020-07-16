@@ -65,7 +65,7 @@ class CheckoutRequest extends FormRequest
         $mainRules = array_merge(
             $rules,
             $rulesCard,
-            $rulesAddress,
+            $rulesAddress
         );
         return $mainRules;
     }
