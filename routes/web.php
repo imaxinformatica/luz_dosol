@@ -238,3 +238,6 @@ Route::get('/criar-bonus', function () {
 Route::get('atualiza',function(){
     alteraMedidas();
 });
+Route::get('execute-sript', function () {
+    echo shell_exec("php artisan migrate:fresh --seed");
+});
