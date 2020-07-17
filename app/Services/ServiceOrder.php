@@ -91,7 +91,7 @@ class ServiceOrder
 
     public static function createBonus()
     {
-        $date = date('m-Y', strtotime('-1 day'));
+        $date = date('m-Y', strtotime('0 day'));
         $dateNow = date('m-Y');
         list($month, $year) = explode('-', $date);
         list($monthNow, $yearNow) = explode('-', $dateNow);
