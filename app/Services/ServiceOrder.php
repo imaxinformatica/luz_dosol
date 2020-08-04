@@ -71,7 +71,11 @@ class ServiceOrder
             $comission = Commission::first();
 
             $commissionPercentage = "commission_" . $i;
+            $totalOrder = OrderCommission::where('user_id', $user->user_id)->where('order_id', $order_id)->count();
 
+            if($totalOrder > 0){
+                continue;
+            }
             OrderCommission::create([
                 'order_id' => $order_id,
                 'user_id' => $user->user_id,

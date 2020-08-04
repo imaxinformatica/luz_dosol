@@ -146,14 +146,14 @@
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="zip_code">CEP <small>*</small></label>
-                                        <input type="text" class="form-control input-cep" value="{{old('zip_code')}}"
+                                        <input type="text" class="form-control input-cep" id="cep" value="{{old('zip_code')}}"
                                             name="zip_code" required>
                                     </div>
                                 </div>
                                 <div class="col-xs-8">
                                     <div class="form-group">
                                         <label for="street">Logradouro <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{old('street')}}" name="street"
+                                        <input type="text" class="form-control" id="street" value="{{old('street')}}" name="street"
                                             required>
                                     </div>
                                 </div>
@@ -180,14 +180,14 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="neighborhood">Bairro<small>*</small></label>
-                                        <input type="text" class="form-control" value="{{old('neighborhood')}}"
+                                        <input type="text" class="form-control" id="neighborhood" value="{{old('neighborhood')}}"
                                             name="neighborhood" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-xs-6">
                                     <div class="form-group">
                                         <label for="city">Cidade<small>*</small></label>
-                                        <input type="text" class="form-control" value="{{old('city')}}" name="city"
+                                        <input type="text" class="form-control" id="city" value="{{old('city')}}" name="city"
                                             required>
                                     </div>
                                 </div>
@@ -253,7 +253,7 @@
                                 <div class="col-sm-3 col-xs-6">
                                     <div class="form-group">
                                         <label for="type_account">Tipo de Conta <small>*</small></label>
-                                        <select name="type_account" id="type_account" class="form-control">
+                                        <select name="type_account" id="type_account" required class="form-control">
                                             <option disabled hidden selected>Selecione...</option>
                                             <option value="1">Conta corrente</option>
                                             <option value="2">Conta poupança</option>

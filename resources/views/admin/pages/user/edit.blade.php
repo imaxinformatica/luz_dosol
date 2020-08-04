@@ -142,14 +142,14 @@
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="zip_code">CEP <small>*</small></label>
-                                        <input type="text" class="form-control input-cep"
+                                        <input type="text" class="form-control input-cep" id="cep"
                                             value="{{$user->address->zip_code}}" name="zip_code" required>
                                     </div>
                                 </div>
                                 <div class="col-xs-8">
                                     <div class="form-group">
                                         <label for="street">Logradouro <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->address->street}}"
+                                        <input type="text" class="form-control" id="street" value="{{$user->address->street}}"
                                             name="street" required>
                                     </div>
                                 </div>
@@ -176,14 +176,14 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="neighborhood">Bairro<small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->address->neighborhood}}"
+                                        <input type="text" class="form-control" id="neighborhood" value="{{$user->address->neighborhood}}"
                                             name="neighborhood" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-xs-6">
                                     <div class="form-group">
                                         <label for="city">Cidade<small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->address->city}}"
+                                        <input type="text" class="form-control" id="city" value="{{$user->address->city}}"
                                             name="city" required>
                                     </div>
                                 </div>
@@ -251,7 +251,7 @@
                                 <div class="col-sm-3 col-xs-6">
                                     <div class="form-group">
                                         <label for="type_account">Tipo de Conta <small>*</small></label>
-                                        <select name="type_account" id="type_account" class="form-control">
+                                        <select name="type_account" id="type_account" required class="form-control">
                                             <option disabled hidden selected>Selecione...</option>
                                             <option {{$user->databank->type_account == 1 ? "selected" : "" }} value="1">Conta corrente</option>
                                             <option {{$user->databank->type_account == 2 ? "selected" : "" }} value="2">Conta poupança</option>

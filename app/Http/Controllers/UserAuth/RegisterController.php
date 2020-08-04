@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\UserAuth;
 
-use App\User;
+use DB;
 use Validator;
+use App\User;
 use App\Rules\CPFValidate;
 use App\Rules\PhoneValidate;
 use App\Services\ServiceUser;
@@ -86,12 +87,19 @@ class RegisterController extends Controller
         $data['status'] = 0;
         $dataUser = ServiceUser::generateDatauser($data);
         $dataUser['user_id'] = session('user_id');
-        $dataAdress = ServiceUser::generateDataAddress($data);
+        $dataAddress = ServiceUser::generateDataAddress($data);
         $dataBank = ServiceUser::generateDataBank($data);
 
-        $user = User::create($dataUser);
-        $user->address()->create($dataAdress);
-        $user->databank()->create($dataBank);
+        DB::beginTransaction();
+        try {
+            $user = User::create($dataUser);
+            $user->address()->create($dataAddress);
+            $user->databank()->create($dataBank);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            request()->session()->flash('error', 'Tivemos um problema no servidor: ', $e->getMessage());
+        }
         return $user;
     }
 

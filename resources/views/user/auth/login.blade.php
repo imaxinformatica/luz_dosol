@@ -100,7 +100,16 @@
             </div>
         </div>
     </footer>
-
+    
+    <script src="{{asset('alertify/alertify.min.js')}}"></script>
+    @if(session()->has('error'))
+    <script type="text/javascript">
+    $(document).ready(function() {
+        alertify.error("{{session('error')}}");
+    });
+    </script>
+    @endif
 </body>
+
 
 </html>
