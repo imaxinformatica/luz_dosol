@@ -45,7 +45,6 @@ class OrderController extends Controller
         list($month, $year) = explode('-', $date);
 
         $totalOrders = $user->orders()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->count();
-
         if ($totalOrders == 0 && $user->total() < 200) {
             return redirect()->back()->with('warning', 'O primeiro pedido do mês precisa ser no mínimo de R$200,00');
         }

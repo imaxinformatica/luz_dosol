@@ -1573,58 +1573,72 @@ class TestSeeder extends Seeder
 
         DB::table('categories')->insert([
             [
+                'id' => 2,
                 'name' => 'PROTEINAS',
                 'slug' => 'proteina',
             ],
             [
+                'id' => 3,
                 'name' => 'CAFÉ E CEVADA',
                 'slug' => 'cafe-e-cevada',
             ],
             [
+                'id' => 4,
                 'name' => 'GELÉIAS',
                 'slug' => 'geleia',
             ],
             [
+                'id' => 6,
                 'name' => 'AMENDOIM / MEL / MELADO',
                 'slug' => 'amendoim-mel-melado',
             ],
             [
+                'id' => 7,
                 'name' => 'COOKIE / BISCOITO',
                 'slug' => 'cookie-e-biscoito',
             ],
             [
+                'id' => 8,
                 'name' => 'FIT E SNACKS KROCS',
                 'slug' => 'fit-snack-krocs',
             ],
             [
+                'id' => 9,
                 'name' => 'SUCOS',
                 'slug' => 'sucos',
             ],
             [
+                'id' => 10,
                 'name' => 'SUCRILHOS',
                 'slug' => 'sucrilhos',
             ],
             [
+                'id' => 11,
                 'name' => 'HIGIENE BUCAL - PREMIUM',
                 'slug' => 'higiene-bucal-premium',
             ],
             [
+                'id' => 12,
                 'name' => 'HIGIENE BUCAL',
                 'slug' => 'higiene-bucal',
             ],
             [
+                'id' => 13,
                 'name' => 'HIGIENE CORPORAL',
                 'slug' => 'higiene-corporal',
             ],
             [
+                'id' => 14,
                 'name' => 'MASSAS ESPECIAIS',
                 'slug' => 'macarrao',
             ],
             [
+                'id' => 15,
                 'name' => 'REFRIGERANTE / CHÁ / TÔNICOS',
                 'slug' => 'refrigerante-cha-tonico',
             ],
             [
+                'id' => 16,
                 'name' => 'OUTROS',
                 'slug' => 'outros',
             ],

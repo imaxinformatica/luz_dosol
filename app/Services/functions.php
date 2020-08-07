@@ -3,8 +3,9 @@
 function convertMoneyBraziltoUSA($value)
 {
     $value = str_replace(',', '.', str_replace('.', '', $value));
+
     $value = floatval($value);
-    return number_format($value, 2);
+    return number_format($value, 2, '.', '');
 }
 
 function convertMoneyUSAtoBrazil($value)
