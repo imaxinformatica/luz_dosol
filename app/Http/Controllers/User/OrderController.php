@@ -213,10 +213,10 @@ class OrderController extends Controller
             }
             ServiceOrder::createComission($order->id, $user);
 
+            $order->update(['status' => $xml->status]);
             if ($user->getTotalMonth() >= 200 && $user->status == 0 && $order->status == 3) {
                 ServiceCheckout::activeUser($user);
             }
-            $order->update(['status' => $xml->status]);
         }
     }
 
