@@ -207,13 +207,14 @@ class OrderController extends Controller
             $date = date('m-Y');
             list($month, $year) = explode('-', $date);
             
-            $firstOrder = $user->orders()->count();
-            if ($firstOrder == 0 && $user->user_id !== null) {
-                ServiceOrder::createSpecialBonus($user->user_id);
-            }
             ServiceOrder::createComission($order->id, $user);
 
             $order->update(['status' => $xml->status]);
+            $firstOrder = $user->orders()->where('status',3)->count();
+            
+            if ($firstOrder == 0 && $user->user_id !== null) {
+                ServiceOrder::createSpecialBonus($user->user_id);
+            }
             if ($user->getTotalMonth() >= 200 && $user->status == 0 && $order->status == 3) {
                 ServiceCheckout::activeUser($user);
             }

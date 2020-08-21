@@ -11,6 +11,7 @@ class TestSeeder extends Seeder
      */
     public function run()
     {
+        $now = date("Y-m-d H:i:s");
         DB::table("users")->insert([
             [
                 'name' => 'Guilherme Neto',
@@ -21,9 +22,11 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
-                'name' => 'LuzDoSol ',
+                'name' => 'LuzDoSol 00',
                 'cpf' => '000.000.000-00',
                 'rg' => '0000000',
                 'user_id' => 1,
@@ -31,6 +34,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0000@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 02',
@@ -41,6 +46,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0002@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'LuzdoSol 03',
@@ -51,6 +58,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0003@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 04',
@@ -61,6 +70,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0004@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'luzdosol 05',
@@ -71,6 +82,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0005@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 06',
@@ -81,6 +94,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0006@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 07',
@@ -91,6 +106,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0007@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'luzdosol 08',
@@ -101,6 +118,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0008@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 09',
@@ -111,6 +130,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0009@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'luzdosol 10',
@@ -121,6 +142,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0010@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 11',
@@ -131,6 +154,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.00011@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'luzdosol 12',
@@ -141,6 +166,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0012@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'luzdosol 13',
@@ -151,6 +178,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.00013@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'LuzDoSol 14',
@@ -161,6 +190,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0014@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'luzdosol 15',
@@ -171,6 +202,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0015@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'luzdosol 16',
@@ -181,6 +214,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0016@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 17',
@@ -191,6 +226,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.017@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 18',
@@ -201,6 +238,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0018@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 19',
@@ -211,6 +250,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0019@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
             [
                 'name' => 'Luzdosol 20',
@@ -221,6 +262,8 @@ class TestSeeder extends Seeder
                 'email' => 'luzdosol.0020@gmail.com',
                 'password' => bcrypt('luzsol2020'),
                 'avatar' => 'default.png',
+                "created_at"    => $now,
+                "updated_at"    => $now,
             ],
         ]);
 
