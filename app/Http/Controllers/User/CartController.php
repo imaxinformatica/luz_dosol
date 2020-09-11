@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
 use App\{Cart, Product};
+use App\Services\CartService;
 use Auth;
 
 class CartController extends Controller
@@ -14,22 +15,18 @@ class CartController extends Controller
     {
         $user = Auth::guard('user')->user();
         $data = $request->except('_token');
-
+        
         $data['user_id'] = $user->id;
-
-        try {
-            $product = Product::find($request->product_id);
-            $data['price'] = $product->price;
-
-            Cart::updateOrCreate(
-                ['product_id' => $data['product_id'], 'user_id' => $data['user_id']],
-                $data
-            );
-        } catch (\Exception $e) {
+        $product = Product::find($request->product_id);
+        if(!$product){
             return redirect()->back()
-                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
+            ->with('error', 'Tivemos problemas em localizar este produto no sistema');
         }
-        return redirect()->back()->with('success', 'Item adicionado ao carrinho.');
+        $data['price'] = $product->price;
+        
+        $response = CartService::include($user,$data);
+        
+        return redirect()->back()->with($response['status'], $response['msg']);
     }
 
     public function delete(Cart $cart)

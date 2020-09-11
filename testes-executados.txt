@@ -1,6 +1,3 @@
-s\Unit\Graduation
- [x] Verifica se o usuario eh graduado
-
-s\Unit\User
- [x] Verifica usuario esta criado
+s\Unit\Bonus
+ [x] Example
 

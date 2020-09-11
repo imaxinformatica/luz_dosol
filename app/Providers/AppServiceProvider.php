@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Faker\Generator as FakerGenerator;
+use Faker\Factory as FakerFactory;
 use Schema;
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
         if(!$this->app->isLocal()){
             \URL::forceScheme('https');
         }
+        $this->app->singleton(FakerGenerator::class, function () {
+            return FakerFactory::create('pt_BR');
+        });
     }
 
     /**
