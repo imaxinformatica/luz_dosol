@@ -23,8 +23,7 @@ class CartController extends Controller
                 ->with('error', 'Tivemos problemas em localizar este produto no sistema');
         }
         $data['price'] = $product->price;
-
-        $response = CartService::store($user, $data);
+        $response = CartService::store($data);
 
         return redirect()->back()
             ->with($response['status'], $response['msg']);

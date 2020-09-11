@@ -38,16 +38,17 @@ class OrderController extends Controller
     public function checkout(CheckoutRequest $request, ServiceCheckout $svCheckout)
     {
         $svOrder = new ServiceOrder;
-
+        
         $user = Auth::guard('user')->user();
-
+        
         $date = date('m-Y');
         list($month, $year) = explode('-', $date);
-
+        
         $totalOrders = $user->orders()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->count();
         if ($totalOrders == 0 && $user->total() < 200) {
             return redirect()->back()->with('warning', 'O primeiro pedido do mês precisa ser no mínimo de R$200,00');
         }
+        
         if (count($user->cart) == 0) {
             return redirect()->back()->with('warning', 'O pedido precisa ter ao mínimo um item no carrinho');
         }
@@ -87,7 +88,6 @@ class OrderController extends Controller
 
         $order = $svOrder->generateOrder($request->all(), $array, $user->id);
         if ($order) {
-
             foreach ($user->cart as $items) {
                 $svOrder->createOrderItem($user->id, $order->id, $items, $items->pivot);
                 $items->pivot->delete();

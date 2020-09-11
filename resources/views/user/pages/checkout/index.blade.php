@@ -63,6 +63,7 @@
     </section>
     @endisset
 
+    @if(isset($errors))
     @if ($errors->any())
     <div class="content-header">
         @foreach ($errors->all() as $error)
@@ -76,6 +77,7 @@
         </div>
         @endforeach
     </div>
+    @endif
     @endif
 
     <!-- Main content -->

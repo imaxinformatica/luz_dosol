@@ -289,7 +289,7 @@ $('.delete-number-to-qty').click(function() {
                 </button>
                 <h4 class="modal-title">Adicionar ao Carrinho</h4>
             </div>
-            <form action="{{route('user.cart.include')}}" method="POST">
+            <form action="{{route('user.cart.store')}}" method="POST">
                 {{csrf_field()}}
                 <div class="modal-body">
                     <div class="row">

@@ -9,11 +9,9 @@ use App\Services\ServiceUser;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GraduationTest extends TestCase
 {
-    use RefreshDatabase;
     public function testExample()
     {
         $this->assertTrue(true);

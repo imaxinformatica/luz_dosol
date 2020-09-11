@@ -139,7 +139,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
 
     Route::group(['prefix' => 'carrinho', 'as' => 'cart.'], function () {
         Route::get('/', 'User\CartController@cart')->name('index');
-        Route::post('/incluir', 'User\CartController@include')->name('include');
+        Route::post('/incluir', 'User\CartController@store')->name('store');
         Route::post('/update/{product}', 'User\CartController@update')->name('update');
         Route::get('/remover/{cart}', 'User\CartController@delete')->name('delete');
     });

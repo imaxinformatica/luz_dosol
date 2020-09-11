@@ -5,13 +5,12 @@ namespace Tests\Unit;
 use App\Cart;
 use App\Services\CartService;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\MigrateFreshSeedOnce;
 
 class CartTest extends TestCase
 {
-    use RefreshDatabase;
-
+    use MigrateFreshSeedOnce;
     public function testIncluirItemCarrinho()
     {
         $this->createItemCart();
@@ -62,7 +61,6 @@ class CartTest extends TestCase
     public function updateQtdItemCart()
     {
         $this->addUser();
-        $this->seed('TestSeeder');
         $user = User::find(1);
         $data = [
             "product_id" => "123",
