@@ -1,5 +1,17 @@
+s\Feature\GraduationController
+ [x] Example
+
+s\Feature\OrderController
+ [x] Acesso pagina carrinho
+ [ ] Checkout
+
 s\Unit\Cart
  [x] Incluir item carrinho
- [x] Atualiza quantidade item carrinho
  [x] Remove item carrinho
+
+s\Unit\Graduation
+ [x] Example
+
+s\Unit\User
+ [x] Example
 

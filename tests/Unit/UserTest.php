@@ -10,6 +10,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UserTest extends TestCase
 {
     // use RefreshDatabase;
+    public function testExample()
+    {
+        $this->assertTrue(true);
+    }
     // public function testVerificaUsuarioEstaCriado()
     // {
     //     $data['name'] = 'Thales Serra';

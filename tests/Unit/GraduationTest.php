@@ -14,6 +14,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class GraduationTest extends TestCase
 {
     use RefreshDatabase;
+    public function testExample()
+    {
+        $this->assertTrue(true);
+    }
 
     // public function testVerificaSeOUsuarioEhGraduado()
     // {
