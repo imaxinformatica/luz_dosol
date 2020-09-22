@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\User;
 use App\Bonus;
-use App\Order;
-use App\Product;
-use App\Orderitem;
 use App\Commission;
 use App\ExtraBonus;
+use App\Order;
 use App\OrderCommission;
+use App\Orderitem;
+use App\Product;
+use App\User;
 
 class ServiceOrder
 {
@@ -24,7 +24,7 @@ class ServiceOrder
         "7" => 0.5,
         "8" => 0.5,
     ];
-    
+
     public function createOrderItem(int $user_id, int $order_id, Product $product, $itemCart): void
     {
         $orderItem = new Orderitem;
@@ -71,9 +71,11 @@ class ServiceOrder
             $comission = Commission::first();
 
             $commissionPercentage = "commission_" . $i;
-            $totalOrder = OrderCommission::where('user_id', $user->user_id)->where('order_id', $order_id)->count();
+            $totalOrder = OrderCommission::where('user_id', $user->user_id)
+                ->where('order_id', $order_id)
+                ->count();
 
-            if($totalOrder > 0){
+            if ($totalOrder > 0) {
                 continue;
             }
             OrderCommission::create([
@@ -89,7 +91,7 @@ class ServiceOrder
         Bonus::create([
             'user_id' => $user_id,
             'price' => 34,
-            'level_bonus' => 1,
+            'level_bonus' => 6,
         ]);
     }
 
@@ -99,24 +101,29 @@ class ServiceOrder
         $dateNow = date('m-Y');
         list($month, $year) = explode('-', $date);
         list($monthNow, $yearNow) = explode('-', $dateNow);
-        if($month == $monthNow && $year == $yearNow){
-            $users = User::get();   
-            $users->each(function($user) use($monthNow, $yearNow){
-                if($user->getActive($monthNow, $yearNow) && $user->getTotalMonth() >= 200){
+        if ($month == $monthNow && $year == $yearNow) {
+            $users = User::get();
+            $users->each(function ($user) use ($monthNow, $yearNow) {
+                if ($user->getActive($monthNow, $yearNow) && $user->getTotalMonth() >= 200) {
                     $user->update(['status' => 1]);
                 }
             });
         }
 
         $users = User::where('status', 1)->get();
-        
+
         foreach ($users as $user) {
             $graduation = $user->getGraduation();
             // level 1
-            $networkUser = $user->users()->where('status', 1)->count();
-            $bonus = $user->bonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->get();
-            
-            $extraBonus = $user->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year);
+            $networkUser = $user->users->where('status', 1)->count();
+            $bonus = $user->bonus()
+                ->whereMonth('updated_at', $month)
+                ->whereYear('updated_at', $year)
+                ->get();
+
+            $extraBonus = $user->extraBonus()
+                ->whereMonth('updated_at', $month)
+                ->whereYear('updated_at', $year);
             if ($networkUser >= 3) {
                 $extraUser = $networkUser - 3 - $extraBonus->where('level_bonus', 1)->count();
                 ServiceOrder::createExtraBonus($extraUser, 1, $graduation, $user);
@@ -190,7 +197,7 @@ class ServiceOrder
             $usersLevel5 = User::whereIn('user_id', $usersLevel4)->where('status', 1)->get();
             if (count($usersLevel5) >= 122) {
                 $extraUser = $networkUser - 122 - $extraBonus->where('level_bonus', 5)->count();
-                ServiceOrder::createExtraBonus($extraUser, 5, $graduation,$user);
+                ServiceOrder::createExtraBonus($extraUser, 5, $graduation, $user);
 
                 if (count($bonus->where('level_bonus', 5)) == 0) {
 
@@ -201,10 +208,10 @@ class ServiceOrder
                     ]);
                 }
             }
-            $realExtraBonus = $user->extraBonus()->whereMonth('updated_at',$month )->whereYear('updated_at', $year)->get(); 
+            $realExtraBonus = $user->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->get();
             ServiceOrder::updateExtraBonus($realExtraBonus, $graduation);
         }
-        echo'ok';
+        echo 'ok';
     }
 
     public function generateReport($date)
@@ -258,18 +265,18 @@ class ServiceOrder
 
     public static function updateExtraBonus($extraBonus, $graduation)
     {
-        if(!$graduation){
+        if (!$graduation) {
             return;
         }
-       
-        foreach($extraBonus as $extra){
+
+        foreach ($extraBonus as $extra) {
             $extra->update(['price' => self::$level[$graduation]]);
         }
     }
 
     public static function createExtraBonus($extraUser, $levelBonus, $graduation, $user)
     {
-        if(!$graduation){
+        if (!$graduation) {
             return;
         }
 

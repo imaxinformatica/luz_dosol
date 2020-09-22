@@ -2,18 +2,16 @@ s\Feature\GraduationController
  [x] Example
 
 s\Feature\OrderController
- [x] Add item cart
- [x] Access page cart
+ [x] Adicionar um item ao carrinho
+ [x] Acessando a pagina de pedido
  [x] Pedido com valor minimo abaixo
  [ ] Pedido com valor minimo acima
 
 s\Unit\Cart
  [x] Incluir item carrinho
+ [x] Atualiza quantidade item carrinho
  [x] Remove item carrinho
 
 s\Unit\Graduation
- [x] Example
-
-s\Unit\User
  [x] Example
 

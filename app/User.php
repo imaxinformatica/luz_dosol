@@ -174,9 +174,10 @@ class User extends Authenticatable
 
     public function total()
     {
+        $items = Cart::where('user_id', $this->id)->select('price', 'qty')->get();
         $total = 0;
-        foreach ($this->cart as $item) {
-            $subtotal = $item->price * $item->pivot->qty;
+        foreach ($items as $item) {
+            $subtotal = $item->price * $item->qty;
             $total += $subtotal;
         }
         return $total;

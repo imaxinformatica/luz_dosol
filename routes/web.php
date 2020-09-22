@@ -238,3 +238,8 @@ Route::get('/criar-bonus', function () {
 Route::get('atualiza',function(){
     alteraMedidas();
 });
+
+Route::get('test/primeiro-pedido', 'Test\BonusTestController@testFirstOrderMonth');
+Route::get('test/bonificacoes', 'Test\BonusTestController@bonification');
+Route::get('test/bonus-consumo', 'Test\BonusTestController@bonus');
+Route::get('test/comissao', 'Test\BonusTestController@commission');

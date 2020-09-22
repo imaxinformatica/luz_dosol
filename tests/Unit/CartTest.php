@@ -22,18 +22,18 @@ class CartTest extends TestCase
         ]);
     }
 
-    // public function testAtualizaQuantidadeItemCarrinho()
-    // {
-    //     $this->createItemCart();
+    public function testAtualizaQuantidadeItemCarrinho()
+    {
+        $this->createItemCart();
 
-    //     $this->updateQtdItemCart();
+        $this->updateQtdItemCart();
 
-    //     $this->assertDatabaseHas('carts', [
-    //         'product_id' => 123,
-    //         'user_id' => 1,
-    //         'qty' => 7,
-    //     ]);
-    // }
+        $this->assertDatabaseHas('carts', [
+            'product_id' => 123,
+            'user_id' => 1,
+            'qty' => 7,
+        ]);
+    }
 
     public function testRemoveItemCarrinho()
     {
