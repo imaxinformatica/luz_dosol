@@ -18,7 +18,6 @@ function convertMoneyUSAtoBrazil($value)
 function convertDateBraziltoUSA($date)
 {
     $date = implode("-", array_reverse(explode("/", $date)));
-
     return $date;
 }
 
@@ -148,4 +147,20 @@ function verifyFirstOrderMonth($date, $user)
         ->whereYear('updated_at', $year)
         ->count();
     return ($totalOrders == 0 && $user->total() < 200);
+}
+
+
+
+
+function setDate($date)
+{
+    return explode('-', $date);
+}
+function updateStatusUser($users, array $date)
+{
+    $users->each(function ($user) use ($date) {
+        if ($user->getActive($date[0], $date[1]) && $user->getTotalMonth() >= 200) {
+            $user->update(['status' => 1]);
+        }
+    });
 }

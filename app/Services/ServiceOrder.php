@@ -14,17 +14,6 @@ use App\User;
 class ServiceOrder
 {
 
-    protected static $level = [
-        "1" => 1.5,
-        "2" => 1.5,
-        "3" => 1.5,
-        "4" => 1,
-        "5" => 1,
-        "6" => 1,
-        "7" => 0.5,
-        "8" => 0.5,
-    ];
-
     public function createOrderItem(int $user_id, int $order_id, Product $product, $itemCart): void
     {
         $orderItem = new Orderitem;
@@ -97,121 +86,7 @@ class ServiceOrder
 
     public static function createBonus()
     {
-        $date = date('m-Y', strtotime('0 day'));
-        $dateNow = date('m-Y');
-        list($month, $year) = explode('-', $date);
-        list($monthNow, $yearNow) = explode('-', $dateNow);
-        if ($month == $monthNow && $year == $yearNow) {
-            $users = User::get();
-            $users->each(function ($user) use ($monthNow, $yearNow) {
-                if ($user->getActive($monthNow, $yearNow) && $user->getTotalMonth() >= 200) {
-                    $user->update(['status' => 1]);
-                }
-            });
-        }
-
-        $users = User::where('status', 1)->get();
-
-        foreach ($users as $user) {
-            $graduation = $user->getGraduation();
-            // level 1
-            $networkUser = $user->users->where('status', 1)->count();
-            $bonus = $user->bonus()
-                ->whereMonth('updated_at', $month)
-                ->whereYear('updated_at', $year)
-                ->get();
-
-            $extraBonus = $user->extraBonus()
-                ->whereMonth('updated_at', $month)
-                ->whereYear('updated_at', $year);
-            if ($networkUser >= 3) {
-                $extraUser = $networkUser - 3 - $extraBonus->where('level_bonus', 1)->count();
-                ServiceOrder::createExtraBonus($extraUser, 1, $graduation, $user);
-                if (count($bonus->where('level_bonus', 1)) == 0) {
-                    Bonus::create([
-                        'user_id' => $user->id,
-                        'price' => 10,
-                        'level_bonus' => 1,
-                    ]);
-                }
-            }
-
-            // level 2
-            $usersLevel1 = $user->users()->pluck('id')->toArray();
-            $usersLevel2 = User::whereIn('user_id', $usersLevel1)->where('status', 1)->get();
-
-            if (count($usersLevel2) >= 6) {
-                $extraUser = $networkUser - 6 - $extraBonus->where('level_bonus', 2)->count();
-                ServiceOrder::createExtraBonus($extraUser, 2, $graduation, $user);
-
-                if (count($bonus->where('level_bonus', 2)) == 0) {
-
-                    Bonus::create([
-                        'user_id' => $user->id,
-                        'price' => 20,
-                        'level_bonus' => 2,
-                    ]);
-
-                }
-            }
-
-            // level 3
-            $usersLevel2 = User::whereIn('user_id', $usersLevel1)->pluck('id')->toArray();
-            $usersLevel3 = User::whereIn('user_id', $usersLevel2)->where('status', 1)->get();
-
-            if (count($usersLevel3) >= 14) {
-                $extraUser = $networkUser - 14 - $extraBonus->where('level_bonus', 3)->count();
-                ServiceOrder::createExtraBonus($extraUser, 3, $graduation, $user);
-
-                if (count($bonus->where('level_bonus', 3)) == 0) {
-                    $extaUser = $networkUser - 3;
-
-                    Bonus::create([
-                        'user_id' => $user->id,
-                        'price' => 40,
-                        'level_bonus' => 3,
-                    ]);
-
-                }
-            }
-
-            // level 4
-            $usersLevel3 = User::whereIn('user_id', $usersLevel2)->pluck('id')->toArray();
-            $usersLevel4 = User::whereIn('user_id', $usersLevel3)->where('status', 1)->get();
-
-            if (count($usersLevel4) >= 40) {
-                $extraUser = $networkUser - 40 - $extraBonus->where('level_bonus', 4)->count();
-                ServiceOrder::createExtraBonus($extraUser, 4, $graduation, $user);
-
-                if (count($bonus->where('level_bonus', 4)) == 0) {
-
-                    Bonus::create([
-                        'user_id' => $user->id,
-                        'price' => 120,
-                        'level_bonus' => 4,
-                    ]);
-                }
-            }
-            // level 5
-            $usersLevel4 = User::whereIn('user_id', $usersLevel3)->pluck('id')->toArray();
-            $usersLevel5 = User::whereIn('user_id', $usersLevel4)->where('status', 1)->get();
-            if (count($usersLevel5) >= 122) {
-                $extraUser = $networkUser - 122 - $extraBonus->where('level_bonus', 5)->count();
-                ServiceOrder::createExtraBonus($extraUser, 5, $graduation, $user);
-
-                if (count($bonus->where('level_bonus', 5)) == 0) {
-
-                    Bonus::create([
-                        'user_id' => $user->id,
-                        'price' => 360,
-                        'level_bonus' => 5,
-                    ]);
-                }
-            }
-            $realExtraBonus = $user->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->get();
-            ServiceOrder::updateExtraBonus($realExtraBonus, $graduation);
-        }
-        echo 'ok';
+        
     }
 
     public function generateReport($date)
@@ -262,31 +137,6 @@ class ServiceOrder
         }
         return $array;
     }
-
-    public static function updateExtraBonus($extraBonus, $graduation)
-    {
-        if (!$graduation) {
-            return;
-        }
-
-        foreach ($extraBonus as $extra) {
-            $extra->update(['price' => self::$level[$graduation]]);
-        }
-    }
-
-    public static function createExtraBonus($extraUser, $levelBonus, $graduation, $user)
-    {
-        if (!$graduation) {
-            return;
-        }
-
-        for ($i = 0; $i < $extraUser; $i++) {
-            ExtraBonus::create([
-                'user_id' => $user->id,
-                'price' => self::$level[$graduation],
-                'level_bonus' => $levelBonus,
-            ]);
-        }
-    }
+    
 
 }

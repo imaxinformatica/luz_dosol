@@ -232,7 +232,10 @@ Route::get('/reiniciar-mes', function(){
     App\Services\ServiceUser::resetMonth();
 });
 Route::get('/criar-bonus', function () {
-    App\Services\ServiceOrder::createBonus();
+    $sv = new App\Services\BonusService();
+
+    $sv->bonus();
+    // App\Services\ServiceOrder::createBonus();
 });
 
 Route::get('atualiza',function(){
@@ -243,3 +246,4 @@ Route::get('test/primeiro-pedido', 'Test\BonusTestController@testFirstOrderMonth
 Route::get('test/bonificacoes', 'Test\BonusTestController@bonification');
 Route::get('test/bonus-consumo', 'Test\BonusTestController@bonus');
 Route::get('test/comissao', 'Test\BonusTestController@commission');
+Route::get('test/graduacao', 'Test\BonusTestController@graduation');

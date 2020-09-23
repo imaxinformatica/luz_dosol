@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Test;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Requests\CheckoutRequest;
+use App\Order;
+use App\Services\BonusService;
 use App\Services\CartService;
 use App\User;
 use Illuminate\Http\Request;
@@ -80,7 +82,7 @@ class BonusTestController extends Controller
         for ($i = 0; $i < 2; $i++) {
             foreach ($user->users as $user) {
                 // Autentica o Usuário
-                
+
                 $this->generateOrderProcess($user);
                 foreach ($user->users as $childUser) {
                     // Autentica o Usuário
@@ -90,44 +92,66 @@ class BonusTestController extends Controller
             }
         }
         $this->showUser(User::first());
-        
     }
 
     public function commission()
     {
-        // $user = User::first();
-        // foreach ($user->users as $key => $user) {
-        //     $this->loopUsers($user);
-        //     $this->generateOrderProcess($user);
-        // }
+        $user = User::first();
+        foreach ($user->users as $key => $user) {
+            $this->loopUsers($user);
+            // $this->generateOrderProcess($user);
+        }
     }
-    public function bonus()
+
+    public function graduation()
+    {
+        $user = User::first();
+        $users = $this->listaUsuarios($user, 10);
+        echo '<ul>';
+        echo "<li>";
+        echo '' . $user->getNameGraduation() . ' - ' . $user->name . ' - ' . count($user->users) . ' cadastros diretos';
+        echo "</li>";
+        $this->showRede($users);
+        echo '</ul>';
+
+    }
+    public function bonus(BonusService $sv)
     {
         $user = User::first();
         foreach ($user->users as $key => $childUser) {
             $this->loopUsers($childUser);
             $this->generateOrderProcess($childUser);
         }
-        \App\Services\ServiceOrder::createBonus();
+        $sv->bonus();
 
         echo "<p>Usuario: {$user->name}<br>";
         echo "Bonificacao: {$user->getBonus('9', '2020')}</p><br>";
         echo "<hr>Usuários Nível 1: </br>";
         $item = '';
-        foreach($user->users as $user){
+        foreach ($user->users as $user) {
             echo "Nome: {$user->name}<br>";
             echo "Status: {$user->status}<br>";
-            foreach($user->users as $user){
-                $item.= "--Nome: {$user->name}<br>";
-                $item.= "--Status: {$user->status}<br>";
+            foreach ($user->users as $user) {
+                $item .= "--Nome: {$user->name}<br>";
+                $item .= "--Status: {$user->status}<br>";
             }
         }
         echo "<hr>Usuários Nível 2: </br>";
         echo $item;
     }
-    private function showRede()
+    private function showRede($users)
     {
+        echo '<ul>';
+        foreach ($users as $user) {
+            echo "<li>";
+            echo 'Graduacao' . $user->getNameGraduation() . ' - Nome: ' . $user->name . ' - ' . count($user->filhos) . ' cadastros diretos' . ' - Pedidos: '. $user->orders->count() . ' - Total Pedidos: '. $user->orders->sum('subtotal');
 
+            if (count($user->filhos) > 0) {
+                $this->showRede($user->filhos);
+            }
+            echo "</li>";
+        }
+        echo '</ul>';
     }
 
     private function showOrderUser($order)
@@ -143,23 +167,43 @@ class BonusTestController extends Controller
 
     private function showUser($user)
     {
-        echo "<p>Usuario: {$user->name}<br>";
-        echo "Bonificacao: {$user->getBonus('9', '2020')}</p><br>";
+        echo "<h2>Usuario: {$user->name}<br>";
+        echo "Bonificacao: {$user->getBonus('9', '2020')}</h2>";
         echo "<h5>Usuários Nível 1: </h5>";
         foreach ($user->users as $user) {
-            echo "---Usuario: {$user->name}<br>";
+            echo "---Usuario: {$user->name} - (Pedidos: " . $user->orders->count() . ")<br>";
 
         }
         echo ("<hr>");
     }
+    private function listaUsuarios($user, $limite)
+    {
+        $lista = [];
+        // Busca usuários cadastrados pelo usuários logado
+        if ($user->users->count() > 0) {
+            $lista = $user->users;
+
+            foreach ($lista as $chave => $user) {
+                $lista[$chave]['filhos'] = [];
+                if ($limite > 0) {
+                    $lista[$chave]['filhos'] = $this->listaUsuarios($user, $limite - 1);
+                }
+            }
+        }
+        return $lista;
+    }
 
     private function loopUsers($user)
     {
+        echo "<p>Usuário: {$user->name}</p>";
+        echo "<p>Comissão: {$user->getCommission('09', '2020')}</p>";
+        $users = $this->listaUsuarios($user, 10);
+        $this->showRede($users);
         foreach ($user->users as $user) {
             $this->loopUsers($user);
-            $this->generateOrderProcess($user);
+            // $this->generateOrderProcess($user);
         }
-        $this->generateOrderProcess($user);
+        // $this->generateOrderProcess($user);
     }
 
     private function generateOrderProcess($user)
