@@ -99,7 +99,7 @@ class BonusTestController extends Controller
         $user = User::first();
         foreach ($user->users as $key => $user) {
             $this->loopUsers($user);
-            // $this->generateOrderProcess($user);
+            $this->generateOrderProcess($user);
         }
     }
 
@@ -144,7 +144,7 @@ class BonusTestController extends Controller
         echo '<ul>';
         foreach ($users as $user) {
             echo "<li>";
-            echo 'Graduacao' . $user->getNameGraduation() . ' - Nome: ' . $user->name . ' - ' . count($user->filhos) . ' cadastros diretos' . ' - Pedidos: '. $user->orders->count() . ' - Total Pedidos: '. $user->orders->sum('subtotal');
+            echo 'Graduacao: ' . $user->getNameGraduation() . ' - Nome: ' . $user->name . ' - ' . count($user->filhos) . ' cadastros diretos' . ' - Pedidos: '. $user->orders->count() . ' - Total Pedidos: '. $user->orders->sum('subtotal');
 
             if (count($user->filhos) > 0) {
                 $this->showRede($user->filhos);
@@ -201,9 +201,9 @@ class BonusTestController extends Controller
         $this->showRede($users);
         foreach ($user->users as $user) {
             $this->loopUsers($user);
-            // $this->generateOrderProcess($user);
+            $this->generateOrderProcess($user);
         }
-        // $this->generateOrderProcess($user);
+        $this->generateOrderProcess($user);
     }
 
     private function generateOrderProcess($user)
