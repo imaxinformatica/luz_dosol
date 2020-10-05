@@ -1,6 +1,17 @@
-s\Unit\Graduation
- [x] Verifica se o usuario eh graduado
+s\Feature\GraduationController
+ [x] Example
 
-s\Unit\User
- [x] Verifica usuario esta criado
+s\Feature\OrderController
+ [x] Adicionar um item ao carrinho
+ [x] Acessando a pagina de pedido
+ [x] Pedido com valor minimo abaixo
+ [ ] Pedido com valor minimo acima
+
+s\Unit\Cart
+ [x] Incluir item carrinho
+ [x] Atualiza quantidade item carrinho
+ [x] Remove item carrinho
+
+s\Unit\Graduation
+ [x] Example
 

@@ -18,7 +18,6 @@ function convertMoneyUSAtoBrazil($value)
 function convertDateBraziltoUSA($date)
 {
     $date = implode("-", array_reverse(explode("/", $date)));
-
     return $date;
 }
 
@@ -31,7 +30,7 @@ function convertDateUSAtoBrazil($date)
 
 function getNameFile($originalImage, $name_image)
 {
-    $name_image = rand (1500 , 20000);
+    $name_image = rand(1500, 20000);
     $extension = '.' . $originalImage->extension();
     $fileName = $name_image . date('Ymd') . time() . microtime();
     $fileName = str_replace('.', '', $fileName);
@@ -103,15 +102,15 @@ function alteraMedidas()
     }
     return dd($products);
 }
-function calc_digitos_posicoes( $digitos, $posicoes = 10, $soma_digitos = 0 ) 
+function calc_digitos_posicoes($digitos, $posicoes = 10, $soma_digitos = 0)
 {
     // Faz a soma dos digitos com a posição
-    // Ex. para 10 posições: 
+    // Ex. para 10 posições:
     //   0    2    5    4    6    2    8    8   4
     // x10   x9   x8   x7   x6   x5   x4   x3  x2
-    // 	 0 + 18 + 40 + 28 + 36 + 10 + 32 + 24 + 8 = 196
-    for ( $i = 0; $i < strlen( $digitos ); $i++  ) {
-        $soma_digitos = $soma_digitos + ( $digitos[$i] * $posicoes );
+    //      0 + 18 + 40 + 28 + 36 + 10 + 32 + 24 + 8 = 196
+    for ($i = 0; $i < strlen($digitos); $i++) {
+        $soma_digitos = $soma_digitos + ($digitos[$i] * $posicoes);
         $posicoes--;
     }
 
@@ -120,7 +119,7 @@ function calc_digitos_posicoes( $digitos, $posicoes = 10, $soma_digitos = 0 )
     $soma_digitos = $soma_digitos % 11;
 
     // Verifica se $soma_digitos é menor que 2
-    if ( $soma_digitos < 2 ) {
+    if ($soma_digitos < 2) {
         // $soma_digitos agora será zero
         $soma_digitos = 0;
     } else {
@@ -133,7 +132,35 @@ function calc_digitos_posicoes( $digitos, $posicoes = 10, $soma_digitos = 0 )
     // Concatena mais um digito aos primeiro nove digitos
     // Ex.: 025462884 + 2 = 0254628842
     $cpf = $digitos . $soma_digitos;
-    
+
     // Retorna
     return $cpf;
+}
+
+function verifyFirstOrderMonth($date, $user)
+{
+    list($month, $year) = explode('-', $date);
+
+    $totalOrders = $user->orders()
+        ->where('status', 3)
+        ->whereMonth('updated_at', $month)
+        ->whereYear('updated_at', $year)
+        ->count();
+    return ($totalOrders == 0 && $user->total() < 200);
+}
+
+
+
+
+function setDate($date)
+{
+    return explode('-', $date);
+}
+function updateStatusUser($users, array $date)
+{
+    $users->each(function ($user) use ($date) {
+        if ($user->getActive($date[0], $date[1]) && $user->getTotalMonth() >= 200) {
+            $user->update(['status' => 1]);
+        }
+    });
 }

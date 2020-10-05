@@ -109,6 +109,17 @@
     });
     </script>
     @endif
+    @if ($errors->any())
+    <div class="content-header">
+        @foreach ($errors->all() as $error)
+        <script type="text/javascript">
+            $(document).ready(function() {
+                alertify.error("{{$error}}");
+            });
+            </script>
+        @endforeach
+    </div>
+    @endif
 </body>
 
 

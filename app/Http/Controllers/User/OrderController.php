@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\User;
 
-use Auth;
-use App\User;
 use App\Cycle;
-use App\Order;
-use App\Services\ServiceOrder;
-use App\Services\ServiceCheckout;
-use App\Services\ServiceShipping;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutRequest;
+use App\Order;
+use App\Services\PagSeguroService;
+use App\Services\ServiceCheckout;
+use App\Services\ServiceOrder;
+use App\Services\ServiceShipping;
+use App\User;
+use Auth;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends Controller
@@ -35,59 +36,43 @@ class OrderController extends Controller
         return $resp->id;
     }
 
-    public function checkout(CheckoutRequest $request, ServiceCheckout $svCheckout)
-    {
+    public function checkout(
+        CheckoutRequest $request,
+        $arrayPagSeguro = null,
+        $isTest = false
+    ) {
         $svOrder = new ServiceOrder;
+        $svCheckout = new ServiceCheckout();
+        $pagSeguroService = new PagSeguroService();
 
         $user = Auth::guard('user')->user();
 
         $date = date('m-Y');
-        list($month, $year) = explode('-', $date);
-
-        $totalOrders = $user->orders()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->count();
-        if ($totalOrders == 0 && $user->total() < 200) {
-            return redirect()->back()->with('warning', 'O primeiro pedido do mês precisa ser no mínimo de R$200,00');
+        if (verifyFirstOrderMonth($date, $user)) {
+            return redirect()
+                ->back()
+                ->with('warning', 'O primeiro pedido do mês precisa ser no mínimo de R$200,00');
         }
+
         if (count($user->cart) == 0) {
-            return redirect()->back()->with('warning', 'O pedido precisa ter ao mínimo um item no carrinho');
+            return redirect()
+                ->back()
+                ->with('warning', 'O pedido precisa ter ao mínimo um item no carrinho');
         }
-        $queryParams['email'] = config('services.pagseguro.pagseguro_email');
-        $queryParams['token'] = config('services.pagseguro.pagseguro_token');
-        $queryParams = http_build_query($queryParams);
-        $data = $request->all();
-        $data['user'] = $user;
-        $dataPayment = $request->payment_method == 'boleto' ? ['paymentMethod' => 'boleto'] : $svCheckout->dataCard($data);
-        $payload = array_merge(
-            $svCheckout->dataMain($data),
-            $dataPayment,
-            $svCheckout->dataItems($user),
-            $svCheckout->getShipping($request->all())
-        );
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1'));
-        curl_setopt($curl, CURLOPT_URL, "https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?{$queryParams}");
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($payload));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-        $resp = curl_exec($curl);
-        curl_close($curl);
-
-        $xml = simplexml_load_string($resp);
-
-        $json = json_encode($xml);
-        $array = json_decode($json, true);
-        if (isset($array['error'])) {
-            $error = isset($array['error'][0]) ? $array['error'][0]['message'] : $array['error']['message'];
-            $msg = "Ops, tivemos um problema no nosso servidor, entre em contato com um de nossos adminsitradores. Erro: {$error}";
-            return redirect()->back()->with('error', $msg);
+        if(!$isTest){
+            $array = $pagSeguroService->sendOrder($request->all(), $user);
+            
+            if (isset($array['error'])) {
+                $error = isset($array['error'][0]) ? $array['error'][0]['message'] : $array['error']['message'];
+                $msg = "Ops, tivemos um problema no nosso servidor, entre em contato com um de nossos adminsitradores. Erro: {$error}";
+                return redirect()->back()->with('error', $msg);
+            }
+        }else{
+            $array = $arrayPagSeguro;
         }
 
         $order = $svOrder->generateOrder($request->all(), $array, $user->id);
         if ($order) {
-
             foreach ($user->cart as $items) {
                 $svOrder->createOrderItem($user->id, $order->id, $items, $items->pivot);
                 $items->pivot->delete();
@@ -102,7 +87,7 @@ class OrderController extends Controller
     {
         $user = Auth::guard('user')->user();
 
-        if($request->shipping_type == "particular") {
+        if ($request->shipping_type == "particular") {
             $shippingPrice = ServiceShipping::getPriceParticular($request->zip_code);
             $newTotal = $user->total() + $shippingPrice;
             $cycle = Cycle::first();
@@ -141,10 +126,10 @@ class OrderController extends Controller
             'height' => 32,
             'width' => 33,
             'volume' => 52800,
-            'repeatBox' => $repeatBox ,
+            'repeatBox' => $repeatBox,
         ];
-        
-        if($repeatBox['small'] != 0){
+
+        if ($repeatBox['small'] != 0) {
             $dataSmall = ServiceShipping::generateArrayShipping(
                 $request->zip_code,
                 $request->shipping_type,
@@ -155,10 +140,10 @@ class OrderController extends Controller
             $shipping['small'] = convertMoneyBraziltoUSA($ship['small']['cServico']['Valor']);
             $deliveryTime['small'] = $ship['small']['cServico']['PrazoEntrega'];
         }
-        if($repeatBox['big'] != 0){
+        if ($repeatBox['big'] != 0) {
             $dataBig = ServiceShipping::generateArrayShipping(
                 $request->zip_code,
-                $request->shipping_type, 
+                $request->shipping_type,
                 $repeatBox['big'],
                 $bigBox
             );
@@ -178,42 +163,45 @@ class OrderController extends Controller
             ];
             return json_encode($array);
         } catch (\Exception $e) {
-            return 'error'. $e->getMessage();
+            return 'error' . $e->getMessage();
         }
     }
 
-    public function callback(Request $request)
+    public function callback(Request $request, $isTest = false, $xml = null)
     {
-        $svCheckout = new ServiceCheckout;
-        $notification = $request->notificationCode;
-        $data['email'] = config('services.pagseguro.pagseguro_email');
-        $data['token'] = config('services.pagseguro.pagseguro_token');
-        $data = http_build_query($data);
-        $url = "https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/{$notification}?{$data}";
+        if (!$isTest) {
 
-        $ch = curl_init();
+            $svCheckout = new ServiceCheckout;
+            $notification = $request->notificationCode;
+            $data['email'] = config('services.pagseguro.pagseguro_email');
+            $data['token'] = config('services.pagseguro.pagseguro_token');
+            $data = http_build_query($data);
+            $url = "https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/{$notification}?{$data}";
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        $xml = curl_exec($ch);
-        curl_close($ch);
+            $ch = curl_init();
 
-        $xml = simplexml_load_string($xml);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            $xml = curl_exec($ch);
+            curl_close($ch);
+
+            $xml = simplexml_load_string($xml);
+        }
+
         $order = Order::where('code', $xml->code)->first();
-        if ($order) {   
+        if ($order) {
             $user = User::find($order->user_id);
             $svOrder = new ServiceOrder;
 
             $date = date('m-Y');
             list($month, $year) = explode('-', $date);
-            
-            
+
             $order->update(['status' => $xml->status]);
-            if($order->status == 3){
+            if ($order->status == 3) {
                 ServiceOrder::createComission($order->id, $user);
             }
 
-            $firstOrder = $user->orders()->where('status',3)->count();
+            $firstOrder = $user->orders()->where('status', 3)->count();
 
             if ($firstOrder == 1 && $user->user_id !== null) {
                 ServiceOrder::createSpecialBonus($user->user_id);

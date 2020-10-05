@@ -139,7 +139,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'user'], func
 
     Route::group(['prefix' => 'carrinho', 'as' => 'cart.'], function () {
         Route::get('/', 'User\CartController@cart')->name('index');
-        Route::post('/incluir', 'User\CartController@include')->name('include');
+        Route::post('/incluir', 'User\CartController@store')->name('store');
         Route::post('/update/{product}', 'User\CartController@update')->name('update');
         Route::get('/remover/{cart}', 'User\CartController@delete')->name('delete');
     });
@@ -232,9 +232,18 @@ Route::get('/reiniciar-mes', function(){
     App\Services\ServiceUser::resetMonth();
 });
 Route::get('/criar-bonus', function () {
-    App\Services\ServiceOrder::createBonus();
+    $sv = new App\Services\BonusService();
+
+    $sv->bonus();
+    // App\Services\ServiceOrder::createBonus();
 });
 
 Route::get('atualiza',function(){
     alteraMedidas();
 });
+
+Route::get('test/primeiro-pedido', 'Test\BonusTestController@testFirstOrderMonth');
+Route::get('test/bonificacoes', 'Test\BonusTestController@bonification');
+Route::get('test/bonus-consumo', 'Test\BonusTestController@bonus');
+Route::get('test/comissao', 'Test\BonusTestController@commission');
+Route::get('test/graduacao', 'Test\BonusTestController@graduation');

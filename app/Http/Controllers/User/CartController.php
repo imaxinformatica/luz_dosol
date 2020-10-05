@@ -2,45 +2,39 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
+use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
-use App\{Cart, Product};
+use App\Product;use App\Services\CartService;
 use Auth;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function include(CartRequest $request)
+    public function store(CartRequest $request)
     {
         $user = Auth::guard('user')->user();
         $data = $request->except('_token');
 
         $data['user_id'] = $user->id;
-
-        try {
-            $product = Product::find($request->product_id);
-            $data['price'] = $product->price;
-
-            Cart::updateOrCreate(
-                ['product_id' => $data['product_id'], 'user_id' => $data['user_id']],
-                $data
-            );
-        } catch (\Exception $e) {
+        $product = Product::find($request->product_id);
+        if (!$product) {
             return redirect()->back()
-                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
+                ->with('error', 'Tivemos problemas em localizar este produto no sistema');
         }
-        return redirect()->back()->with('success', 'Item adicionado ao carrinho.');
+        $data['price'] = $product->price;
+        $response = CartService::store($data);
+
+        return redirect()->back()
+            ->with($response['status'], $response['msg']);
     }
 
     public function delete(Cart $cart)
     {
-        try {
-            $cart->delete();
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
-        }
-        return redirect()->back()->with('success', 'Item removido do carrinho.');
+        $response = CartService::delete($cart);
+        return redirect()->back()
+            ->with($response['status'], $response['msg']);
+
     }
 
     public function cart()
@@ -62,13 +56,10 @@ class CartController extends Controller
     public function update(Request $request, Product $product)
     {
         $user = Auth::guard('user')->user();
-        $productCart = $user->cart()->where('product_id', $product->id)->first();
-        if($productCart){
-            $productCart->pivot->update([
-                'qty' => $request->value
-            ]);
-        }  
-        session()->flash('success', 'Atualizado com sucesso');
+        $data = $request->all();
+        $data['product_id'] = $product->id;
+        $response = CartService::update($user, $data);
+        session()->flash($response['status'], $response['msg']);
         return response()->json();
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TestSeeder extends Seeder
 {
@@ -9,263 +11,378 @@ class TestSeeder extends Seeder
      *
      * @return void
      */
+    protected $now;
+    protected static $count = 0;
+    protected static $repeat = 0;
+
+    public function __construct()
+    {
+        $this->now = date("Y-m-d H:i:s");
+    }
+
+    public function generateUser($user)
+    {
+        $data = [
+            [
+                'name' => "Luz do Sol 01",
+                'cpf' => '000.000.000-00',
+                'rg' => '0000000',
+                'user_id' => $user->id,
+                'cellphone' => '(11) 94886-7923',
+                'email' => "luzdosol01@gmail.com",
+                'password' => bcrypt('luzsol2020'),
+                'avatar' => 'default.png',
+                "created_at" => $this->now,
+                "updated_at" => $this->now,
+            ],
+            [
+                'name' => "Luz do Sol 02",
+                'cpf' => '000.000.000-00',
+                'rg' => '0000000',
+                'user_id' => $user->id,
+                'cellphone' => '(11) 94886-7923',
+                'email' => "luzdosol02@gmail.com",
+                'password' => bcrypt('luzsol2020'),
+                'avatar' => 'default.png',
+                "created_at" => $this->now,
+                "updated_at" => $this->now,
+            ],
+            [
+                'name' => "Luz do Sol 03",
+                'cpf' => '000.000.000-00',
+                'rg' => '0000000',
+                'user_id' => $user->id,
+                'cellphone' => '(11) 94886-7923',
+                'email' => "luzdosol03@gmail.com",
+                'password' => bcrypt('luzsol2020'),
+                'avatar' => 'default.png',
+                "created_at" => $this->now,
+                "updated_at" => $this->now,
+            ],
+            [
+                'name' => "Luz do Sol 04",
+                'cpf' => '000.000.000-00',
+                'rg' => '0000000',
+                'user_id' => $user->id,
+                'cellphone' => '(11) 94886-7923',
+                'email' => "luzdosol04@gmail.com",
+                'password' => bcrypt('luzsol2020'),
+                'avatar' => 'default.png',
+                "created_at" => $this->now,
+                "updated_at" => $this->now,
+            ],
+        ];
+        foreach ($data as $key => $item) {
+            $user = App\User::create($item);
+            if ($key == 0) {
+                $data = [
+                    [
+                        'name' => "Luz do Sol 05",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol05@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                    [
+                        'name' => "Luz do Sol 06",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol06@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                    [
+                        'name' => "Luz do Sol 07",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol07@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                ];
+                foreach ($data as $keyItem => $item) {
+                    $user = App\User::create($item);
+                    if ($keyItem == 0) {
+                        $data = [
+                            [
+                                'name' => "Luz do Sol 08",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol08@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+                            [
+                                'name' => "Luz do Sol 09",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol09@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+    
+                        ];
+                        foreach ($data as $key => $item) {
+                            $user = App\User::create($item);
+                        }
+                    }
+                    if ($keyItem == 1) {
+                        $data = [
+                            [
+                                'name' => "Luz do Sol 20",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol20@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+                            [
+                                'name' => "Luz do Sol 21",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol21@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+    
+                        ];
+                        foreach ($data as $key => $item) {
+                            $user = App\User::create($item);
+                        }
+                    }
+                    if ($keyItem == 2) {
+                        $data = [
+                            [
+                                'name' => "Luz do Sol 23",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol23@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+                            [
+                                'name' => "Luz do Sol 24",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol24@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+    
+                        ];
+                        foreach ($data as $key => $item) {
+                            $user = App\User::create($item);
+                        }
+                    }
+    
+                }
+            }
+            if ($key == 2) {
+                $data = [
+                    [
+                        'name' => "Luz do Sol 10",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol10@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                    [
+                        'name' => "Luz do Sol 11",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol11@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                ];
+                foreach ($data as $key => $item) {
+                    $user = App\User::create($item);
+                }
+            }
+            if ($key == 3) {
+                $data = [
+                    [
+                        'name' => "Luz do Sol 12",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol12@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                    [
+                        'name' => "Luz do Sol 13",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol13@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                    [
+                        'name' => "Luz do Sol 14",
+                        'cpf' => '000.000.000-00',
+                        'rg' => '0000000',
+                        'user_id' => $user->id,
+                        'cellphone' => '(11) 94886-7923',
+                        'email' => "luzdosol14@gmail.com",
+                        'password' => bcrypt('luzsol2020'),
+                        'avatar' => 'default.png',
+                        "created_at" => $this->now,
+                        "updated_at" => $this->now,
+                    ],
+                ];
+                foreach ($data as $key => $item) {
+                    $user = App\User::create($item);
+                    if ($key == 0) {
+                        $data = [
+                            [
+                                'name' => "Luz do Sol 15",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol15@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+                            [
+                                'name' => "Luz do Sol 16",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol16@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+    
+                        ];
+                        foreach ($data as $item) {
+                            $user = App\User::create($item);
+                        }
+                    }
+                    if ($key == 1) {
+                        $data = [
+                            [
+                                'name' => "Luz do Sol 25",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7923',
+                                'email' => "luzdosol25@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+                            [
+                                'name' => "Luz do Sol 26",
+                                'cpf' => '000.000.000-00',
+                                'rg' => '0000000',
+                                'user_id' => $user->id,
+                                'cellphone' => '(11) 94886-7926',
+                                'email' => "luzdosol26@gmail.com",
+                                'password' => bcrypt('luzsol2020'),
+                                'avatar' => 'default.png',
+                                "created_at" => $this->now,
+                                "updated_at" => $this->now,
+                            ],
+    
+                        ];
+                        foreach ($data as $item) {
+                            $user = App\User::create($item);
+                        }
+                    }
+    
+                }
+            }
+        }
+        // $emailNumber = self::$count++;
+        // for ($i = 0; $i < 3; $i++) {
+        //     $emailNumber .= "t";
+        //     App\User::create($data);
+        // }
+        // $totalUsers = App\User::count();
+        // foreach ($user->users as $user) {
+        //     if ($totalUsers < 50) {
+        //         $this->generateUser($user);
+        //     }
+        // }
+
+    }
     public function run()
     {
-        $now = date("Y-m-d H:i:s");
-        DB::table("users")->insert([
-            [
-                'name' => 'Guilherme Neto',
-                'cpf' => '000.000.000-00',
-                'rg' => '0000000',
-                'user_id' => null,
-                'cellphone' => '(11) 94886-7923',
-                'email' => 'luzdosol@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'LuzDoSol 00',
-                'cpf' => '000.000.000-00',
-                'rg' => '0000000',
-                'user_id' => 1,
-                'cellphone' => '(11) 94886-7923',
-                'email' => 'luzdosol.0000@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 02',
-                'cpf' => '123.456.789-99',
-                'rg' => '123456789123',
-                'user_id' => 1,
-                'cellphone' => '(13) 13131-3131',
-                'email' => 'luzdosol.0002@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'LuzdoSol 03',
-                'cpf' => '347.131.730-96',
-                'rg' => '468489490',
-                'user_id' => 1,
-                'cellphone' => '(11) 94886-7923',
-                'email' => 'luzdosol.0003@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 04',
-                'cpf' => '123.456.789-99',
-                'rg' => '1234567989789',
-                'user_id' => 1,
-                'cellphone' => '(32) 16499-8797',
-                'email' => 'luzdosol.0004@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'luzdosol 05',
-                'cpf' => '111.111.111-11',
-                'rg' => '1111111',
-                'user_id' => 2,
-                'cellphone' => '(11) 1111-111',
-                'email' => 'luzdosol.0005@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 06',
-                'cpf' => '111.111.111-11',
-                'rg' => '11111111111',
-                'user_id' => 2,
-                'cellphone' => '(11) 1111-1111',
-                'email' => 'luzdosol.0006@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 07',
-                'cpf' => '000.000.000-00',
-                'rg' => '00000000',
-                'user_id' => 2,
-                'cellphone' => '(00) 00000-0000',
-                'email' => 'luzdosol.0007@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'luzdosol 08',
-                'cpf' => '111.111.111-11',
-                'rg' => '111111111',
-                'user_id' => 2,
-                'cellphone' => '(11) 1111-111',
-                'email' => 'luzdosol.0008@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 09',
-                'cpf' => '000.000.000-00',
-                'rg' => '0000000000',
-                'user_id' => 3,
-                'cellphone' => '(00) 0000-0000',
-                'email' => 'luzdosol.0009@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'luzdosol 10',
-                'cpf' => '111.111.111-11',
-                'rg' => '1111111',
-                'user_id' => 3,
-                'cellphone' => '(11) 1111-111',
-                'email' => 'luzdosol.0010@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 11',
-                'cpf' => '000.000.000-00',
-                'rg' => '00000',
-                'user_id' => 3,
-                'cellphone' => '(00) 00000-0000',
-                'email' => 'luzdosol.00011@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'luzdosol 12',
-                'cpf' => '111.111.111-11',
-                'rg' => '111111111',
-                'user_id' => 3,
-                'cellphone' => '(11) 11111-1111',
-                'email' => 'luzdosol.0012@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'luzdosol 13',
-                'cpf' => '111.111.111-11',
-                'rg' => '1111111111',
-                'user_id' => 4,
-                'cellphone' => '(11) 11111-1111',
-                'email' => 'luzdosol.00013@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'LuzDoSol 14',
-                'cpf' => '000.000.000-00',
-                'rg' => '0000',
-                'user_id' => 4,
-                'cellphone' => '(00) 00000-0000',
-                'email' => 'luzdosol.0014@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'luzdosol 15',
-                'cpf' => '111.111.111-11',
-                'rg' => '111111',
-                'user_id' => 4,
-                'cellphone' => '(11) 1111-11',
-                'email' => 'luzdosol.0015@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'luzdosol 16',
-                'cpf' => '111.111.111-11',
-                'rg' => '1111111',
-                'user_id' => 4,
-                'cellphone' => '(11) 11111-1111',
-                'email' => 'luzdosol.0016@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 17',
-                'cpf' => '000.000.000-00',
-                'rg' => '11111111111',
-                'user_id' => 5,
-                'cellphone' => '(11) 1111-1111',
-                'email' => 'luzdosol.017@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 18',
-                'cpf' => '000.000.000-00',
-                'rg' => '111111111111',
-                'user_id' => 5,
-                'cellphone' => '(11) 11111-1111',
-                'email' => 'luzdosol.0018@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 19',
-                'cpf' => '000.000.000-00',
-                'rg' => '111111111111',
-                'user_id' => 5,
-                'cellphone' => '(11) 11111-1111',
-                'email' => 'luzdosol.0019@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-            [
-                'name' => 'Luzdosol 20',
-                'cpf' => '000.000.000-00',
-                'rg' => '111111111111',
-                'user_id' => 5,
-                'cellphone' => '(11) 11111-1111',
-                'email' => 'luzdosol.0020@gmail.com',
-                'password' => bcrypt('luzsol2020'),
-                'avatar' => 'default.png',
-                "created_at"    => $now,
-                "updated_at"    => $now,
-            ],
-        ]);
+        $data = [
+            'name' => 'Luz do Sol',
+            'cpf' => '000.000.000-00',
+            'rg' => '0000000',
+            'user_id' => null,
+            'cellphone' => '(11) 94886-7923',
+            'email' => 'luzdosol@gmail.com',
+            'password' => bcrypt('luzsol2020'),
+            'avatar' => 'default.png',
+            "created_at" => $this->now,
+            "updated_at" => $this->now,
+        ];
+        $user = App\User::create($data);
+        $this->generateUser($user);
 
         DB::table('products')->insert([
             [
@@ -1848,7 +1965,7 @@ class TestSeeder extends Seeder
                 'user_id' => '17',
                 'state' => 'SP',
             ],
-            
+
             [
                 'zip_code' => '11111-111',
                 'street' => '111111111111',
