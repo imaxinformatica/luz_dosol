@@ -4,9 +4,9 @@ namespace App;
 
 use App\Notifications\UserResetPassword;
 use App\Services\ServiceGraduation;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -165,7 +165,7 @@ class User extends Authenticatable
 
     public function getActive($month, $year): bool
     {
-        if($this->status == 1){
+        if ($this->status == 1) {
             return true;
         }
         $active = $this->active()->whereMonth('date_active', $month)->whereYear('date_active', $year)->first();
@@ -207,9 +207,33 @@ class User extends Authenticatable
 
     public function getBonus($month, $year)
     {
-        $bonus = $this->bonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
+        $bonus = $this->bonus()
+            ->whereMonth('updated_at', $month)
+            ->whereYear('updated_at', $year)
+            ->sum('price');
+        $extrabonus = $this->extraBonus()
+            ->whereMonth('updated_at', $month)
+            ->whereYear('updated_at', $year)
+            ->sum('price');
+        return $bonus + $extrabonus;
+    }
+    public function getBonusIndication($month, $year)
+    {
+        return $bonus = $this->bonus()
+            ->whereMonth('updated_at', $month)
+            ->whereYear('updated_at', $year)
+            ->where('level_bonus', 6)
+            ->sum('price');
+    }
+    public function getBonusNotIndication($month, $year)
+    {
+        $bonus = $this->bonus()
+            ->whereMonth('updated_at', $month)
+            ->whereYear('updated_at', $year)
+            ->where('level_bonus','<>', 6)
+            ->sum('price');
         $extrabonus = $this->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
-        return $bonus+$extrabonus;
+        return $bonus + $extrabonus;
     }
 
     public function orders()

@@ -14,7 +14,7 @@ class ConfigurationController extends Controller
     public function index()
     {
         $user = Auth::guard('user')->user();
-        $states = State::all();
+        $states = State::orderBy('name','asc')->get();
         return view('user.pages.configuration.index')
             ->with('states', $states)
             ->with('user', $user);

@@ -30,8 +30,8 @@ class UserController extends Controller
 
     public function create()
     {
-        $states = State::all();
-        $banks = Bank::get();
+        $states = State::orderBy('name','asc')->get();
+        $banks = Bank::orderBy('bank_name','asc')->get();
         return view('admin.pages.user.create')
         ->with('banks', $banks)
         ->with('states', $states);
@@ -53,7 +53,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $states = State::all();
+        $states = State::orderBy('name','asc')->get();
         $banks = Bank::get();
         return view('admin.pages.user.edit')
         ->with('states', $states)

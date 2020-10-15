@@ -110,7 +110,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="rg">RG <small>*</small></label>
-                                        <input type="text" class="btn-form" value="{{old('rg')}}" name="rg" required>
+                                        <input type="text" class="btn-form" value="{{old('rg')}}" name="rg" maxlength="15" required>
                                     </div>
                                 </div>
                             </div>

@@ -170,7 +170,6 @@ class OrderController extends Controller
     public function callback(Request $request, $isTest = false, $xml = null)
     {
         if (!$isTest) {
-
             $svCheckout = new ServiceCheckout;
             $notification = $request->notificationCode;
             $data['email'] = config('services.pagseguro.pagseguro_email');
@@ -203,7 +202,7 @@ class OrderController extends Controller
 
             $firstOrder = $user->orders()->where('status', 3)->count();
 
-            if ($firstOrder == 1 && $user->user_id !== null) {
+            if ($firstOrder == 1 && $user->user_id !== null && $xml->status == 3) {
                 ServiceOrder::createSpecialBonus($user->user_id);
             }
             if ($user->getTotalMonth() >= 200 && $user->status == 0 && $order->status == 3) {

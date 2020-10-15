@@ -1,6 +1,6 @@
 <div class="col-lg-7">
     <div class="row">
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-4">
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
@@ -20,7 +20,26 @@
                 </a>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-4">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h4>Indicação Direta</h4>
+                    <h4 class="special-bonus">R$ {{$data['special_bonus']}}</h4>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                </div>
+                <a href="#" class="small-box-footer">
+                    @if(auth()->guard('user')->user()->status == 0)
+                    Disponível após ATIVAÇÃO mensal
+                    @else
+                    -
+                    @endif
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">

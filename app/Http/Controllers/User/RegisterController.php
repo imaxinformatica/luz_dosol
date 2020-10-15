@@ -17,7 +17,7 @@ class RegisterController extends Controller
 
     public function register()
     {
-        $states = State::all();
+        $states = State::orderBy('name','asc')->get();
         $banks = Bank::orderBy('bank_code', 'asc')->get();
         return view('user.auth.finish')
             ->with('banks', $banks)

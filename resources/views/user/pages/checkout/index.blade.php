@@ -314,6 +314,19 @@ $('#shipping_type').on('change', function() {
     var zip_code = $('input[name="zip_code"]').val();
     getShippingScript(shipping_type, zip_code);
 });
+$.fn.preventDoubleSubmit = function() {
+    $(this).submit(function() {
+    if (this.beenSubmitted)
+        return false;
+    else
+        this.beenSubmitted = true;
+    });
+};
+$('#finishOrder form').preventDoubleSubmit(); 
+
+function toggleDisabled(elem){
+    elem.disabled = !elem.disabled;
+}
 
 function getShippingScript(shipping_type, zip_code) {
     $.ajax({

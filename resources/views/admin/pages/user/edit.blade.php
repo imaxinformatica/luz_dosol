@@ -117,7 +117,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                         <label for="rg">RG <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->rg}}" name="rg"
+                                        <input type="text" class="form-control" value="{{$user->rg}}" name="rg" maxlength="15"
                                             required>
                                     </div>
                                 </div>
