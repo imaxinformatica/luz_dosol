@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = [
+        'graduation_name'
+    ];
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new UserResetPassword($token));
@@ -84,6 +88,23 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\ActiveUser', 'user_id');
     }
+
+    public function getGraduationNameAttribute()
+    {
+        $graduations = [
+            '1' =>"Bronze",
+            '2' =>"Prata",
+            '3' =>"Ouro",
+            '4' =>"Platina",
+            '5' =>"Diamante",
+            '6' =>"Mestre",
+            '7' =>"Principe/Princesa",
+            '8' =>"Rei/Rainha",
+        ];
+        $g = $this->getGraduation();
+        return array_key_exists($g, $graduations) ? $graduations[$g] : "Não graduado";
+    }
+
 
     public function status()
     {

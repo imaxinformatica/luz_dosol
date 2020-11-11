@@ -13,9 +13,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = Auth::guard('user')->user();
+        $user->children = \listChildren($user,10);
+        
 
-        $users = User::where('user_id', $user->id)->orderBy('name', 'asc')->get();
-
-        return view('user.pages.user.index')->with('users', $users);
+        // $users = User::where('user_id', $user->id)->orderBy('name', 'asc')->get();
+        return view('user.pages.user.index')
+        ->with('user', $user);
     }
 }

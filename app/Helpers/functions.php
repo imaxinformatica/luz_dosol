@@ -149,9 +149,6 @@ function verifyFirstOrderMonth($date, $user)
     return ($totalOrders == 0 && $user->total() < 200);
 }
 
-
-
-
 function setDate($date)
 {
     return explode('-', $date);
@@ -163,4 +160,21 @@ function updateStatusUser($users, array $date)
             $user->update(['status' => 1]);
         }
     });
+}
+
+function listChildren($user, $limite)
+{
+    $lista = [];
+    // Busca usuários cadastrados pelo usuários logado
+    if ($user->users->count() > 0) {
+        $lista = $user->users;
+
+        foreach ($lista as $chave => $user) {
+            $lista[$chave]['children'] = [];
+            if ($limite > 0) {
+                $lista[$chave]['children'] = listChildren($user, $limite - 1);
+            }
+        }
+    }
+    return $lista;
 }
