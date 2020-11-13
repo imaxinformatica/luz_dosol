@@ -37,7 +37,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <img class="graduation-img" src="{{ asset('images/'.$user->getGraduation())}}.png">
+                                <img class="graduation-img" src="{{ asset('images/'.$user->getMaxGraduation())}}.png">
                                 <p class="text-center">Graduação<br>máxima alcançada</p>
                             </div>
                             <div class="col-md-6">

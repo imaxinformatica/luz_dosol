@@ -48,6 +48,9 @@
                                                 <div class="col-sm-3">
                                                     <p><b>Graduação:</b> {{ $child->graduation_name }}</p>
                                                 </div>
+                                                <div class="col-sm-2">
+                                                    <p><b>Status:</b> {{ $child->status() }}</p>
+                                                </div>
                                             </div>
                                             @if (count($child->children) > 0)
                                                 @component('user.components.user', ['user' => $child])

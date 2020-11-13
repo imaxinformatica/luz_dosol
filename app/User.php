@@ -81,7 +81,7 @@ class User extends Authenticatable
 
     public function graduation()
     {
-        return $this->hasMany('App\Graduation', 'user_id');
+        return $this->hasOne('App\Graduation', 'user_id');
     }
 
     public function active()
@@ -319,10 +319,17 @@ class User extends Authenticatable
         return $graduation;
     }
 
-    public function getGraduation(): int
+    public function getMaxGraduation(): int
+    {
+        if ($this->graduation) {
+            return $this->graduation->max_graduation;
+        }
+        return $this->getGraduation();
+    }
+    public function getGraduation($day = -1): int
     {
         $sv = new ServiceGraduation;
-        $date = date('m-Y', strtotime('-1 day'));
+        $date = date('m-Y', strtotime("{$day} day"));
         list($month, $year) = explode('-', $date);
 
         $activeUsers = $this->activeUsers($month, $year)->count();

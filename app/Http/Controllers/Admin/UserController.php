@@ -14,6 +14,11 @@ class UserController extends Controller
     {
         $users = new User;
 
+        if($request->has('id')){
+            if(request('id') != ''){
+                $users = $users->where('id', request('id') );
+            }
+        }
         if($request->has('name')){
             if(request('name') != ''){
                 $users = $users->where('name', 'like', request('name') . '%');
@@ -24,7 +29,7 @@ class UserController extends Controller
                 $users = $users->where('email', 'like', request('email') . '%');
             }
         }
-        $users = $users->orderBy('name', 'asc')->paginate(20);
+        $users = $users->orderBy('id', 'asc')->paginate(20);
         return view('admin.pages.user.index')->with('users', $users);
     }
 

@@ -9,32 +9,32 @@ class ServiceGraduation
 {
     protected $month;
     protected $year;
-    function __construct() {
-        $date = date('m-Y', strtotime('-1 day'));
+    public function __construct()
+    {
+        $date = date('m-Y', strtotime('-15 day'));
         list($month, $year) = explode('-', $date);
         $this->month = $month;
         $this->year = $year;
     }
 
-    
     public function getMaxGraduation()
     {
         $activeUser = ActiveUser::whereMonth('date_active', $this->month)
-        ->whereYear('date_active', $this->year)->pluck('user_id')->toArray();;
-        $users = User::whereIn('id',$activeUser)->get();
-        
+            ->whereYear('date_active', $this->year)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $activeUser)->get();
+
         foreach ($users as $user) {
-            $maxGraduation = $user->getGraduation();
-            $actualGraduation = $user->graduation()
-            ->whereMonth('updated_at', $this->month)
-            ->whereYear('updated_at', $this->year)->first();
-            if(!$actualGraduation){
+            $maxGraduation = $user->getGraduation(-14);
+
+            if (!$user->graduation) {
+                $user->graduation->delete();
                 $user->graduation()->create([
-                    'max_graduation' => $maxGraduation
+                    'max_graduation' => $maxGraduation,
                 ]);
-            }else{
-                $actualGraduation->update([
-                    'max_graduation' => $maxGraduation
+            } else {
+                $maxGraduation = $maxGraduation > $user->graduation->max_graduation ? $maxGraduation : $user->graduation->max_graduation;
+                $user->graduation->update([
+                    'max_graduation' => $maxGraduation,
                 ]);
             }
         }
@@ -75,7 +75,7 @@ class ServiceGraduation
                     break;
                 }
                 /**
-                 * verifica se o osuario do loop no nivel 1 é graduado. 
+                 * verifica se o osuario do loop no nivel 1 é graduado.
                  * Se sim, incrementa a @var userGraduated.
                  * Caso Contrário verifica a rede nivel 2 desse usuario
                  *  */
@@ -84,7 +84,7 @@ class ServiceGraduation
                     $userGraduated++;
                 } else {
                     /**
-                     * verifica se o osuario do loop no nivel 2 é graduado. 
+                     * verifica se o osuario do loop no nivel 2 é graduado.
                      * Se sim, incrementa a @var userGraduated e sai do loop
                      * Caso Contrário verifica a rede nivel 3 desse usuario
                      * e repete o fluxo ate o nivel 10
@@ -199,7 +199,7 @@ class ServiceGraduation
                     break;
                 }
                 /**
-                 * verifica se o osuario do loop no nivel 1 é graduado. 
+                 * verifica se o osuario do loop no nivel 1 é graduado.
                  * Se sim, incrementa a @var userGraduated.
                  * Logo em seguida verifica se o mesmo é gold,
                  * Caso seja, incrementa a @var usersGold.
@@ -213,7 +213,7 @@ class ServiceGraduation
                     }
                 } else {
                     /**
-                     * verifica se o osuario do loop no nivel 2 é graduado. 
+                     * verifica se o osuario do loop no nivel 2 é graduado.
                      * Se sim, incrementa a @var userGraduated e sai do loop
                      * Caso Contrário verifica a rede nivel 3 desse usuario
                      * e repete o fluxo ate o nivel 10
@@ -355,7 +355,7 @@ class ServiceGraduation
                     break;
                 }
                 /**
-                 * verifica se o osuario do loop no nivel 1 é graduado. 
+                 * verifica se o osuario do loop no nivel 1 é graduado.
                  * Se sim, incrementa a @var userGraduated.
                  * Logo em seguida verifica se o mesmo é gold,
                  * Caso seja, incrementa a @var usersGold.
@@ -369,7 +369,7 @@ class ServiceGraduation
                     }
                 } else {
                     /**
-                     * verifica se o osuario do loop no nivel 2 é graduado. 
+                     * verifica se o osuario do loop no nivel 2 é graduado.
                      * Se sim, incrementa a @var userGraduated e sai do loop
                      * Caso Contrário verifica a rede nivel 3 desse usuario
                      * e repete o fluxo ate o nivel 10
@@ -512,7 +512,7 @@ class ServiceGraduation
                     break;
                 }
                 /**
-                 * verifica se o osuario do loop no nivel 1 é graduado. 
+                 * verifica se o osuario do loop no nivel 1 é graduado.
                  * Se sim, incrementa a @var userGraduated.
                  * Logo em seguida verifica se o mesmo é gold,
                  * Caso seja, incrementa a @var usersGold.
@@ -530,7 +530,7 @@ class ServiceGraduation
                     }
                 } else {
                     /**
-                     * verifica se o osuario do loop no nivel 2 é graduado. 
+                     * verifica se o osuario do loop no nivel 2 é graduado.
                      * Se sim, incrementa a @var userGraduated e sai do loop
                      * Caso Contrário verifica a rede nivel 3 desse usuario
                      * e repete o fluxo ate o nivel 10
