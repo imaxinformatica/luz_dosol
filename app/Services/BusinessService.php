@@ -14,7 +14,7 @@ class BusinessService
     protected $graduationService;
     public function __construct(GraduationService $graduationService)
     {
-        $date = date('m-Y', strtotime('-30 day'));
+        $date = date('m-Y', strtotime('-1 day'));
         list($month, $year) = explode('-', $date);
 
         $this->month = $month;

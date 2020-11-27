@@ -40,7 +40,7 @@ class GraduationService
     }
     public function getGraduation(User $user)
     {
-        $date = setDate(date('m-Y', strtotime('-30 day')));
+        $date = setDate(date('m-Y', strtotime('-1 day')));
         return $this->loopGraduation($user, $date, 10);
     }
 
