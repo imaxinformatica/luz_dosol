@@ -162,6 +162,8 @@ return [
         "city" => "cidade",
         "state" => "estado",
         "total" => "total",
+        "key" => "chave",
+        "type" => "tipo de chave",
         "order_id" => "código do pedido",
         "subtotal" => "subtotal",
         "commission_percentage" => "porcentagem de comissão",

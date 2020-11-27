@@ -9,12 +9,12 @@ class PagSeguroService
     private $queryParamsPagSeguro;
     private $checkoutService;
 
-    public function __construct()
+    public function __construct(ServiceCheckout $checkoutService)
     {
         $this->queryParamsPagSeguro['email'] = config('services.pagseguro.pagseguro_email');
         $this->queryParamsPagSeguro['token'] = config('services.pagseguro.pagseguro_token');
         $this->queryParamsPagSeguro = http_build_query($this->queryParamsPagSeguro);
-        $this->checkoutService = new ServiceCheckout();
+        $this->checkoutService = $checkoutService;
     }
 
     public function sendOrder(array $data, $user)

@@ -223,24 +223,15 @@ Route::post('/callback-pagseguro', 'User\OrderController@callback')->name('callb
 
 Route::get('/get-shipping', 'User\OrderController@getShipping')->name('get.shipping');
 
-Route::get('/verificar-graduacao', function () {
-    $sv = new App\Services\ServiceGraduation;
-    $sv->getMaxGraduation();
-});
+Route::get('/reiniciar-mes', 'Api\RouterController@resetMonth');
 
-Route::get('/reiniciar-mes', function(){
-    App\Services\ServiceUser::resetMonth();
-});
-Route::get('/criar-bonus', function () {
-    $sv = new App\Services\BonusService();
 
-    $sv->bonus();
-    // App\Services\ServiceOrder::createBonus();
-});
+Route::get('/criar-bonus','Api\RouterController@setBonus');
 
 Route::get('atualiza',function(){
     alteraMedidas();
 });
+Route::get('graduacao', 'Api\RouterController@graduation');
 
 Route::get('test/primeiro-pedido', 'Test\BonusTestController@testFirstOrderMonth');
 Route::get('test/bonificacoes', 'Test\BonusTestController@bonification');

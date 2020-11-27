@@ -36,24 +36,29 @@
                                             <div class="row">
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-box-tool toggleChild"
-                                                data-child="{{ $child->id }}"><i id="icon-{{$child->id}}" class="fa fa-plus"></i>
+                                                        data-child="{{ $child->id }}"><i id="icon-{{ $child->id }}"
+                                                            class="fa fa-plus"></i>
                                                     </button>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <p><b>Nome:</b> {{ $child->name }}</p>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <p><b>E-mail:</b> {{ $child->name }}</p>
+                                                    <p><b>Graduação:</b>
+                                                        {{ $user->status == 1 ? $child->graduation_name : 'disponível após ATIVAÇÃO' }}
+                                                    </p>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <p><b>Graduação:</b> {{ $child->graduation_name }}</p>
+                                                    <p><b>Status:</b>
+                                                        {{ $user->status == 1 ? $child->status() : 'disponível após ATIVAÇÃO' }}
+                                                    </p>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <p><b>Status:</b> {{ $child->status() }}</p>
+                                                    <p><b>Nível 1</b></p>
                                                 </div>
                                             </div>
                                             @if (count($child->children) > 0)
-                                                @component('user.components.user', ['user' => $child])
+                                                @component('user.components.user', ['user' => $child, 'count' => 2, 'active' => $user->status])
                                                 @endcomponent
                                             @endif
                                         @endforeach

@@ -25,10 +25,9 @@ class ServiceProduct
         return $fileName;
     }
 
-    public static function createProduct(array $data): void
+    public static function createProduct(array $data, ServiceProduct $productService): void
     {
-        $sv = new ServiceProduct();
-        $data['file'] = $sv->saveImage($data['file'], $data['name']);
+        $data['file'] = $productService->saveImage($data['file'], $data['name']);
         $data['price'] = convertMoneyBraziltoUSA($data['price']);
         $data['weight'] = convertMoneyBraziltoUSA($data['weight']);
         $data['volume'] = convertMoneyBraziltoUSA($data['volume']);

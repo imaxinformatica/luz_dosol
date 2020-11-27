@@ -2,13 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Bonus;
-use App\Services\ServiceCheckout;
-use App\Services\ServiceGraduation;
-use App\Services\ServiceUser;
-use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 
 class GraduationTest extends TestCase
 {
@@ -67,8 +61,6 @@ class GraduationTest extends TestCase
     //     $graduationUserGold9 = $userGold9->getGraduation();
     //     $graduationUserGold10 = $userGold10->getGraduation();
 
-
-
     //     $this->assertEquals(7, $graduationUserEmperor);
     //     $this->assertEquals(6, $graduationUserMaster);
 
@@ -118,8 +110,9 @@ class GraduationTest extends TestCase
     //     $dataBank['cpf_holder'] = '1234';
     //     $dataBank['name_holder'] = 'Thales Serra';
     //     $dataBank['type_account'] = '1';
-
-    //     $user = ServiceUser::createUser($data, $dataAddress, $dataBank);
+    
+    //      Criar usuario
+    //     $user = ?
     //     ServiceCheckout::activeUser($user);
     //     $user_id = [
     //         1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 11, 11, 13, 13, 15, 15, 17, 17, 19, 19, 22, 22, 23, 23, 21, 21, 20, 20, 18, 18, 16, 16, 14, 14, 12, 12, 10, 10, 29, 29, 27, 27, 26, 26, 24, 24, 25, 25, 28, 28, 31, 31, 33, 33, 70, 70, 71, 71, 72, 72, 73, 73, 30, 30, 32, 32, 34, 34, 35, 35, 36, 36, 37, 37, 74, 74, 75, 75, 76, 76, 77, 77, 38, 38, 39, 39, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44, 45, 45, 25, 28, 31, 33, 11, 13, 15, 17, 19, 22, 131, 131, 130, 130, 129, 129, 128, 128, 127, 127, 126, 126, 125, 125, 124, 124, 122, 122, 2, 150, 150, 123, 123
@@ -148,7 +141,8 @@ class GraduationTest extends TestCase
     //         $dataBank['cpf_holder'] = '1234';
     //         $dataBank['name_holder'] = 'Thales Serra';
     //         $dataBank['type_account'] = '1';
-    //         $user = ServiceUser::createUser($data, $dataAddress, $dataBank);
+    //          Criar usuario
+    //          $user = ?
     //         ServiceCheckout::activeUser($user);
     //     }
     // }

@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ParticularRequest;
 use App\ParticularShip;
 use App\Services\ParticularService;
-use App\Services\ServiceCategory;
 
 class ParticularController extends Controller
 {

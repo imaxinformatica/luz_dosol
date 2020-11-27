@@ -94,21 +94,6 @@
                             <div class="row">
                                 <div class="col-xs-6">
                                     <div class="form-group">
-                                        <label>Status <small>*</small></label>
-                                        <select name="status" id="status" class="form-control">
-                                            <option selected disabled hidden>Selecione..</option>
-                                            <option value="1" {{$user->status == '1' ? "selected" : ""}}>Ativado
-                                            </option>
-                                            <option value="0" {{$user->status == '0' ? "selected" : ""}}>Desativado
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="form-group">
                                         <label for="cpf">CPF <small>*</small></label>
                                         <input type="text" class="form-control input-cpf" value="{{$user->cpf}}"
                                             name="cpf" required>
@@ -265,6 +250,35 @@
                                         <label for="cpf_holder">CPF Titular <small>*</small></label>
                                         <input type="text" class="form-control input-cpf" value="{{$user->databank->cpf_holder}}"
                                             name="cpf_holder" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="type">Tipo de Chave</label>
+                                        <select class="form-control key_type" name="type">
+                                            <option disabled selected>Selecione..</option>
+                                            <option {{ old('type', $user->links['pix']->type) == 'cpf' ? 'selected' : '' }}
+                                                value="cpf">
+                                                Chave de CPF</option>
+                                            <option
+                                                {{ old('type', $user->links['pix']->type) == 'cellphone' ? 'selected' : '' }}
+                                                value="cellphone">Chave de Celular</option>
+                                            <option
+                                                {{ old('type', $user->links['pix']->type) == 'email' ? 'selected' : '' }}
+                                                value="email">Chave de E-mail</option>
+                                            <option
+                                                {{ old('type', $user->links['pix']->type) == 'random' ? 'selected' : '' }}
+                                                value="random">Chave Aleatória</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="key">Chave</label>
+                                        <input type="text" class="form-control key"
+                                            value="{{ old('key', $user->links['pix']->key) }}" name="key">
                                     </div>
                                 </div>
                             </div>

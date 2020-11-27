@@ -17,29 +17,6 @@ class ServiceGraduation
         $this->year = $year;
     }
 
-    public function getMaxGraduation()
-    {
-        $activeUser = ActiveUser::whereMonth('date_active', $this->month)
-            ->whereYear('date_active', $this->year)->pluck('user_id')->toArray();
-        $users = User::whereIn('id', $activeUser)->get();
-
-        foreach ($users as $user) {
-            $maxGraduation = $user->getGraduation(-14);
-
-            if (!$user->graduation) {
-                $user->graduation->delete();
-                $user->graduation()->create([
-                    'max_graduation' => $maxGraduation,
-                ]);
-            } else {
-                $maxGraduation = $maxGraduation > $user->graduation->max_graduation ? $maxGraduation : $user->graduation->max_graduation;
-                $user->graduation->update([
-                    'max_graduation' => $maxGraduation,
-                ]);
-            }
-        }
-    }
-
     public function getBronzeGraduation($activeUsers, $bonusTotal): bool
     {
         if ($bonusTotal >= 30 && $activeUsers >= 2) {
@@ -58,7 +35,6 @@ class ServiceGraduation
 
     public function getGoldGraduation(User $u, $activeUsers, $bonusTotal): bool
     {
-
         // Verifica se o usuario tem duas pesssoas no nivel 2 ativas e ao minimo um bonus de 850
         if ($activeUsers >= 2 && $bonusTotal >= 850) {
             // caso possua, ele fara um foreach em todos os usuarios da sua rede
@@ -68,7 +44,6 @@ class ServiceGraduation
              * @var userGraduated = numero de usuários graduados (precisa de no minimo 3)
              */
             $userGraduated = 0;
-
             foreach ($networkUser as $user) {
                 // Se ja possuir os tres usuarios graduados, sai do loop e retorna true
                 if ($userGraduated >= 3) {
@@ -482,7 +457,6 @@ class ServiceGraduation
                             } //.!.Level 3
                         }
                     } //.!.Level 2
-
                 }
             } //.!.Level 1
             return ($userGraduated >= 4 && $usersGold >= 2) ? true : false;

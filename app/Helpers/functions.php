@@ -1,5 +1,16 @@
 <?php
 
+function validateRequest(String $input)
+{
+    if (request()->has($input)) {
+        if (request($input) != '' && request($input)[0] != null && request($input) != null && request($input) != "null") {
+            return true;
+        }
+        return false;
+    }
+    return false;
+}
+
 function convertMoneyBraziltoUSA($value)
 {
     $value = str_replace(',', '.', str_replace('.', '', $value));

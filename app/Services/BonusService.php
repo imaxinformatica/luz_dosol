@@ -10,10 +10,11 @@ class BonusService
     private $level;
     private $extraUser;
     private $priceBonus;
+    protected $graduationService;
 
     private static $count = 1;
 
-    public function __construct()
+    public function __construct(GraduationService $graduationService)
     {
         $this->level = [
             "1" => 1.5,
@@ -39,6 +40,53 @@ class BonusService
             "4" => 120,
             "5" => 360,
         ];
+        $this->graduationService = $graduationService;
+    }
+
+    public function bonus()
+    {
+        $date = setDate(date('m-Y', strtotime('0 day')));
+        $today = setDate(date('m-Y'));
+        if ($date == $today) {
+            updateStatusUser(User::get(), $today);
+        }
+        $users = User::where('status', 1)->get();
+
+        foreach ($users as $user) {
+            $graduation = $this->graduationService->getGraduation($user);
+            $this->loopBonus($user, $date, $graduation);
+            $realExtraBonus = $user->extraBonus()
+                ->whereMonth('updated_at', $date[0])
+                ->whereYear('updated_at', $date[1])
+                ->get();
+            $this->updateExtraBonus($realExtraBonus, $graduation);
+        }
+        echo 'Bônus Atualizados';
+    }
+
+    public function extraBonus($extraUser, $levelBonus, $graduation, $user)
+    {
+        if (!$graduation) {
+            return;
+        }
+        for ($i = 0; $i < $extraUser; $i++) {
+            ExtraBonus::create([
+                'user_id' => $user->id,
+                'price' => $this->level[$graduation],
+                'level_bonus' => $levelBonus,
+            ]);
+        }
+    }
+
+    public function updateExtraBonus($extraBonus, $graduation)
+    {
+        if (!$graduation) {
+            return;
+        }
+
+        foreach ($extraBonus as $extra) {
+            $extra->update(['price' => $this->level[$graduation]]);
+        }
     }
 
     protected function totalExtraUser($userActive, $user, $date)
@@ -94,50 +142,5 @@ class BonusService
             self::$count++;
         }
         self::$count = 1;
-
-    }
-    public function bonus()
-    {
-        $date = setDate(date('m-Y', strtotime('0 day')));
-        $today = setDate(date('m-Y'));
-        if ($date == $today) {
-            updateStatusUser(User::get(), $today);
-        }
-        $users = User::where('status', 1)->get();
-
-        foreach ($users as $user) {
-            $graduation = $user->getGraduation();
-            $this->loopBonus($user, $date, $graduation);
-            $realExtraBonus = $user->extraBonus()
-                ->whereMonth('updated_at', $date[0])
-                ->whereYear('updated_at', $date[1])
-                ->get();
-            $this->updateExtraBonus($realExtraBonus, $graduation);
-        }
-        echo 'Bônus Atualizados';
-    }
-    public function extraBonus($extraUser, $levelBonus, $graduation, $user)
-    {
-        if (!$graduation) {
-            return;
-        }
-        for ($i = 0; $i < $extraUser; $i++) {
-            ExtraBonus::create([
-                'user_id' => $user->id,
-                'price' => $this->level[$graduation],
-                'level_bonus' => $levelBonus,
-            ]);
-        }
-    }
-
-    public function updateExtraBonus($extraBonus, $graduation)
-    {
-        if (!$graduation) {
-            return;
-        }
-
-        foreach ($extraBonus as $extra) {
-            $extra->update(['price' => $this->level[$graduation]]);
-        }
     }
 }

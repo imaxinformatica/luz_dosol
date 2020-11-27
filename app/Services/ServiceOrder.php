@@ -109,7 +109,7 @@ class ServiceOrder
             $data['díg. conta'] = $user->databank->account_type;
             $data['cpf titular'] = $user->databank->cpf_holder;
             $data['nome titular'] = $user->databank->name_holder;
-            $data['graduação'] = $user->getNameGraduation();
+            $data['graduação'] = $user->graduation_name;
             $array[$key] = $data;
         }
         return $array;

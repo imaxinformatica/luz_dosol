@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers\User;
 
+use Auth;
+use App\State;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConfigurationRequest;
-use App\Services\ServiceUser;
-use App\State;
-use Auth;
 
 class ConfigurationController extends Controller
 {
+    protected $userService;
+
+    public function __construct()
+    {
+        $this->userService = new UserService();
+    }
+
     public function index()
     {
         $user = Auth::guard('user')->user();
@@ -23,9 +30,9 @@ class ConfigurationController extends Controller
     public function update(ConfigurationRequest $request)
     {
         $user = Auth::guard('user')->user();
-
-        $dataUser = ServiceUser::generateDatauser($request->all());
-        $dataAddress = ServiceUser::generateDataAddress($request->all());
+        $userService = new UserService();
+        $dataUser = $userService->generateDataUser($request->all());
+        $dataAddress = $userService->generateDataAddress($request->all());
 
         try {
             $user->update($dataUser);
@@ -37,7 +44,7 @@ class ConfigurationController extends Controller
         return redirect()->back()->with('success', 'Dados Atualizados com sucesso');
     }
 
-    public function changeAvatar(Request $request, ServiceUser $sv)
+    public function changeAvatar(Request $request)
     {
         $request->validate([
             'avatar' => 'required'
@@ -45,7 +52,7 @@ class ConfigurationController extends Controller
 
         $user = Auth::guard('user')->user();
         try {
-            $data['avatar'] = ServiceUser::saveAvatar($request->file('avatar'), $user->id);
+            $data['avatar'] = $this->userService->avatar($request->file('avatar'), $user->id);
             $user->update($data);
         } catch (\Exception $e) {
             return redirect()->back()

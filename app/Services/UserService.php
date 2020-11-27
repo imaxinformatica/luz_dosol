@@ -2,13 +2,41 @@
 
 namespace App\Services;
 
-use App\User;
 use Image;
+use App\User;
+use App\Models\PixKey;
 
-class ServiceUser
+class UserService
 {
+    public function create(array $data): User
+    {
+        $dataUser = $this->generateDataUser($data);
+        $dataAddress = $this->generateDataAddress($data);
+        $dataBank = $this->generateDataBank($data);
 
-    public static function generateDatauser(array $data): array
+        
+
+        $user = User::create($dataUser);
+        $user->address()->create($dataAddress);
+        $user->databank()->create($dataBank);
+        $this->setPix($user);
+
+        return $user;
+    }
+
+    public function update(array $data, User $user): void
+    {
+        $dataUser = $this->generateDataUser($data);
+        $dataAddress = $this->generateDataAddress($data);
+        $dataBank = $this->generateDataBank($data);
+
+        $user->update($dataUser);
+        $user->address()->update($dataAddress);
+        $user->databank()->update($dataBank);
+        $this->setPix($user, $data);
+    }
+
+    public function generateDataUser(array $data): array
     {
         $dataUser['name'] = $data['name'];
         $dataUser['email'] = $data['email'];
@@ -19,23 +47,11 @@ class ServiceUser
         if (isset($data['password'])) {
             $dataUser['password'] = bcrypt($data['password']);
         }
-        if (isset($data['status'])) {
+        $dataUser['status'] = 0;
 
-            $dataUser['status'] = $data['status'];
-        }
         return $dataUser;
     }
-
-    public static function createUser($dataUser, $dataAdress, $dataBank): User
-    {
-        $user = User::create($dataUser, $dataAdress, $dataBank);
-        $user->address()->create($dataAdress);
-        $user->databank()->create($dataBank);
-
-        return $user;
-    }
-
-    public static function generateDataAddress(array $data): array
+    public function generateDataAddress(array $data): array
     {
         $dataAddress['zip_code'] = $data['zip_code'];
         $dataAddress['street'] = $data['street'];
@@ -47,7 +63,7 @@ class ServiceUser
         return $dataAddress;
     }
 
-    public static function generateDataBank(array $data): array
+    public function generateDataBank(array $data): array
     {
         $dataBank['bank_code'] = $data['bank_code'];
         $dataBank['agency'] = $data['agency'];
@@ -60,7 +76,7 @@ class ServiceUser
         return $dataBank;
     }
 
-    public static function saveAvatar($file, $name)
+    public function avatar($file, $name)
     {
         $originalPath = public_path() . '/uploads/profile/';
         $originalImage = $file;
@@ -75,11 +91,22 @@ class ServiceUser
         return $fileName;
     }
 
-    public static function resetMonth()
+    public function setPix(User $user, array $data)
     {
-        $users = User::get();
-        $users->each(function($user){
-            $user->update(['status' => 0]);
-        });
+        $pixKey = PixKey::where('user_id', $user->id)->first();
+        if($pixKey){
+            $pixKey->update([
+                'key' => $data['key'],
+                'type' => $data['type'],
+            ]);
+        }else{
+
+            if(isset($data['type'])){
+                $user->pixKeys()->create([
+                    'key' => $data['key'],
+                    'type' => $data['type'],
+                ]);
+            }
+        }
     }
 }

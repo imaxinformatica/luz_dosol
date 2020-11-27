@@ -350,3 +350,7 @@ button.more-info {
 .child {
     padding-left: 30px;
 }
+.gray {
+    background-color: #ddd;
+    border-radius: 5px;
+}

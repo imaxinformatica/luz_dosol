@@ -43,6 +43,13 @@ class UserRequest extends FormRequest
             'name_holder' => 'required',
 
         ];
+        if(validateRequest('type') || \validateRequest('key')){
+            $rules['type'] = 'required';
+            $rules['key'] = 'required';
+        }else{
+            $rules['type'] = 'nullable';
+            $rules['key'] = 'nullable';
+        }
         if ($this->request->has('user_id')) {
             $rules['password'] = ['required|min:6'];
             $rules['email'] = [

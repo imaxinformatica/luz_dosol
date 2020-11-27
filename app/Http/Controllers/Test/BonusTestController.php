@@ -109,7 +109,7 @@ class BonusTestController extends Controller
         $users = $this->listaUsuarios($user, 10);
         echo '<ul>';
         echo "<li>";
-        echo '' . $user->getNameGraduation() . ' - ' . $user->name . ' - ' . count($user->users) . ' cadastros diretos';
+        echo '' . $user->graduation_name . ' - ' . $user->name . ' - ' . count($user->users) . ' cadastros diretos';
         echo "</li>";
         $this->showRede($users);
         echo '</ul>';
@@ -144,7 +144,7 @@ class BonusTestController extends Controller
         echo '<ul>';
         foreach ($users as $user) {
             echo "<li>";
-            echo 'Graduacao: ' . $user->getNameGraduation() . ' - Nome: ' . $user->name . ' - ' . count($user->filhos) . ' cadastros diretos' . ' - Pedidos: '. $user->orders->count() . ' - Total Pedidos: '. $user->orders->sum('subtotal');
+            echo 'Graduacao: ' . $user->graduation_name . ' - Nome: ' . $user->name . ' - ' . count($user->filhos) . ' cadastros diretos' . ' - Pedidos: '. $user->orders->count() . ' - Total Pedidos: '. $user->orders->sum('subtotal');
 
             if (count($user->filhos) > 0) {
                 $this->showRede($user->filhos);
@@ -161,7 +161,7 @@ class BonusTestController extends Controller
         echo "<br>Frete: $order->shipping";
         echo "<br>Total: $order->total";
         echo "<br>Usuário: {$order->user->name}";
-        echo "<br>Status: {$order->getStatus()}";
+        echo "<br>Status: {$order->status}";
         echo "<br><hr>";
     }
 

@@ -30,45 +30,20 @@ class Order extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function getStatus()
+    public function getStatusAttribute($value)
     {
-        switch ($this->status) {
-            case 0:
-                $status = "Pendente";
-
-                break;
-            case 1:
-                $status = "Aguardando Pagamento";
-
-                break;
-            case 2:
-                $status = "Em Análise";
-
-                break;
-            case 3:
-                $status = "Pago";
-
-                break;
-            case 4:
-                $status = "Disponível";
-
-                break;
-            case 5:
-                $status = "Em Disputa";
-
-                break;
-            case 6:
-                $status = "Devolvida";
-
-                break;
-            case 6:
-                $status = "Cancelada";
-
-                break;
-            default:
-                $status = "";
-                break;
-        }
-        return $status;
+        $status = [
+            "Pendente",
+            "Aguardando Pagamento",
+            "Em Análise",
+            "Pago",
+            "Disponível",
+            "Em Disputa",
+            "Devolvida",
+            "Cancelada",
+            "Cancelada",
+        ];
+        
+        return array_key_exists($value, $status) ? $status[$value] : "";
     }
 }

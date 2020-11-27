@@ -54,7 +54,7 @@
             <li {{ (Request::is('user/documento') ? 'class=active' : '') }}
                 {{ (Request::is('user/documento/*') ? 'class=active' : '') }}>
                 <a href="{{ route('user.document.index')}}">
-                    <i class="fa fa-download"></i> <span>DOCUMENTOS</span>
+                    <i class="fa fa-file-text" ></i><span>DOCUMENTOS</span>
                 </a>
             </li>
             <li {{ (Request::is('user/congiguracao') ? 'class=active' : '') }}

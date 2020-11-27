@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\ActiveUser;
+use App\Cart;
 use App\Notifications\UserResetPassword;
-use App\Services\ServiceGraduation;
+use App\Services\GraduationService;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,8 +33,18 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'graduation_name'
+        'graduation_name',
+        'links',
     ];
+
+    protected $graduationService;
+
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+
+        $this->graduationService = new GraduationService();
+    }
 
     public function sendPasswordResetNotification($token)
     {
@@ -43,6 +55,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Product', 'carts', 'user_id', 'product_id')
             ->withPivot('product_id', 'user_id', 'price', 'qty', 'id');
+    }
+
+    public function pixKeys()
+    {
+        return $this->hasMany('App\Models\PixKey', 'user_id');
     }
 
     public function users()
@@ -92,19 +109,18 @@ class User extends Authenticatable
     public function getGraduationNameAttribute()
     {
         $graduations = [
-            '1' =>"Bronze",
-            '2' =>"Prata",
-            '3' =>"Ouro",
-            '4' =>"Platina",
-            '5' =>"Diamante",
-            '6' =>"Mestre",
-            '7' =>"Principe/Princesa",
-            '8' =>"Rei/Rainha",
+            '1' => "Bronze",
+            '2' => "Prata",
+            '3' => "Ouro",
+            '4' => "Platina",
+            '5' => "Diamante",
+            '6' => "Mestre",
+            '7' => "Principe/Princesa",
+            '8' => "Rei/Rainha",
         ];
-        $g = $this->getGraduation();
+        $g = $this->graduationService->getGraduation($this);
         return array_key_exists($g, $graduations) ? $graduations[$g] : "Não graduado";
     }
-
 
     public function status()
     {
@@ -195,7 +211,9 @@ class User extends Authenticatable
 
     public function total()
     {
-        $items = Cart::where('user_id', $this->id)->select('price', 'qty')->get();
+        $items = Cart::where('user_id', $this->id)
+            ->select('price', 'qty')
+            ->get();
         $total = 0;
         foreach ($items as $item) {
             $subtotal = $item->price * $item->qty;
@@ -232,11 +250,12 @@ class User extends Authenticatable
             ->whereMonth('updated_at', $month)
             ->whereYear('updated_at', $year)
             ->sum('price');
-        $extrabonus = $this->extraBonus()
+
+        $extraBonus = $this->extraBonus()
             ->whereMonth('updated_at', $month)
             ->whereYear('updated_at', $year)
             ->sum('price');
-        return $bonus + $extrabonus;
+        return $bonus + $extraBonus;
     }
     public function getBonusIndication($month, $year)
     {
@@ -251,10 +270,10 @@ class User extends Authenticatable
         $bonus = $this->bonus()
             ->whereMonth('updated_at', $month)
             ->whereYear('updated_at', $year)
-            ->where('level_bonus','<>', 6)
+            ->where('level_bonus', '<>', 6)
             ->sum('price');
-        $extrabonus = $this->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
-        return $bonus + $extrabonus;
+        $extraBonus = $this->extraBonus()->whereMonth('updated_at', $month)->whereYear('updated_at', $year)->sum('price');
+        return $bonus + $extraBonus;
     }
 
     public function orders()
@@ -270,53 +289,12 @@ class User extends Authenticatable
 
     public function activeUsers($month, $year)
     {
-        $usersNetwwork = $this->users()->pluck('id')->toArray();
+        $usersNetwork = $this->users()->pluck('id')->toArray();
 
-        $activeUsers = \App\ActiveUser::whereIn('user_id', $usersNetwwork)
+        $activeUsers = \App\ActiveUser::whereIn('user_id', $usersNetwork)
             ->whereMonth('date_active', $month)
             ->whereYear('date_active', $year)->get();
         return $activeUsers;
-    }
-
-    public function getNameGraduation()
-    {
-        switch ($this->getGraduation()) {
-            case 1:
-                $graduation = "Bronze";
-                break;
-            case 2:
-                $graduation = "Prata";
-                break;
-            case 3:
-                $graduation = "Ouro";
-
-                break;
-            case 4:
-                $graduation = "Platina";
-
-                break;
-            case 5:
-                $graduation = "Diamante";
-
-                break;
-            case 6:
-                $graduation = "Mestre";
-
-                break;
-            case 7:
-                $graduation = "Principe/Princesa";
-
-                break;
-            case 8:
-                $graduation = "Rei/Rainha";
-
-                break;
-
-            default:
-                $graduation = "Não Graduado";
-                break;
-        }
-        return $graduation;
     }
 
     public function getMaxGraduation(): int
@@ -324,73 +302,18 @@ class User extends Authenticatable
         if ($this->graduation) {
             return $this->graduation->max_graduation;
         }
-        return $this->getGraduation();
+        return $this->graduationService->getGraduation($this);
     }
-    public function getGraduation($day = -1): int
+    public function getGraduation(): int
     {
-        $sv = new ServiceGraduation;
-        $date = date('m-Y', strtotime("{$day} day"));
-        list($month, $year) = explode('-', $date);
+        return $this->graduationService->getGraduation($this);
+    }
 
-        $activeUsers = $this->activeUsers($month, $year)->count();
-
-        $bonusTotal = $this->getTotalBonus($month, $year);
-
-        $graduation = 0;
-
-        $isGraduated = $sv->getBronzeGraduation($activeUsers, $bonusTotal);
-        if ($isGraduated) {
-            $isGraduated = false;
-            $graduation++;
-            $isGraduated = $sv->getSilverGraduation($activeUsers, $bonusTotal);
-
-            if ($isGraduated) {
-                $isGraduated = false;
-                $graduation++;
-                $isGraduated = $sv->getGoldGraduation($this, $activeUsers, $bonusTotal);
-
-                if ($isGraduated) {
-                    $isGraduated = false;
-                    $graduation++;
-                    $isGraduated = $sv->getPlatinumGraduation($this, $activeUsers, $bonusTotal);
-
-                    if ($isGraduated) {
-                        $isGraduated = false;
-                        $graduation++;
-                        $isGraduated = $sv->getDiamondGraduation($this, $activeUsers, $bonusTotal);
-
-                        if ($isGraduated) {
-                            $isGraduated = false;
-                            $graduation++;
-                            $isGraduated = $sv->getMasterGraduation($this, $activeUsers, $bonusTotal);
-
-                            if ($isGraduated) {
-                                $isGraduated = false;
-                                $graduation++;
-                                $isGraduated = $sv->getEmperorGraduation($this, $activeUsers, $bonusTotal);
-
-                                if ($isGraduated) {
-                                    $isGraduated = false;
-                                    $graduation++;
-                                    $isGraduated = $sv->getPrinceGraduation($this, $activeUsers, $bonusTotal);
-
-                                    if ($isGraduated) {
-                                        $isGraduated = false;
-                                        $graduation++;
-                                        $isGraduated = $sv->getKingGraduation($this, $activeUsers, $bonusTotal);
-
-                                        if ($isGraduated) {
-                                            $isGraduated = false;
-                                            $graduation++;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $graduation;
+    public function getLinksAttribute()
+    {
+        $pix = $this->pixKeys()->first() ? $this->pixKeys()->first() : new \App\Models\PixKey();
+        return [
+            'pix' => $pix
+        ];
     }
 }

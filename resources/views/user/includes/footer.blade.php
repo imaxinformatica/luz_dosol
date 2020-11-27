@@ -97,6 +97,37 @@ $('.change-avatar').on('click', function(){
     $('#city_billing').val("");
     $('#state_billing').val("");
   }
+  // $(document).ready(function() {
+  //     validatePix();
+  // });
+        
+  $('.key_type').on('change', function() {
+      validatePix();
+  });
+  function validatePix() {
+      let type = $('.key_type').val();
+      if (type == 'cpf') {
+          $('.key').addClass('input-cpf');
+          $('.key').removeClass('input-key');
+          $('.key').removeClass('input-phone');
+          $('.key').attr('type', 'text');
+      } else if (type == 'email') {
+          $('.key').removeClass('input-cpf');
+          $('.key').removeClass('input-key');
+          $('.key').removeClass('input-phone');
+          $('.key').attr('type', 'email');
+      } else if (type == 'cellphone') {
+          $('.key').addClass('input-phone');
+          $('.key').removeClass('input-cpf');
+          $('.key').removeClass('input-key');
+          $('.key').attr('type', 'text');
+      } else {
+          $('.key').addClass('input-key');
+          $('.key').removeClass('input-cpf');
+          $('.key').removeClass('input-phone');
+          $('.key').attr('type', 'text');
+      }
+  }
 
   function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {

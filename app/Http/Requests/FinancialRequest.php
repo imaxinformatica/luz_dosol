@@ -23,12 +23,21 @@ class FinancialRequest extends FormRequest
      */
     public function rules()
     {
+        if(validateRequest('type') || \validateRequest('key')){
+            $type = 'required';
+            $key = 'required';
+        }else{
+            $type = 'nullable';
+            $key = 'nullable';
+        }
         return [
             'bank_code' => 'required',
             'agency' => 'required',
             'account' => 'required',
             'account_type' => 'required',
             'cpf_holder' => 'required',
+            'type' => $type,
+            'key' => $key,
             'name_holder' => 'required'
         ];
     }
