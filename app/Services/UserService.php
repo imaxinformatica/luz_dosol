@@ -18,7 +18,7 @@ class UserService
 
         $user = User::create($dataUser);
         $user->address()->create($dataAddress);
-        $user->databank()->create($dataBank);
+        $user->dataBank()->create($dataBank);
         $this->setPix($user);
 
         return $user;
@@ -32,7 +32,7 @@ class UserService
 
         $user->update($dataUser);
         $user->address()->update($dataAddress);
-        $user->databank()->update($dataBank);
+        $user->dataBank()->update($dataBank);
         $this->setPix($user, $data);
     }
 

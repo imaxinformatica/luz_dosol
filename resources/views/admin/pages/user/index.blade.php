@@ -175,7 +175,7 @@
                                     <td>{{$user->status()}}</td>
                                     <td>
 
-                                        <a href="{{ route('admin.user.status', ['user' => $user])}}" title="Editar"
+                                        <a href="{{ route('admin.user.status', ['user' => $user])}}" title="Alterar Status"
                                             class="act-list">
                                             @if($user->status == 0)
                                             <i class="fa fa-toggle-off" aria-hidden="true"></i>
@@ -187,13 +187,13 @@
                                             class="act-list change-password">
                                             <i class="fa fa-lock" aria-hidden="true"></i>
                                         </a>
-                                        <!-- <a href="#" data-user_id="{{$user->id}}" title="Vincular Usuário a Rede"
-                                            class="act-list attach-user">
-                                            <i class="fa fa-users" aria-hidden="true"></i>
-                                        </a> -->
                                         <a href="{{ route('admin.user.edit', ['user' => $user])}}" title="Editar"
                                             class="act-list">
                                             <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="{{ route('admin.user.network', ['user' => $user])}}" title="Visualizar Rede"
+                                            class="act-list">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
 
                                         <a href="{{ route('admin.user.delete', ['user' => $user])}}" title="Excluir"

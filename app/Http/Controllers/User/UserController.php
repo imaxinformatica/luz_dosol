@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
 use App\User;
 use Auth;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
         $user = Auth::guard('user')->user();
-        $user->children = \listChildren($user,10);
-        
+        $user->children = \listChildren($user, 10);
 
-        // $users = User::where('user_id', $user->id)->orderBy('name', 'asc')->get();
         return view('user.pages.user.index')
-        ->with('user', $user);
+            ->with('user', $user);
     }
 }

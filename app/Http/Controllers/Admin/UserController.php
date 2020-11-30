@@ -132,17 +132,24 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Usuário adicionado a rede com sucesso.');
     }
 
+    public function network(User $user)
+    {
+        $user->children = \listChildren($user, 10);
+
+        return view('admin.pages.user.network')
+            ->with('user', $user);
+    }
+
     public function delete(User $user)
     {
         try {
-            $user->databank()->delete();
+            $user->dataBank()->delete();
             $user->address()->delete();
             $user->delete();
         } catch (\Exception $e) {
             return redirect()->route('admin.user.index')
-                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos adminsitradores: ' . $e->getMessage());
+                ->with('error', 'Ops, tivemos um problema, entre em contato com um de nossos administradores: ' . $e->getMessage());
         }
-
         return redirect()->back()
             ->with('success', 'Usuário deletado com sucesso');
     }

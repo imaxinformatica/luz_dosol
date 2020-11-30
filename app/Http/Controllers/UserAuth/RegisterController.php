@@ -108,7 +108,7 @@ class RegisterController extends Controller
         try {
             $user = User::create($dataUser);
             $user->address()->create($dataAddress);
-            $user->databank()->create($dataBank);
+            $user->dataBank()->create($dataBank);
             if (isset($data['hasPix']) && $data['hasPix'] == 1) {
                 $user->pixKeys()->create($dataPix);
             }

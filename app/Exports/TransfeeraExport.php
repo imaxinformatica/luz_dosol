@@ -5,8 +5,9 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class TransfeeraExport implements FromArray, WithHeadings
+class TransfeeraExport implements FromArray, WithHeadings, ShouldAutoSize
 {
     protected $data;
 
@@ -29,15 +30,15 @@ class TransfeeraExport implements FromArray, WithHeadings
 
         return [
             [
-                'nome',
-                'cpf titular',
-                'e-mail',
-                'código banco',
-                'agência',
-                'conta',
-                'díg. conta',
-                'tipo de conta', 
-                'valor',
+                'Nome',
+                'CPF Titular',
+                'E-mail',
+                'Código Banco',
+                'Agência',
+                'Conta',
+                'Díg. Conta',
+                'Tipo de Conta', 
+                'Valor',
             ],
         ];
     }

@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers\User;
 
+use Auth;
+use App\User;
 use App\Cycle;
+use App\Order;
+use App\Services\OrderService;
+use App\Services\ServiceOrder;
+use App\Services\ServiceCheckout;
+use App\Services\ServiceShipping;
+use App\Services\PagSeguroService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutRequest;
-use App\Order;
-use App\Services\PagSeguroService;
-use App\Services\ServiceCheckout;
-use App\Services\ServiceOrder;
-use App\Services\ServiceShipping;
-use App\User;
-use Auth;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends Controller
 {
+    protected $orderService;
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
     public function getSession()
     {
         $data['email'] = config('services.pagseguro.pagseguro_email');
@@ -41,7 +48,7 @@ class OrderController extends Controller
         $arrayPagSeguro = null,
         $isTest = false
     ) {
-        $svOrder = new ServiceOrder;
+        $svOrder = new ServiceOrder();
         $svCheckout = new ServiceCheckout();
         $pagSeguroService = new PagSeguroService();
 
@@ -190,20 +197,19 @@ class OrderController extends Controller
         $order = Order::where('code', $xml->code)->first();
         if ($order) {
             $user = User::find($order->user_id);
-            $svOrder = new ServiceOrder;
 
             $date = date('m-Y');
             list($month, $year) = explode('-', $date);
 
             $order->update(['status' => $xml->status]);
             if ($order->status == 3) {
-                ServiceOrder::createComission($order->id, $user);
+                $this->orderService->setCommission($order->id, $user);
             }
 
             $firstOrder = $user->orders()->where('status', 3)->count();
 
             if ($firstOrder == 1 && $user->user_id !== null && $xml->status == 3) {
-                ServiceOrder::createSpecialBonus($user->user_id);
+                $this->orderService->setSpecialBonus($user->user_id);
             }
             if ($user->getTotalMonth() >= 200 && $user->status == 0 && $order->status == 3) {
                 ServiceCheckout::activeUser($user);

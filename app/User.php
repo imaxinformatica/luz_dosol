@@ -77,7 +77,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Address', 'user_id');
     }
 
-    public function databank()
+    public function dataBank()
     {
         return $this->hasOne('App\Databank', 'user_id');
     }
@@ -286,6 +286,7 @@ class User extends Authenticatable
         $totalBonus = $this->getCommission($month, $year) + $this->getBonus($month, $year);
         return $totalBonus;
     }
+
 
     public function activeUsers($month, $year)
     {

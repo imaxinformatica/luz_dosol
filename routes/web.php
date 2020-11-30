@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
         Route::post('/senha', 'Admin\UserController@password')->name('password');
         Route::post('/attach', 'Admin\UserController@attach')->name('attach');
         Route::post('/update/{user}', 'Admin\UserController@update')->name('update');
+        Route::get('/network/{user}', 'Admin\UserController@network')->name('network');
         Route::get('/status/{user}', 'Admin\UserController@status')->name('status');
         Route::get('/delete/{user}', 'Admin\UserController@delete')->name('delete');
     });

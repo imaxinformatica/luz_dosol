@@ -11,6 +11,7 @@ use App\User;
 class RouterController extends Controller
 {
     protected $businessService;
+    
     public function __construct(
         GraduationService $graduationService,
         BusinessService $businessService,

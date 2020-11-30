@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class PaymentsExport implements FromArray, WithHeadings
+class PaymentsExport implements FromArray, WithHeadings, ShouldAutoSize
 {
     protected $data;
 
@@ -28,16 +29,16 @@ class PaymentsExport implements FromArray, WithHeadings
 
         return [
             [
-                'código',
-                'nome',
-                'valor',
-                'código banco',
-                'agência',
-                'conta',
-                'díg. conta',
-                'cpf titular',
-                'nome titular',
-                'graduação',
+                'Código',
+                'Nome',
+                'Valor',
+                'Código banco',
+                'Agência',
+                'Conta',
+                'Díg. Conta',
+                'CPF titular',
+                'Nome titular',
+                'Chave PIX',
             ],
         ];
     }

@@ -195,7 +195,7 @@
                                             <option disabled hidden selected>Selecione...</option>
                                             @foreach($banks as $bank)
                                             <option value="{{$bank->bank_code}}"
-                                                {{$bank->bank_code == $user->databank->bank_code ? "selected" : ""}}>
+                                                {{$bank->bank_code == $user->dataBank->bank_code ? "selected" : ""}}>
                                                 {{$bank->bank_code." - ". $bank->bank_name}}</option>
                                             @endforeach
                                         </select>
@@ -204,7 +204,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="agency">Agência <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->databank->agency}}" name="agency"
+                                        <input type="text" class="form-control" value="{{$user->dataBank->agency}}" name="agency"
                                             required>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label for="account">Conta (s/ dígito) <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->databank->account}}"
+                                        <input type="text" class="form-control" value="{{$user->dataBank->account}}"
                                             name="account" required>
                                     </div>
                                 </div>
@@ -222,14 +222,14 @@
                                 <div class="col-sm-2 col-xs-6">
                                     <div class="form-group">
                                         <label for="account_type">Dígito conta <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->databank->account_type}}"
+                                        <input type="text" class="form-control" value="{{$user->dataBank->account_type}}"
                                             name="account_type" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-xs-6">
                                     <div class="form-group">
                                         <label for="name_holder">Nome Titular <small>*</small></label>
-                                        <input type="text" class="form-control" value="{{$user->databank->name_holder}}"
+                                        <input type="text" class="form-control" value="{{$user->dataBank->name_holder}}"
                                             name="name_holder" required>
                                     </div>
                                 </div>
@@ -238,17 +238,17 @@
                                         <label for="type_account">Tipo de Conta <small>*</small></label>
                                         <select name="type_account" id="type_account" required class="form-control">
                                             <option disabled hidden selected>Selecione...</option>
-                                            <option {{$user->databank->type_account == 1 ? "selected" : "" }} value="1">Conta corrente</option>
-                                            <option {{$user->databank->type_account == 2 ? "selected" : "" }} value="2">Conta poupança</option>
-                                            <option {{$user->databank->type_account == 3 ? "selected" : "" }} value="3">Conta conjunta</option>
-                                            <option {{$user->databank->type_account == 4 ? "selected" : "" }} value="4">Poupança conjunta</option>
+                                            <option {{$user->dataBank->getAttributes()['type_account'] == 1 ? "selected" : "" }} value="1">Conta corrente</option>
+                                            <option {{$user->dataBank->getAttributes()['type_account'] == 2 ? "selected" : "" }} value="2">Conta poupança</option>
+                                            <option {{$user->dataBank->getAttributes()['type_account'] == 3 ? "selected" : "" }} value="3">Conta conjunta</option>
+                                            <option {{$user->dataBank->getAttributes()['type_account'] == 4 ? "selected" : "" }} value="4">Poupança conjunta</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-3">
                                     <div class="form-group">
                                         <label for="cpf_holder">CPF Titular <small>*</small></label>
-                                        <input type="text" class="form-control input-cpf" value="{{$user->databank->cpf_holder}}"
+                                        <input type="text" class="form-control input-cpf" value="{{$user->dataBank->cpf_holder}}"
                                             name="cpf_holder" required>
                                     </div>
                                 </div>

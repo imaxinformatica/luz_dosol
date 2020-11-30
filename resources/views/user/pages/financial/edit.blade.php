@@ -129,16 +129,16 @@
                                             <select name="type_account" id="type_account" class="form-control">
                                                 <option disabled hidden selected>Selecione...</option>
                                                 <option value="1"
-                                                    {{ $dataBank->type_account == 1 ? 'selected' : '' }}>Conta
+                                                    {{ $dataBank->getAttributes()['type_account'] == 1 ? 'selected' : '' }}>Conta
                                                     corrente</option>
                                                 <option value="2"
-                                                    {{ $dataBank->type_account == 2 ? 'selected' : '' }}>Conta
+                                                    {{ $dataBank->getAttributes()['type_account'] == 2 ? 'selected' : '' }}>Conta
                                                     poupança</option>
                                                 <option value="3"
-                                                    {{ $dataBank->type_account == 3 ? 'selected' : '' }}>Conta
+                                                    {{ $dataBank->getAttributes()['type_account'] == 3 ? 'selected' : '' }}>Conta
                                                     conjunta</option>
                                                 <option value="4"
-                                                    {{ $dataBank->type_account == 4 ? 'selected' : '' }}>Poupança
+                                                    {{ $dataBank->getAttributes()['type_account'] == 4 ? 'selected' : '' }}>Poupança
                                                     conjunta</option>
                                             </select>
                                         </div>
