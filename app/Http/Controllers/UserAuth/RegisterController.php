@@ -119,7 +119,6 @@ class RegisterController extends Controller
                 ->session()
                 ->flash('error', 'Tivemos um problema no servidor: ', $e->getMessage());
         }
-        dd($user);
         return $user;
     }
 
