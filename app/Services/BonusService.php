@@ -45,7 +45,7 @@ class BonusService
 
     public function bonus()
     {
-        $date = setDate(date('m-Y', strtotime('0 day')));
+        $date = setDate(date('m-Y', strtotime('-5 day')));
         $today = setDate(date('m-Y'));
         if ($date == $today) {
             updateStatusUser(User::get(), $today);

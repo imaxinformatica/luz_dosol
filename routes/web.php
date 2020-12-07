@@ -224,10 +224,8 @@ Route::post('/callback-pagseguro', 'User\OrderController@callback')->name('callb
 
 Route::get('/get-shipping', 'User\OrderController@getShipping')->name('get.shipping');
 
-Route::get('/reiniciar-mes', 'Api\RouterController@resetMonth');
-
-
 Route::get('/criar-bonus','Api\RouterController@setBonus');
+Route::get('/reiniciar-mes', 'Api\RouterController@resetMonth');
 
 Route::get('atualiza',function(){
     alteraMedidas();
