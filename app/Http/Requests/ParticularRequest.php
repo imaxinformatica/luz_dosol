@@ -24,6 +24,7 @@ class ParticularRequest extends FormRequest
     public function rules()
     {
         return [
+            'city' => 'required',
             'cep_initial' => 'required',
             'cep_final' => 'required',
             'price' => 'required',

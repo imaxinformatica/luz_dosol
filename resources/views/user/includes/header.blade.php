@@ -20,11 +20,11 @@
                         <b>O clico finaliza em:</b><span class="timeOut"></span>
                     </li>
                     <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="{{route('user.cart.index')}}" class="dropdown-toggle">
                             <i class="fa fa-shopping-cart"></i>
                             <span class="label label-danger">{{auth()->guard('user')->user()->cart->count()}}</span>
                         </a>
-                        <ul class="dropdown-menu" style="min-width: 400px;">
+                        {{-- <ul class="dropdown-menu" style="min-width: 400px;">
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
@@ -55,7 +55,7 @@
                                 </ul>
                             </li>
                             <li class="footer"><a class="finaliza-btn" href="{{route('user.cart.index')}}">Finalizar Pedido</a></li>
-                        </ul>
+                        </ul> --}}
                     </li>
 
 

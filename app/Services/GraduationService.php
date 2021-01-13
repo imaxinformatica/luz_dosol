@@ -66,19 +66,19 @@ class GraduationService
         $this->diamond = [
             5 => 0,  // Diamante
             6 => 1,  // Mestre
-            7 => 2,  // Imperador/Imperatriz
+            7 => 3,  // Imperador/Imperatriz
             8 => 2,  // Príncipe / Princesa
-            9 => 2,  // Mestre
+            9 => 4,  // Rei /Rainha
         ];
         $this->master = [
             6 => 0,  // Mestre
-            7 => 1,  // Imperador/Imperatriz
-            8 => 3,  // Príncipe / Princesa
-            9 => 4,  // Rei / Rainha
+            7 => 0,  // Imperador/Imperatriz
+            8 => 1,  // Príncipe / Princesa
+            9 => 3,  // Rei / Rainha
         ];
         $this->emperor = [
             8 => 0,  // Príncipe / Princesa
-            9 => 2,  // Rei / Rainha
+            9 => 1,  // Rei / Rainha
         ];
     }
 

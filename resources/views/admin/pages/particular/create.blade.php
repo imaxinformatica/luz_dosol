@@ -62,6 +62,15 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
+                                        <label for="particular-city">Cidade <small>*</small></label>
+                                        <input type="text" class="form-control" value="{{old('city')}}"
+                                            id="particular-city" name="city" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
                                         <label for="particular-cep_initial">Cep Inicial <small>*</small></label>
                                         <input type="text" class="form-control input-cep" value="{{old('cep_initial')}}"
                                             id="particular-cep_initial" name="cep_initial" required>

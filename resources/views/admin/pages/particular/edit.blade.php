@@ -56,14 +56,26 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Dados</h3>
                     </div>
-                    <form method="POST" action="{{route('admin.particular.update', ['particular' => $particular])}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('admin.particular.update', ['particular' => $particular])}}"
+                        enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
+                                        <label for="particular-city">Cidade <small>*</small></label>
+                                        <input type="text" class="form-control"
+                                            value="{{old('city', $particular->city)}}" id="particular-city"
+                                            name="city" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
                                         <label for="particular-cep_initial">Cep Inicial <small>*</small></label>
-                                        <input type="text" class="form-control input-cep" value="{{old('cep_initial',$particular->cep_initial)}}"
+                                        <input type="text" class="form-control input-cep"
+                                            value="{{old('cep_initial',$particular->cep_initial)}}"
                                             id="particular-cep_initial" name="cep_initial" required>
                                     </div>
                                 </div>
@@ -72,7 +84,8 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="particular-cep_final">Cep Final <small>*</small></label>
-                                        <input type="text" class="form-control input-cep" value="{{old('cep_final',$particular->cep_final)}}"
+                                        <input type="text" class="form-control input-cep"
+                                            value="{{old('cep_final',$particular->cep_final)}}"
                                             id="particular-cep_final" name="cep_final" required>
                                     </div>
                                 </div>
@@ -81,7 +94,8 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="particular-price">Preço <small>*</small></label>
-                                        <input type="text" class="form-control input-money" value="{{old('price',convertMoneyUsaToBrazil($particular->price))}}"
+                                        <input type="text" class="form-control input-money"
+                                            value="{{old('price',convertMoneyUsaToBrazil($particular->price))}}"
                                             id="particular-price" name="price" required>
                                     </div>
                                 </div>
@@ -103,7 +117,7 @@
 @stop
 @section('scripts')
 <script type="text/javascript">
-$('#reference').on('keyup', function() {
+    $('#reference').on('keyup', function() {
     let letter = $(this).val();
 
 });
