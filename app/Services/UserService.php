@@ -14,12 +14,10 @@ class UserService
         $dataAddress = $this->generateDataAddress($data);
         $dataBank = $this->generateDataBank($data);
 
-        
-
         $user = User::create($dataUser);
         $user->address()->create($dataAddress);
         $user->dataBank()->create($dataBank);
-        $this->setPix($user);
+        $this->setPix($user, $data);
 
         return $user;
     }

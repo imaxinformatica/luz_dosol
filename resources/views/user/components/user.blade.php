@@ -2,7 +2,7 @@
     @foreach ($user->children as $child)
         <div class="row {{ $count % 2 == 0 ? 'gray' : ''}}">
             <div class="col-sm-1">
-                <button type="button" class="btn btn-box-tool toggleChild" data-child="{{ $child->id }}"><i
+                <button type="button" class="btn btn-box-tool toggleChild status-total-{{$count + 1}} status-{{$child->status}} status-{{$child->status}}-{{$count + 1}}" data-child="{{ $child->id }}"><i
                         id="icon-{{ $child->id }}" class="fa fa-plus"></i>
                 </button>
             </div>

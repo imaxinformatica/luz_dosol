@@ -13,7 +13,6 @@ class UserController extends Controller
     {
         $user = Auth::guard('user')->user();
         $user->children = \listChildren($user, 10);
-
         return view('user.pages.user.index')
             ->with('user', $user);
     }

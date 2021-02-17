@@ -30,7 +30,7 @@
     <section class="content">
         <div class="row">
             <div class="col-lg-5">
-                <div class="box">
+                <div class="box" style="height: 269px">
                     <div class="box-header with-border">
                         <h3 class="box-title">Graduações</h3>
                     </div>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bonus">
+            <div class="bonus" >
                 <!-- Conteudo carregado via ajax -->
             </div>
 
@@ -138,7 +138,7 @@
 
 @section('scripts')
 <script type="text/javascript">
-$('document').ready(function() {
+    $('document').ready(function() {
     getCycle();
 });
 $('#cycle').on('change', function() {
